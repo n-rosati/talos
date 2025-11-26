@@ -30,6 +30,14 @@ nodes:
         - 8.8.8.8
       installDiskSelector:
         model: ADATA*
+      schematic:
+        customization:
+            extraKernelArgs:
+            - net.ifnames=0
+            - sysctl.kernel.kexec_load_disabled=1
+        systemExtensions:
+            officialExtensions:
+                - siderolabs/amd-ucode
       networkInterfaces:
         # suffix is the adapter mac adres.
         - interface: eth0
