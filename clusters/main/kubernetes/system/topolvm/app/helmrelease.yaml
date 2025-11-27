@@ -25,7 +25,7 @@ spec:
       retries: 3
   values:
     lvmd:
-      managed: true
+      managed: false
       env:
         - name: LVM_SYSTEM_DIR
           value: /tmp
@@ -47,8 +47,8 @@ spec:
           allowVolumeExpansion: true
           additionalParameters:
             "topolvm.io/device-class": "thin"
-    scheduler:
-      enabled: true
+    node:
+      lvmdEmbedded: true
     # Optional setting for a single node cluster:
     controller:
       replicaCount: 1
