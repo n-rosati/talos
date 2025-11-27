@@ -14,3 +14,4 @@ resources:
   - volsync/ks.yaml
   - lvm-disk-watcher/ks.yaml
   - topolvm/ks.yaml
+  - nvidia-device-plugin/ks.yaml

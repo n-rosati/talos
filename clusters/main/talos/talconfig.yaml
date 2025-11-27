@@ -43,6 +43,11 @@ nodes:
                     - siderolabs/util-linux-tools
                     - siderolabs/iscsi-tools
                     - siderolabs/amd-ucode
+                    - siderolabs/nonfree-kmod-nvidia-lts
+                    - siderolabs/nvidia-container-toolkit-lts
+      patches:
+        - "@./patches/nvidia.yaml"
+        - "@./patches/image-gc.yaml"
       networkInterfaces:
         # suffix is the adapter mac adres.
         - interface: eth0
