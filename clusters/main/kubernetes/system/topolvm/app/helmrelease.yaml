@@ -37,7 +37,7 @@ spec:
           type: thin
           thin-pool:
             name: topolvm_thin # Logical Volume name used in LVM_Disk_Watcher
-            overprovision-ratio: 10.0 # Adjust to your convenience
+            overprovision-ratio: 50.0 # Adjust to your convenience
     storageClasses:
       - name: topolvm-thin-provisioner
         storageClass:
