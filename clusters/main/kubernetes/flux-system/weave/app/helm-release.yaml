@@ -1,0 +1,38 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: weave
+  namespace: weave
+spec:
+  interval: 2m
+  chart:
+    spec:
+      chart: weave-gitops
+      version: 4.0.36
+      sourceRef:
+        kind: HelmRepository
+        name: weave-gitops
+        namespace: flux-system
+  timeout: 20m
+  maxHistory: 3
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  uninstall:
+    keepHistory: false
+  values:
+    service:
+      type: ClusterIP
+    adminUser:
+      create: true
+      username: admin
+      passwordHash: "$2a$12$ZCj5LZVMiFQw6LIp.Z.iWu.14vqV7iPiTpVPGUte3M16ZILeBClqy"
+    networkPolicy:
+      create: false
+    annotations:
+      reloader.stakater.com/auto: "true"
