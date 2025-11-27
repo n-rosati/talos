@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: part-db
+  # needed for cnpg restore (see: https://discord.com/channels/830763548678291466/1313457434747998249
+  labels:
+    pod-security.kubernetes.io/enforce: privileged
+  annotations:
+    volsync.backube/privileged-movers: "true"

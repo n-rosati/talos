@@ -1,0 +1,204 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: part-db
+  namespace: part-db
+spec:
+  interval: 2m
+  timeout: 20m
+  chart:
+    spec:
+      chart: app-template
+      version: 15.24.53
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  releaseName: part-db
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    release_name: part-db
+    global:
+      stopAll: false
+    image:
+      repository: docker.io/jbtronics/part-db1
+      pullPolicy: IfNotPresent
+      tag: v2.2.1
+    credentials:
+      home-s3:
+        name: home-s3
+        type: s3
+        url: ${S3_URL}
+        bucket: part-db
+        encrKey: ${BACKUP_ENCRYPTION_KEY}
+        accessKey: ${S3_ACCESS_KEY}
+        secretKey: ${S3_SECRET_KEY}
+    securityContext:
+      container:
+        readOnlyRootFilesystem: false
+        runAsNonRoot: false
+        runAsUser: 0
+        runAsGroup: 0
+    service:
+      main:
+        enabled: true
+        ports:
+          main:
+            enabled: true
+            port: 3000
+            protocol: http
+            targetPort: 80
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: external
+        hosts:
+          - host: partdb.${DOMAIN_0}
+        integrations:
+          certManager:
+            enabled: true
+            certificateIssuer: le-prod
+          nginx:
+            enabled: true
+            auth:
+              type: authelia
+              internalHost: ${AUTHELIA_INTERNAL_DNS}
+              externalHost: ${AUTHELIA_EXTERNAL_DNS}
+          homepage:
+            enabled: true
+            name: PartDB
+            description: Part-DB is an open source inventory management system for your electronic components.
+            group: Apps
+            icon: https://raw.githubusercontent.com/Part-DB/Part-DB-server/refs/heads/master/public/icon/safari-pinned-tab.svg
+            widget:
+              enabled: true
+              type: customapi
+              url: http://${PARTDB_DNS}:3000/api/parts
+              custom:
+                method: GET
+                headers.Authorization: Bearer ${HOMEPAGE_PARTDB_KEY}
+                mappings.0.field: hydra:totalItems
+                mappings.0.label: Total Parts
+                mappings.0.format: number
+    persistence:
+      media:
+        enabled: true
+        type: pvc
+        mountPath: /var/www/html/public/media
+        volsync:
+          - name: uploads
+            type: restic
+            credentials: home-s3
+            dest:
+              enabled: true
+            src:
+              enabled: true
+              trigger:
+                schedule: 0 5 * * *
+      uploads:
+        enabled: true
+        type: pvc
+        mountPath: /var/www/html/uploads
+        volsync:
+          - name: uploads
+            type: restic
+            credentials: home-s3
+            dest:
+              enabled: true
+            src:
+              enabled: true
+              trigger:
+                schedule: 0 5 * * *
+      run:
+        enabled: true
+        type: pvc
+        mountPath: /run
+        targetSelectAll: true
+        size: 500Mi
+    cnpg:
+      main:
+        enabled: true
+        database: part-db
+        user: partdb
+        password: ${PARTDB_DB_PASSWORD}
+        pgVersion: 16
+        mode: recovery
+        cluster:
+          singleNode: true
+          postgresql:
+            wal_keep_size: 5GB
+        backups:
+          enabled: true
+          credentials: home-s3
+          revision: "4"
+        recovery:
+          enabled: true
+          revision: "4"
+          credentials: home-s3
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              command: ["/bin/sh", "-c"]
+              args: [
+                  "mkdir -p /run/php && /usr/sbin/php-fpm8.4 && exec apache2-foreground",
+                ] # image likely wont be fixed so this will make the folder then pass off to apache2
+              probes:
+                liveness:
+                  enabled: false
+                  type: http
+                  path: /
+                readiness:
+                  enabled: false
+                  type: http
+                  path: /
+                startup:
+                  enabled: false
+                  type: http
+                  path: /
+              env:
+                ALLOW_ATTACHMENT_DOWNLOADS: "1"
+                ALLOW_EMAIL_PW_RESET: "true"
+                APP_ENV: docker
+                APP_SECRET: ${PARTDB_SECRET}
+                ATTACHMENT_DOWNLOAD_BY_DEFAULT: "1"
+                BANNER: 'Welcome to Part-DB.  <blockquote class=''pb-0''> <p style=''font-size: 12px''> And God said <br> $\\nabla \\cdot \\vec{D} = \\rho$, $\\nabla \\cdot \\vec{B} = 0$, $\\nabla \\times \\vec{E} = -\\frac{\\partial \\vec{B}}{\\partial t}$, $\\nabla \\times \\vec{H} = \\vec{j} + \\frac{\\partial \\vec{D}}{\\partial t}$,  <br> and then there was light. </p> </blockquote>'
+                BASE_CURRENCY: CAD
+                DATABASE_URL: postgresql://partdb:${PARTDB_DB_PASSWORD}@part-db-app-template-cnpg-main-rw.part-db.svc.cluster.local:5432/part-db?serverVersion=16.4&charset=utf8
+                DB_AUTOMIGRATE: true
+                DEFAULT_LANG: en
+                DEFAULT_TIMEZONE: Etc/UTC
+                DEFAULT_URI: https://partdb.${DOMAIN_0}/
+                EMAIL_SENDER_EMAIL: ${SERVICE_EMAIL}
+                EMAIL_SENDER_NAME: PartDB Service
+                FIXER_API_KEY: ${PARTDB_FIXER_API_KEY}
+                HISTORY_SAVE_CHANGED_DATA: "true"
+                HISTORY_SAVE_CHANGED_FIELDS: "true"
+                HISTORY_SAVE_NEW_DATA: "true"
+                HISTORY_SAVE_REMOVED_DATA: "true"
+                INSTANCE_NAME: Part-DB
+                MAILER_DSN: ${SMTP_MAILER_DSN}
+                PROVIDER_DIGIKEY_CLIENT_ID: ${PARTDB_DIGIKEY_CLIENT_ID}
+                PROVIDER_DIGIKEY_COUNTRY: ca
+                PROVIDER_DIGIKEY_CURRENCY: CAD
+                PROVIDER_DIGIKEY_LANGUAGE: en
+                PROVIDER_DIGIKEY_SECRET: ${PARTDB_DIGIKEY_SECRET}
+                PROVIDER_ELEMENT14_KEY: ${PARTDB_ELEMENT14_KEY}
+                PROVIDER_ELEMENT14_STORE_ID: canada.newark.com
+                PROVIDER_LCSC_CURRENCY: CAD
+                PROVIDER_LCSC_ENABLED: "1"
+                PROVIDER_OCOTPART_COUNTRY: CA
+                PROVIDER_OCTOPART_CLIENT_ID: ${PARTDB_OCTOPART_CLIENT_ID}
+                PROVIDER_OCTOPART_CURRENCY: CAD
+                PROVIDER_OCTOPART_SECRET: ${PARTDB_OCTOPART_SECRET}
+                TRUSTED_PROXIES: 172.16.0.0/16,172.17.0.0/16
+                TRUSTED_HOSTS: partdb.${DOMAIN_0},part-db-app-template.part-db.svc.cluster.local
+                USE_GRAVATAR: "0"
