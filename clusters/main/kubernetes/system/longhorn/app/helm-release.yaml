@@ -32,6 +32,6 @@ spec:
       # v2DataEngine: true
     persistence:
       # Set to false to pick another CSI as default
-      defaultClass: true
+      defaultClass: false
       # Increase to 3 for a multi-node cluster
       defaultClassReplicaCount: 1
