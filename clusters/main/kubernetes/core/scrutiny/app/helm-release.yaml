@@ -1,0 +1,46 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: scrutiny
+  namespace: scrutiny
+spec:
+  interval: 2m
+  chart:
+    spec:
+      chart: scrutiny
+      version: 13.12.0
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    global:
+      stopAll: false
+    service:
+      main:
+        type: LoadBalancer
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: internal
+        hosts:
+          - host: scrutinykube.${DOMAIN_0}
+        integrations:
+          certManager:
+            enabled: true
+            certificateIssuer: le-prod
+          # nginx:
+          #   enabled: true
+          homepage:
+            enabled: false
+            group: Apps
+            widget:
+              enabled: false
