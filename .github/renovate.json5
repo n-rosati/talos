@@ -4,6 +4,6 @@
     "extends": [
         "config:recommended",
         "github>trueforge-org/truecharts//.github/renovate/main.json5",
-        "github>n-rosati/homelab-infra//.github/renovate/main.json5"
+        "github>n-rosati/talos//.github/renovate/main.json5"
     ]
 }

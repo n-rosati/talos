@@ -1,10 +1,10 @@
 {
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "extends": [
-        "github>n-rosati/homelab-infra//.github/renovate/packageRules/scheduledAutomergePackages.json5",
-        "github>n-rosati/homelab-infra//.github/renovate/packageRules/kube-talos.json5",
-        "github>n-rosati/homelab-infra//.github/renovate/updates/major.json5",
-        "github>n-rosati/homelab-infra//.github/renovate/hostRules.json5"
+        "github>n-rosati/talos//.github/renovate/packageRules/scheduledAutomergePackages.json5",
+        "github>n-rosati/talos//.github/renovate/packageRules/kube-talos.json5",
+        "github>n-rosati/talos//.github/renovate/updates/major.json5",
+        "github>n-rosati/talos//.github/renovate/hostRules.json5"
     ],
     "timezone": "America/Toronto",
     "platformAutomerge": true
