@@ -8,3 +8,4 @@ resources:
   - mend-renovate/ks.yaml
   - scrutiny/ks.yaml
   - lldap/ks.yaml
+  - authelia/ks.yaml
