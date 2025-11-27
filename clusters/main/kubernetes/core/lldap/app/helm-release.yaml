@@ -89,7 +89,7 @@ spec:
           enabled: true
           method: object_store
           credentials: home-s3
-          revision: "2"
+          revision: "4"
         cluster:
           singleNode: true
           postgresql:
