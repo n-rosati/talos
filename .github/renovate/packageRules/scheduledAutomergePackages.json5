@@ -1,0 +1,23 @@
+{
+    "packageRules": [
+        {
+            "description": [
+                "Custom schedule for apps where restarting would be disruptive"
+            ],
+            "matchDataSources": [
+                "docker",
+                "helm"
+            ],
+            "matchPackagePatterns": [
+                "minecraft-router",
+                "minecraft-java",
+                "factorio",
+                "wg-easy",
+                "app-template"
+            ],
+            "automergeSchedule": [
+                "* 0-9 * * *"
+            ]
+        }
+    ]
+}

@@ -1,0 +1,71 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: mend-renovate
+  namespace: mend-renovate
+spec:
+  interval: 2m
+  chart:
+    spec:
+      chart: mend-renovate
+      version: 5.1.0
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    global:
+      stopAll: true
+    TZ: America/Toronto
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: external
+        hosts:
+          - host: renovate.${DOMAIN_0}
+        integrations:
+          certManager:
+            enabled: true
+            certificateIssuer: le-prod
+          nginx:
+            enabled: true
+          homepage:
+            enabled: false
+            group: Infrastructure
+            href: " "
+            icon: renovate.svg
+            name: Renovate
+            description: "Mend Renovate products help developers automate dependency updates by detecting newer package versions and providing updates directly to the application code"
+            widget:
+              enabled: false
+    persistence:
+      key:
+        enabled: true
+        type: secret
+        readOnly: true
+        objectName: renovate-key
+        expandObjectName: false
+        subPath: RENOVATE_APP_KEY
+        mountPath: /usr/src/app/renovate.private-key.pem
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              env:
+                MEND_RNV_ACCEPT_TOS: y
+                MEND_RNV_LICENSE_KEY: ${RENOVATE_LICENSE_KEY}
+                MEND_RNV_GITHUB_APP_ID: ${RENOVATE_APP_ID}
+                MEND_RNV_GITHUB_APP_KEY: null
+                MEND_RNV_WEBHOOK_SECRET: ${RENOVATE_WEBHOOK_SECRET}
+                RENOVATE_GIT_IGNORED_AUTHORS: '236480601+redecorate-bot[bot]@users.noreply.github.com'
+                LOG_LEVEL: debug
+                MEND_RNV_API_ENABLE_PROMETHEUS_METRICS: true

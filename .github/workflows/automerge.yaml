@@ -1,10 +1,12 @@
 name: Automerge and Approve
 
 on:
-  workflow_run:
-    workflows: ["Placeholder"]  # Name of the main CI workflow
-    types:
-      - completed
+  merge_group:
+  # workflow_run:
+  #   # If you want to filter based on a specific finisher workflow, add here
+  #   workflows: ["Placeholder"] # Name of the main CI workflow
+  #   types:
+  #     - completed
 
 jobs:
   automerge:
@@ -15,9 +17,9 @@ jobs:
     steps:
       - id: automerge
         name: automerge
-        uses: "pascalgn/automerge-action@v0.16.4"
+        uses: "pascalgn/automerge-action@7961b8b5eec56cc088c140b56d864285eabd3f67" # v0.16.4
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           UPDATE_RETRIES: 24
           UPDATE_RETRY_SLEEP: 60000
-          MERGE_METHOD: "squash"
+          MERGE_METHOD: "rebase"
