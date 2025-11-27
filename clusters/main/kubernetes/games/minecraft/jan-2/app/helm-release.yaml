@@ -1,0 +1,116 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: jan-2
+  namespace: mc-jan-2
+spec:
+  interval: 2m
+  timeout: 10m
+  chart:
+    spec:
+      chart: minecraft-java
+      version: 23.44.15
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    global:
+      stopAll: true
+    credentials:
+      home-s3:
+        name: home-s3
+        type: s3
+        url: ${S3_URL}
+        bucket: jan-2
+        encrKey: ${BACKUP_ENCRYPTION_KEY}
+        accessKey: ${S3_ACCESS_KEY}
+        secretKey: ${S3_SECRET_KEY}
+    service:
+      main:
+        enabled: true
+        type: LoadBalancer
+        annotations:
+          mc-router.itzg.me/externalServerName: "jan-2.${DOMAIN_0}"
+      rcon:
+        enabled: true
+        type: LoadBalancer
+    persistence:
+      data:
+        volsync:
+          - credentials: home-s3
+            name: home-s3
+            type: restic
+            dest:
+              enabled: true
+            src:
+              enabled: true
+              trigger:
+                schedule: 40 6 * * *
+      backups:
+        type: nfs
+        path: ${NFS_BULK_DATA}/Backups/Minecraft/jan-2
+        server: ${TRUENAS_IP}
+    resources:
+      limits:
+        cpu: 4000m
+        memory: 6Gi
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              imageSelector: image
+              env:
+                OPS: SunnyEar4432867,Hydranoid620
+                WHITELIST: Hydranoid620,SunnyEar4432867
+                ENABLE_COMMAND_BLOCK: true
+                FABRIC_LOADER_VERSION: 0.14.21
+                FORCE_REDOWNLOAD: "false"
+                MAX_PLAYERS: 2
+                MEMORY: 4G
+                MOTD: <3
+                PVP: true
+                RCON_PASSWORD: ${MC_RCON_PASSWORD}
+                SEED: "-2750416327677348285"
+                TYPE: FABRIC
+                USE_AIKAR_FLAGS: true
+                USE_SIMD_FLAGS: true
+                USE_FLARE_FLAGS: false
+                VERSION: 1.19.2
+                ALLOW_FLIGHT: true
+            mcbackup:
+              env:
+                BACKUP_INTERVAL: "1h"
+                INITIAL_DELAY: "2m"
+                LINK_LATEST: "false"
+                PAUSE_IF_NO_PLAYERS: "false"
+                PLAYERS_ONLINE_CHECK_INTERVAL: "5m"
+                PRUNE_BACKUPS_DAYS: "2"
+                TAR_COMPRESS_METHOD: "zstd"
+    addons:
+      codeserver:
+        enabled: true
+        ingress:
+          enabled: true
+          ingressClassName: external
+          hosts:
+            - host: jan-2-config.${DOMAIN_0}
+          integrations:
+            certManager:
+              enabled: true
+              certificateIssuer: le-prod
+            nginx:
+              enabled: true
+              auth:
+                type: authelia
+                internalHost: ${AUTHELIA_INTERNAL_DNS}
+                externalHost: ${AUTHELIA_EXTERNAL_DNS}

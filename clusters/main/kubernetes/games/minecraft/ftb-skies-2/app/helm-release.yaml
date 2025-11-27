@@ -1,0 +1,165 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ftb-skies-2
+  namespace: mc-ftb-skies-2
+spec:
+  interval: 2m
+  timeout: 10m
+  chart:
+    spec:
+      chart: minecraft-java
+      version: 23.44.15
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    global:
+      stopAll: false
+    credentials:
+      home-s3:
+        name: home-s3
+        type: s3
+        url: ${S3_URL}
+        bucket: ftb-skies-2
+        encrKey: ${BACKUP_ENCRYPTION_KEY}
+        accessKey: ${S3_ACCESS_KEY}
+        secretKey: ${S3_SECRET_KEY}
+    service:
+      main:
+        enabled: true
+        type: LoadBalancer
+        annotations:
+          mc-router.itzg.me/externalServerName: "ftb-skies-2.${DOMAIN_0}"
+      rcon:
+        enabled: true
+        type: LoadBalancer
+    persistence:
+      data:
+        volsync:
+          - credentials: home-s3
+            name: home-s3
+            type: restic
+            dest:
+              enabled: true
+            src:
+              enabled: true
+              trigger:
+                schedule: 20 6 * * *
+      backups:
+        type: nfs
+        path: ${NFS_BULK_DATA}/Backups/Minecraft/ftb-skies-2
+        server: ${TRUENAS_IP}
+      mods:
+        enabled: true
+        type: pvc
+        mountPath: /mods
+        targetSelectAll: true
+        size: 5Gi
+      rs-config-patch:
+        enabled: true
+        type: configmap
+        objectName: rs-config-patch
+        targetSelector:
+          main:
+            main:
+              mountPath: /patches/rs-config-patch.json
+              subPath: rs-config-patch.json
+              readOnly: true
+    configmap:
+      rs-config-patch:
+        enabled: true
+        data:
+          rs-config-patch.json: |
+            {
+              "file": "/data/config/refinedstorage-common.toml",
+              "ops": [
+                {
+                  "$set": {
+                    "path": "$.controller.energyCapacity",
+                    "value": 1000000
+                  }
+                }
+              ]
+            }
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              imageSelector: j21Image
+              env:
+                PATCH_DEFINITIONS: "/patches"
+                OPS: Hydranoid620,b227,BlueMoon_Live
+                WHITELIST: Hydranoid620,b227,BlueMoon_Live
+                DIFFICULTY: easy
+                ENABLE_COMMAND_BLOCK: true
+                VERSION: 1.21.1
+                TYPE: FTBA
+                FTB_MODPACK_ID: 129
+                FTB_MODPACK_VERSION_ID: 100136
+                FTB_FORCE_REINSTALL: false
+                MAX_PLAYERS: 3
+                MOTD: FTB Skies 2!
+                PVP: true
+                MEMORY: "8G"
+                JVM_OPTS: -Xms8G -Xmx8G
+                MAX_TICK_TIME: 60000
+                RCON_PASSWORD: ${MC_RCON_PASSWORD}
+                USE_MODPACK_START_SCRIPT: true
+                SEED: "-6792938523469477000"
+                FORCE_REDOWNLOAD: false
+                VIEW_DISTANCE: 10
+                SIMULATION_DISTANCE: 10
+                USE_AIKAR_FLAGS: false
+                USE_FLARE_FLAGS: false
+                USE_MEOWICE_FLAGS: false
+                USE_MEOWICE_GRAALVM_FLAGS: false
+                USE_SIMD_FLAGS: false
+                ALLOW_FLIGHT: true
+                STOP_SERVER_ANNOUNCE_DELAY: 15
+                STOP_DURATION: 40
+            mcbackup:
+              enabled: true
+              env:
+                BACKUP_INTERVAL: "4h"
+                INITIAL_DELAY: "2m"
+                LINK_LATEST: "false"
+                PAUSE_IF_NO_PLAYERS: "false"
+                PLAYERS_ONLINE_CHECK_INTERVAL: "5m"
+                PRUNE_BACKUPS_DAYS: "4"
+                TAR_COMPRESS_METHOD: "zstd"
+    resources:
+      requests:
+        cpu: 100m
+        memory: 8Gi
+      limits:
+        cpu: null
+        memory: 10Gi
+    addons:
+      codeserver:
+        enabled: false
+        ingress:
+          enabled: true
+          ingressClassName: external
+          hosts:
+            - host: ftb-skies-2-config.${DOMAIN_0}
+          integrations:
+            certManager:
+              enabled: true
+              certificateIssuer: le-prod
+            nginx:
+              enabled: true
+              auth:
+                type: authelia
+                internalHost: ${AUTHELIA_INTERNAL_DNS}
+                externalHost: ${AUTHELIA_EXTERNAL_DNS}

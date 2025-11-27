@@ -1,0 +1,102 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: rcon-webadmin
+  namespace: rcon-webadmin
+spec:
+  interval: 2m
+  chart:
+    spec:
+      chart: rcon-webadmin
+      version: 11.11.3
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    global:
+      stopAll: false
+    credentials:
+      home-s3:
+        name: home-s3
+        type: s3
+        url: ${S3_URL}
+        bucket: rcon-webadmin
+        encrKey: ${BACKUP_ENCRYPTION_KEY}
+        accessKey: ${S3_ACCESS_KEY}
+        secretKey: ${S3_SECRET_KEY}
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: external
+        hosts:
+          - host: rcon.${DOMAIN_0}
+        integrations:
+          certManager:
+            enabled: true
+            certificateIssuer: le-prod
+          nginx:
+            enabled: true
+            auth:
+              type: authelia
+              internalHost: ${AUTHELIA_INTERNAL_DNS}
+              externalHost: ${AUTHELIA_EXTERNAL_DNS}
+          homepage:
+            enabled: true
+            group: Apps
+            href: https://{{ ( index .Values.ingress.main.hosts 0 ).host }}
+            widget:
+              enabled: false
+      websocketaccess:
+        enabled: true
+        ingressClassName: external
+        targetSelector:
+          websocketaccess: websocketaccess
+        hosts:
+          - host: rcon-ws.${DOMAIN_0}
+            paths:
+              - path: /
+                pathType: Prefix
+                overrideService:
+                  name: websocketaccess
+                  port: 4327
+        integrations:
+          certManager:
+            enabled: true
+            certificateIssuer: le-prod
+          nginx:
+            enabled: true
+            auth:
+              type: authelia
+              internalHost: ${AUTHELIA_INTERNAL_DNS}
+              externalHost: ${AUTHELIA_EXTERNAL_DNS}
+    persistence:
+      db:
+        volsync:
+          - credentials: home-s3
+            name: home-s3
+            type: restic
+            dest:
+              enabled: true
+            src:
+              enabled: true
+              trigger:
+                schedule: 0 7 * * *
+    rcon:
+      rwa_websocket_url_ssl: "wss://rcon-ws.${DOMAIN_0}:443"
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              env:
+                RWA_USERNAME: ${RWA_USERNAME}
+                RWA_PASSWORD: ${RWA_PASSWORD}

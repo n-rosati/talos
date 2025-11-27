@@ -1,0 +1,47 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: minecraft-router
+  namespace: minecraft-router
+spec:
+  interval: 2m
+  chart:
+    spec:
+      chart: minecraft-router
+      version: 2.16.5
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    global:
+      stopAll: false
+    ingress:
+      main:
+        enabled: false
+        ingressClassName: external
+        hosts:
+          - host: jan.${DOMAIN_0}
+          - host: jan2.${DOMAIN_0}
+          - host: statech-industry.${DOMAIN_0}
+          - host: ftb-skies-2.${DOMAIN_0}
+          - host: monifactory.${DOMAIN_0}
+        integrations:
+          certManager:
+            enabled: true
+            certificateIssuer: le-prod
+    service:
+      main:
+        type: LoadBalancer
+        loadBalancerIP: ${MINECRAFT_ROUTER_IP}
+        integrations:
+          metallb:
+            enabled: true

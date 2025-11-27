@@ -1,0 +1,112 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: factorio
+  namespace: factorio
+spec:
+  interval: 2m
+  chart:
+    spec:
+      chart: factorio
+      version: 10.11.4
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    image:
+      repository: docker.io/factoriotools/factorio
+      tag: stable@sha256:feeebedf6754969a43d7c08a48fc9508b2d91b34f5cbf1e120740b3fbdf3a75e
+      pullPolicy: IfNotPresent
+    rcon-api-image:
+      repository: ghcr.io/nekomeowww/factorio-rcon-api
+      tag: 2.1.4@sha256:5ceb891de25c1b0f5161a5bbbecb910a8084ec39425dcac87e9743ba142633dc
+    global:
+      stopAll: false
+    credentials:
+      home-s3:
+        name: home-s3
+        type: s3
+        url: ${S3_URL}
+        bucket: factorio
+        encrKey: ${BACKUP_ENCRYPTION_KEY}
+        accessKey: ${S3_ACCESS_KEY}
+        secretKey: ${S3_SECRET_KEY}
+    service:
+      main:
+        type: LoadBalancer
+        loadBalancerIP: ${FACTORIO_IP}
+        integrations:
+          metallb:
+            enabled: true
+      rcon-api:
+        enabled: true
+        targetSelector: rcon-api
+        ports:
+          rcon-api:
+            enabled: true
+            port: "24180"
+            protocol: http
+            targetPort: "24180"
+            targetSelector: rcon-api
+    persistence:
+      config:
+        volsync:
+          - credentials: home-s3
+            name: home-s3
+            type: restic
+            dest:
+              enabled: true
+            src:
+              enabled: true
+              trigger:
+                schedule: 10 6 * * *
+    workload:
+      rcon-api:
+        enabled: true
+        type: Deployment
+        strategy: RollingUpdate
+        replicas: 1
+        podSpec:
+          containers:
+            rcon-api:
+              primary: true
+              enabled: true
+              imageSelector: rcon-api-image
+              env:
+                FACTORIO_RCON_HOST: factorio-rcon.factorio.svc.cluster.local
+                FACTORIO_RCON_PORT: "27015"
+                FACTORIO_RCON_PASSWORD: ${FACTORIO_RCON_PASSWORD}
+              probes:
+                readiness:
+                  enabled: false
+                liveness:
+                  enabled: false
+                startup:
+                  enabled: false
+    addons:
+      codeserver:
+        enabled: true
+        ingress:
+          enabled: true
+          ingressClassName: external
+          hosts:
+            - host: factorio-config.${DOMAIN_0}
+          integrations:
+            certManager:
+              enabled: true
+              certificateIssuer: le-prod
+            nginx:
+              enabled: true
+              auth:
+                type: authelia
+                internalHost: ${AUTHELIA_INTERNAL_DNS}
+                externalHost: ${AUTHELIA_EXTERNAL_DNS}
