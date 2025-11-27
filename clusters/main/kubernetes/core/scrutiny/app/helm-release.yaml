@@ -23,7 +23,7 @@ spec:
       retries: 3
   values:
     global:
-      stopAll: true
+      stopAll: false
     service:
       main:
         type: LoadBalancer
