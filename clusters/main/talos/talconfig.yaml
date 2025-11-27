@@ -30,16 +30,19 @@ nodes:
         - 8.8.8.8
       installDiskSelector:
         model: ADATA*
+      kernelModules:
+        - name: dm_thin_pool
+        - name: dm_mod
       schematic:
         customization:
             extraKernelArgs:
-            - net.ifnames=0
-            - sysctl.kernel.kexec_load_disabled=1
-        systemExtensions:
-            officialExtensions:
-                - siderolabs/util-linux-tools
-                - siderolabs/iscsi-tools
-                - siderolabs/amd-ucode
+                - net.ifnames=0
+                - sysctl.kernel.kexec_load_disabled=1
+            systemExtensions:
+                officialExtensions:
+                    - siderolabs/util-linux-tools
+                    - siderolabs/iscsi-tools
+                    - siderolabs/amd-ucode
       networkInterfaces:
         # suffix is the adapter mac adres.
         - interface: eth0
