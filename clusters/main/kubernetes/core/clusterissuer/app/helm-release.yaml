@@ -49,7 +49,7 @@ spec:
       # Accepts comma-separated regex expressions
       replicationNamespaces: '.*'
       certificates:
-        - name: cluster-wildcard
+        - name: domain-0-wildcard
           enabled: true
           certificateIssuer: le-prod
           hosts:
