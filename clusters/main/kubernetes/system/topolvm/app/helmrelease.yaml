@@ -25,7 +25,7 @@ spec:
       retries: 3
   values:
     lvmd:
-      managed: false
+      managed: true
       env:
         - name: LVM_SYSTEM_DIR
           value: /tmp
