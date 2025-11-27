@@ -1,0 +1,104 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: spoolman
+  namespace: spoolman
+spec:
+  interval: 2m
+  timeout: 20m
+  chart:
+    spec:
+      chart: spoolman
+      version: 1.9.3
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    global:
+      stopAll: false
+    credentials:
+      home-s3:
+        name: home-s3
+        type: s3
+        url: ${S3_URL}
+        bucket: spoolman
+        encrKey: ${BACKUP_ENCRYPTION_KEY}
+        accessKey: ${S3_ACCESS_KEY}
+        secretKey: ${S3_SECRET_KEY}
+    service:
+      main:
+        type: LoadBalancer
+        loadBalancerIP: ${SPOOLMAN_IP}
+        integrations:
+          metallb:
+            enabled: true
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: external
+        hosts:
+          - host: spoolman.${DOMAIN_0}
+        integrations:
+          certManager:
+            enabled: true
+            certificateIssuer: le-prod
+          nginx:
+            enabled: true
+            auth:
+              type: authelia
+              internalHost: ${AUTHELIA_INTERNAL_DNS}
+              externalHost: ${AUTHELIA_EXTERNAL_DNS}
+          homepage:
+            enabled: true
+            name: Spoolman
+            description: Keep track of your inventory of 3D-printer filament spools.
+            group: Apps
+            icon: spoolman.svg
+            widget:
+              enabled: true
+              type: spoolman
+    persistence:
+      data:
+        volsync:
+          - credentials: home-s3
+            name: data
+            type: restic
+            dest:
+              enabled: true
+            src:
+              enabled: true
+              trigger:
+                schedule: 30 5 * * *
+    cnpg:
+      main:
+        password: ${CNPG_PASSWORD}
+        mode: recovery
+        cluster:
+          singleNode: true
+          postgresql:
+            wal_keep_size: 5GB
+        backups:
+          enabled: true
+          credentials: home-s3
+          revision: "1"
+        recovery:
+          enabled: true
+          credentials: home-s3
+          revision: "1"
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              env:
+                SPOOLMAN_METRICS_ENABLED: "false"
+                SPOOLMAN_CORS_ORIGIN: spoolman.${DOMAIN_0}
