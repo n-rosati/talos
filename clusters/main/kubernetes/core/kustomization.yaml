@@ -7,3 +7,4 @@ resources:
   - system-upgrade-controller-plans/ks.yaml
   - mend-renovate/ks.yaml
   - scrutiny/ks.yaml
+  # - lldap/ks.yaml

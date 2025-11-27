@@ -8,3 +8,5 @@ resources:
   - kube-system
   - networking
   - system
+  - external-services
+

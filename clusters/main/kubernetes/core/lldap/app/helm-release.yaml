@@ -1,0 +1,117 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: lldap
+  namespace: lldap
+spec:
+  interval: 2m
+  timeout: 20m
+  chart:
+    spec:
+      chart: lldap
+      version: 8.11.3
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    global:
+      stopAll: false
+    credentials:
+      home-s3:
+        name: home-s3
+        type: s3
+        url: ${S3_URL}
+        bucket: lldap
+        encrKey: ${BACKUP_ENCRYPTION_KEY}
+        accessKey: ${S3_ACCESS_KEY}
+        secretKey: ${S3_SECRET_KEY}
+    service:
+      ldap:
+        type: LoadBalancer
+        loadBalancerIP: ${LLDAP_IP}
+        integrations:
+          metallb:
+            enabled: true
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: external
+        hosts:
+          - host: lldap.${DOMAIN_0}
+        integrations:
+          certManager:
+            enabled: true
+            certificateIssuer: le-prod
+          nginx:
+            enabled: true
+            auth:
+              type: authelia
+              internalHost: ${AUTHELIA_INTERNAL_DNS}
+              externalHost: ${AUTHELIA_EXTERNAL_DNS}
+          homepage:
+            enabled: true
+            name: LLDAP
+            group: Infrastructure
+            href: https://{{ ( index .Values.ingress.main.hosts 0 ).host }}
+            widget:
+              enabled: false
+    persistence:
+      data:
+        volsync:
+          - credentials: home-s3
+            name: data
+            type: restic
+            dest:
+              enabled: false # CHANGE TO TRUE WHEN REINSTALLING
+            src:
+              enabled: true
+              trigger:
+                schedule: 0 6 * * *
+    cnpg:
+      main:
+        mode: recovery
+        pgVersion: 15
+        password: ${CNPG_PASSWORD}
+        backups:
+          enabled: true
+          credentials: home-s3
+          revision: "4"
+        recovery:
+          enabled: true
+          method: object_store
+          credentials: home-s3
+          revision: "2"
+        cluster:
+          singleNode: true
+          postgresql:
+            wal_keep_size: 5GB
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              env:
+                LLDAP_HTTP_URL: https://lldap.${DOMAIN_0}
+                LLDAP_LDAP_BASE_DN: ${LDAP_BASE_DN}
+                # Admin user
+                LLDAP_LDAP_USER_DN: ${LDAP_USER_DN}
+                LLDAP_LDAP_USER_EMAIL: ${PERSONAL_EMAIL}
+                LLDAP_LDAP_USER_PASS: ${LDAP_USER_PASS}
+                # Email
+                LLDAP_SMTP_OPTIONS__ENABLE_PASSWORD_RESET: true
+                LLDAP_SMTP_OPTIONS__SERVER: ${SMTP_SERVER}
+                LLDAP_SMTP_OPTIONS__PORT: ${SMTP_PORT}
+                LLDAP_SMTP_OPTIONS__SMTP_ENCRYPTION: TLS
+                LLDAP_SMTP_OPTIONS__USER: ${SERVICE_EMAIL}
+                LLDAP_SMTP_OPTIONS__PASSWORD: ${SERVICE_EMAIL_PASSWORD}
+                LLDAP_SMTP_OPTIONS__FROM: "LLDAP <${SERVICE_EMAIL}>"
+                LLDAP_SMTP_OPTIONS__REPLY_TO: ${SERVICE_EMAIL}
