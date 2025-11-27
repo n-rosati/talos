@@ -47,8 +47,8 @@ spec:
           allowVolumeExpansion: true
           additionalParameters:
             "topolvm.io/device-class": "thin"
-    node:
-      lvmdEmbedded: true
+    scheduler:
+      enabled: true
     # Optional setting for a single node cluster:
     controller:
       replicaCount: 1
