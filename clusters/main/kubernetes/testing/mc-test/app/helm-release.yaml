@@ -1,0 +1,159 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: mc-test
+  namespace: mc-test
+spec:
+  interval: 2m
+  timeout: 10m
+  chart:
+    spec:
+      chart: minecraft-java
+      version: 23.44.15
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    global:
+      stopAll: true
+    service:
+      main:
+        enabled: true
+        type: LoadBalancer
+        annotations:
+          mc-router.itzg.me/externalServerName: "mc-test.${DOMAIN_0}"
+      rcon:
+        enabled: true
+        type: LoadBalancer
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: internal
+        hosts:
+          - host: mc-test.${DOMAIN_0}
+        integrations:
+          homepage:
+            enabled: true
+            name: mc-test
+            description: " "
+            group: Games
+            icon: minecraft.png
+            href: " "
+            widget:
+              enabled: true
+              type: minecraft
+              url: udp://mc-test-minecraft-java.mc-test.svc.cluster.local:25565
+    persistence:
+      backups:
+        type: nfs
+        path: /mnt/DSU/Backups/Minecraft/mc-test
+        server: ${TRUENAS_IP}
+      mods:
+        enabled: true
+        type: pvc
+        mountPath: /mods
+        targetSelectAll: true
+        size: 5Gi
+      rs-config-patch:
+        enabled: true
+        type: configmap
+        objectName: rs-config-patch
+        targetSelector:
+          main:
+            main:
+              mountPath: /patches
+              readOnly: true
+    configmap:
+      rs-config-patch:
+        enabled: true
+        data:
+          rs-config-patch.json: |
+            {
+              "file": "/data/config/refinedstorage-common.toml",
+              "ops": [
+                {
+                  "$set": {
+                    "path": "$.controller.energyCapacity",
+                    "value": 99999
+                  }
+                }
+              ]
+            }
+    resources:
+      limits:
+        cpu: null
+        memory: null
+      requests:
+        cpu: 100m
+        memory: 1Gi
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              imageSelector: j21graalvmImage
+              env:
+                OPS: Hydranoid620
+                WHITELIST: Hydranoid620
+                DIFFICULTY: easy
+                ENABLE_COMMAND_BLOCK: true
+                VERSION: 1.21.1
+                TYPE: FTBA
+                FTB_MODPACK_ID: 129
+                FTB_MODPACK_VERSION_ID: 100131
+                FTB_FORCE_REINSTALL: false
+                MAX_PLAYERS: 1
+                MOTD: mc-test
+                PVP: true
+                MEMORY: "6G"
+                # JVM_XX_OPTS: -XX:+UseG1GC -XX:+ParallelRefProcEnabled -XX:MaxGCPauseMillis=200 -XX:+UnlockExperimentalVMOptions -XX:+DisableExplicitGC -XX:MaxRAMPercentage=50 -XX:G1NewSizePercent=30 -XX:G1MaxNewSizePercent=40 -XX:G1HeapRegionSize=8M -XX:G1ReservePercent=20 -XX:G1HeapWastePercent=5 -XX:G1MixedGCCountTarget=4 -XX:InitiatingHeapOccupancyPercent=15 -XX:G1MixedGCLiveThresholdPercent=90 -XX:G1RSetUpdatingPauseTimePercent=5 -XX:SurvivorRatio=32 -XX:+PerfDisableSharedMem -XX:MaxTenuringThreshold=1  -XX:+AlwaysPreTouch
+                MAX_TICK_TIME: 60000
+                RCON_PASSWORD: ${MC_RCON_PASSWORD}
+                USE_MODPACK_START_SCRIPT: true
+                SEED: "-6792938523469477000"
+                FORCE_REDOWNLOAD: false
+                VIEW_DISTANCE: 10
+                USE_AIKAR_FLAGS: false
+                USE_FLARE_FLAGS: false
+                USE_MEOWICE_FLAGS: true
+                USE_MEOWICE_GRAALVM_FLAGS: true
+                USE_SIMD_FLAGS: false
+                ALLOW_FLIGHT: true
+                PATCH_DEFINITIONS: "/patches"
+            mcbackup:
+              enabled: true
+              env:
+                BACKUP_INTERVAL: "4h"
+                INITIAL_DELAY: "2m"
+                LINK_LATEST: "false"
+                PAUSE_IF_NO_PLAYERS: "false"
+                PLAYERS_ONLINE_CHECK_INTERVAL: "5m"
+                PRUNE_BACKUPS_DAYS: "4"
+                TAR_COMPRESS_METHOD: "zstd"
+    addons:
+      codeserver:
+        enabled: false
+        ingress:
+          enabled: true
+          ingressClassName: external
+          hosts:
+            - host: mc-test-config.${DOMAIN_0}
+          integrations:
+            certManager:
+              enabled: true
+              certificateIssuer: le-prod
+            nginx:
+              enabled: true
+              auth:
+                type: authelia
+                internalHost: ${AUTHELIA_INTERNAL_DNS}
+                externalHost: ${AUTHELIA_EXTERNAL_DNS}

@@ -1,0 +1,115 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: testing
+  namespace: testing
+spec:
+  interval: 2m
+  chart:
+    spec:
+      chart: app-template
+      version: 15.24.53
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  releaseName: testing
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    release_name: testing
+    global:
+      stopAll: true
+    image:
+      repository: busybox
+      pullPolicy: IfNotPresent
+      tag: stable@sha256:355b3a1bf5609da364166913878a8508d4ba30572d02020a97028c75477e24ff
+    service:
+      main:
+        enabled: true
+        ports:
+          main:
+            enabled: true
+            port: 3000
+            protocol: http
+    persistence:
+      test:
+        enabled: true
+        type: pvc
+        mountPath: /var/lib/test
+      my-secret-persistence:
+        enabled: true
+        type: secret
+        objectName: testing-app-template-my-secret
+        expandObjectName: false
+        mountPath: /var/lib/my-folder
+        subPath: my-file.txt
+        items:
+          - key: key2
+            path: my-file.txt
+      configmap-persist:
+        enabled: true
+        type: configmap
+        objectName: rs-config-patch
+        targetSelector:
+          main:
+            main:
+              mountPath: /patches/rs-config-patch.json
+              subPath: rs-config-patch.json
+              readOnly: true
+      testsecret2:
+        enabled: true
+        type: secret
+        objectName: testsecret2
+        expandObjectName: false
+        mountPath: /secrets2
+    secret:
+      my-secret:
+        enabled: true
+        data:
+          key: "this is my secret value"
+          key2: "other key value"
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              command:
+                - "sh"
+                - "-c"
+                - "while true; do sleep 6000; done"
+              probes:
+                liveness:
+                  enabled: false
+                readiness:
+                  enabled: false
+                startup:
+                  enabled: false
+    configmap:
+      rs-config-patch:
+        enabled: true
+        data:
+          rs-config-patch.json: |
+            {
+              "file": "/data/config/refinedstorage-common.toml",
+              "ops": [
+                {
+                  "$set": {
+                    "path": "$.controller.energyCapacity",
+                    "value": 1000000,
+                    "value-type": int
+                  }
+                }
+              ]
+            }
+    addons:
+      codeserver:
+        enabled: true
+        service:
+          type: LoadBalancer

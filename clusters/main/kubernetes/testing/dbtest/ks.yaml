@@ -1,0 +1,12 @@
+apiVersion: kustomize.toolkit.fluxcd.io/v1
+kind: Kustomization
+metadata:
+  name: dbtest
+  namespace: flux-system
+spec:
+  interval: 10m
+  path: clusters/main/kubernetes/testing/dbtest/app
+  prune: true
+  sourceRef:
+    kind: GitRepository
+    name: cluster
