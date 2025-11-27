@@ -1,0 +1,138 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: jellyfin
+  namespace: jellyfin
+spec:
+  interval: 2m
+  timeout: 10m
+  chart:
+    spec:
+      chart: jellyfin
+      version: 21.12.9
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    jellyfinUpdatePosterImage:
+      repository: docker.io/iceshadow/jellyfinupdateposter
+      pullPolicy: IfNotPresent
+      tag: latest@sha256:795096768a7be1472bb470812496a686cfa3a1693abb88f07e739e6bf2f280a9
+    global:
+      stopAll: false
+    credentials:
+      home-s3:
+        name: home-s3
+        type: s3
+        url: ${S3_URL}
+        bucket: jellyfin
+        encrKey: ${BACKUP_ENCRYPTION_KEY}
+        accessKey: ${S3_ACCESS_KEY}
+        secretKey: ${S3_SECRET_KEY}
+    service:
+      jellyfin-up:
+        enabled: true
+        targetSelector: jellyfin-up
+        ports:
+          jellyfin-up:
+            enabled: true
+            primary: true
+            port: 8080
+            targetPort: 8080
+            targetSelector: jellyfin-up
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: external
+        hosts:
+          - host: jellyfin.${DOMAIN_0}
+        integrations:
+          certManager:
+            enabled: true
+            certificateIssuer: le-prod
+          homepage:
+            enabled: true
+            group: Media
+            href: https://{{ ( index .Values.ingress.main.hosts 0 ).host }}
+            widget:
+              enabled: true
+              type: jellyfin
+              url: http://jellyfin.jellyfin.svc.cluster.local:8096
+              custom:
+                key: ${HOMEPAGE_JELLYFIN_KEY}
+    persistence:
+      config:
+        volsync:
+          - credentials: home-s3
+            name: config
+            type: restic
+            dest:
+              enabled: true
+            src:
+              enabled: true
+              trigger:
+                schedule: 30 7 * * *
+      media:
+        enabled: true
+        type: nfs
+        path: ${NFS_BULK_DATA}/Media
+        mountPath: /media
+        server: ${TRUENAS_IP}
+      mount:
+        enabled: true
+        type: nfs
+        path: ${NFS_APP_DATA}/JellyfinUpdatePoster
+        server: ${TRUENAS_IP}
+        targetSelector:
+          jellyfin-up:
+            jellyfin-up:
+              mountPath: /mount
+    autodiscovery:
+      enabled: true
+    workload:
+      main:
+        podSpec:
+          runtimeClassName: "nvidia"
+          containers:
+            main:
+              resources:
+                limits:
+                  nvidia.com/gpu: 1
+      broadcastproxy:
+        enabled: true
+      jellyfin-up:
+        enabled: true
+        type: Deployment
+        strategy: RollingUpdate
+        replicas: 1
+        podSpec:
+          containers:
+            jellyfin-up:
+              primary: true
+              enabled: true
+              imageSelector: jellyfinUpdatePosterImage
+              env:
+                JELLYFIN_URL: http://jellyfin.jellyfin.svc.cluster.local:8096
+                JELLYFIN_API_KEY: ${JELLYFIN_UPDATE_POSTER_API_KEY}
+                TMDB_API_KEY: ${TMDB_API_KEY}
+                INCLUDE_EPISODES: false
+                ENABLE_WEBHOOK: true
+                # SCHEDULED_TIMES: 06:00,12:00,18:00 # Optional: Schedule poster updates at specific times (HH:MM)
+                args:
+                  - --force
+              probes:
+                readiness:
+                  enabled: false
+                liveness:
+                  enabled: false
+                startup:
+                  enabled: false

@@ -9,5 +9,6 @@ resources:
   - games
   - infra
   - kube-system
+  - media
   - networking
   - system

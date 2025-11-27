@@ -1,0 +1,134 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: tdarr
+  namespace: tdarr
+spec:
+  interval: 2m
+  timeout: 10m
+  chart:
+    spec:
+      chart: tdarr
+      version: 12.23.1
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    global:
+      stopAll: false
+    credentials:
+      home-s3:
+        name: home-s3
+        type: s3
+        url: ${S3_URL}
+        bucket: tdarr
+        encrKey: ${BACKUP_ENCRYPTION_KEY}
+        accessKey: ${S3_ACCESS_KEY}
+        secretKey: ${S3_SECRET_KEY}
+    service:
+      main:
+        type: LoadBalancer
+        loadBalancerIP: ${TDARR_IP}
+        integrations:
+          metallb:
+            enabled: true
+      comm:
+        type: LoadBalancer
+        loadBalancerIP: ${TDARR_IP}
+        integrations:
+          metallb:
+            enabled: true
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: external
+        hosts:
+          - host: tdarr.${DOMAIN_0}
+        integrations:
+          certManager:
+            enabled: true
+            certificateIssuer: le-prod
+          nginx:
+            enabled: true
+            auth:
+              type: authelia
+              internalHost: ${AUTHELIA_INTERNAL_DNS}
+              externalHost: ${AUTHELIA_EXTERNAL_DNS}
+          homepage:
+            enabled: true
+            name: Tdarr
+            group: Media
+            icon: tdarr.png
+            href: https://{{ ( index .Values.ingress.main.hosts 0 ).host }}
+            widget:
+              enabled: true
+              type: tdarr
+              url: http://tdarr.tdarr.svc.cluster.local:8265
+    persistence:
+      configs:
+        volsync:
+          - credentials: home-s3
+            name: home-s3
+            type: restic
+            dest:
+              enabled: true
+            src:
+              enabled: true
+              trigger:
+                schedule: 40 7 * * *
+      server:
+        volsync:
+          - name: server
+            type: restic
+            credentials: home-s3
+            dest:
+              enabled: true
+            src:
+              enabled: true
+              trigger:
+                schedule: 40 7 * * *
+      media:
+        type: nfs
+        enabled: true
+        readOnly: false
+        server: ${TRUENAS_IP}
+        path: ${NFS_BULK_DATA}/Media
+        mountPath: /media
+      other-media:
+        type: nfs
+        enabled: true
+        readOnly: false
+        server: ${TRUENAS_IP}
+        path: ${NFS_BULK_DATA}/Media/Other
+        mountPath: /othermedia
+      # Temp mount for a temp remote worker node
+      # transcode-cache:
+      #   type: nfs
+      #   path: ${NFS_APPS_PATH}/Tdarr
+      #   server: ${TRUENAS_IP}
+      #   mountPath: /temp
+    workload:
+      main:
+        podSpec:
+          runtimeClassName: "nvidia"
+          containers:
+            main:
+              resources:
+                limits:
+                  nvidia.com/gpu: 1
+    resources:
+      requests:
+        cpu: 75m
+        memory: 200Mi
+      limits:
+        cpu: 2500m
+        memory: null
