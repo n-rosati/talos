@@ -3,6 +3,6 @@ kind: Kustomization
 resources:
   # - bluebubbles-es/ks.yaml
   # - printer-es/ks.yaml
-  # - s3/ks.yaml
+  - s3/ks.yaml
   # - scrutiny-es/ks.yaml
   # - truenas-es/ks.yaml
