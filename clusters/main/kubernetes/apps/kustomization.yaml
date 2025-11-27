@@ -7,5 +7,6 @@ resources:
   - kubernetes-dashboard/ks.yaml
   - nextcloud/ks.yaml
   - part-db/ks.yaml
+  - pgadmin/ks.yaml
   - spoolman/ks.yaml
   - vaultwarden/ks.yaml
