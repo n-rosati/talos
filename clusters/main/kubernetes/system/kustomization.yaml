@@ -13,4 +13,4 @@ resources:
   - system-upgrade-controller/ks.yaml
   - volsync/ks.yaml
   - lvm-disk-watcher/ks.yaml
-  - topolvm/ks.yaml
+  # - topolvm/ks.yaml
