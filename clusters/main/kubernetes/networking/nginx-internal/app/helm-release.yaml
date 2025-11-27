@@ -6,14 +6,14 @@ metadata:
   name: nginx-internal
   namespace: nginx-internal
 spec:
-  interval: 15m
+  interval: 2m
   chart:
     spec:
       chart: ingress-nginx
-      version: 4.13.0
+      version: 4.14.0
       sourceRef:
         kind: HelmRepository
-        name: home-ops-mirror
+        name: ingress-nginx
         namespace: flux-system
       interval: 15m
   timeout: 20m
@@ -30,12 +30,10 @@ spec:
     keepHistory: false
   values:
     controller:
-      replicaCount: 2
+      replicaCount: 1
       service:
         externalTrafficPolicy: Local
         annotations:
-          # TODO: Maybe play with this
-          # internal-dns.alpha.kubernetes.io/hostname: internal.${DOMAIN_0}
           metallb.io/ip-allocated-from-pool: main
           metallb.io/loadBalancerIPs: ${NGINX_INTERNAL_IP}
       ingressClassByName: true
@@ -47,7 +45,7 @@ spec:
       config:
         allow-snippet-annotations: true
         annotations-risk-level: Critical
-        client-body-buffer-size: 100M
+        client-body-buffer-size: 128M
         client-body-timeout: 120
         client-header-timeout: 120
         enable-brotli: "true"
@@ -63,6 +61,7 @@ spec:
         proxy-busy-buffers-size: 32k
         ssl-protocols: TLSv1.3 TLSv1.2
         use-forwarded-headers: "true"
+        proxy-real-ip-cidr: "${PODNET},${SVCNET}"
       metrics:
         enabled: true
         # serviceMonitor:
@@ -75,10 +74,10 @@ spec:
       terminationGracePeriodSeconds: 120
       publishService:
         enabled: false
-      resources:
-        requests:
-          cpu: 75m
-        limits:
-          memory: 500Mi
     defaultBackend:
       enabled: false
+    resources:
+      requests:
+        cpu: 100m
+      limits:
+        memory: 500Mi
