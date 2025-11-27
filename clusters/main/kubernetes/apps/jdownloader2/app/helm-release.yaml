@@ -1,0 +1,85 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: jdownloader2
+  namespace: jdownloader2
+spec:
+  interval: 2m
+  chart:
+    spec:
+      chart: jdownloader2
+      version: 20.12.3
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    global:
+      stopAll: false
+    credentials:
+      home-s3:
+        name: home-s3
+        type: s3
+        url: ${S3_URL}
+        bucket: jdownloader2
+        encrKey: ${BACKUP_ENCRYPTION_KEY}
+        accessKey: ${S3_ACCESS_KEY}
+        secretKey: ${S3_SECRET_KEY}
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: external
+        hosts:
+          - host: jdownloader.${DOMAIN_0}
+        integrations:
+          certManager:
+            enabled: true
+            certificateIssuer: le-prod
+          nginx:
+            enabled: true
+            auth:
+              type: authelia
+              internalHost: ${AUTHELIA_INTERNAL_DNS}
+              externalHost: ${AUTHELIA_EXTERNAL_DNS}
+          homepage:
+            enabled: true
+            group: Apps
+            href: https://{{ ( index .Values.ingress.main.hosts 0 ).host }}
+            widget:
+              enabled: true
+              type: jdownloader
+              custom:
+                username: ${JDOWNLOADER_USERNAME}
+                password: ${JDOWNLOADER_PASSWORD}
+    persistence:
+      config:
+        volsync:
+          - credentials: home-s3
+            name: config
+            type: restic
+            dest:
+              enabled: true
+            src:
+              enabled: true
+              trigger:
+                schedule: 40 4 * * *
+      output:
+        type: nfs
+        enabled: true
+        mountPath: /output
+        path: ${NFS_APP_DATA}/JDownloader2
+        server: ${TRUENAS_IP}
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 4Gi
+    jdownloader:
+      KEEP_APP_RUNNING: true

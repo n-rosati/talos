@@ -1,0 +1,96 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: qbittorrent
+  namespace: qbittorrent
+spec:
+  interval: 2m
+  chart:
+    spec:
+      chart: qbittorrent
+      version: 24.0.3
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    global:
+      stopAll: false
+    credentials:
+      home-s3:
+        name: home-s3
+        type: s3
+        url: ${S3_URL}
+        bucket: qbittorrent
+        encrKey: ${BACKUP_ENCRYPTION_KEY}
+        accessKey: ${S3_ACCESS_KEY}
+        secretKey: ${S3_SECRET_KEY}
+    service:
+      torrent:
+        type: LoadBalancer
+        loadBalancerIP: ${QBITTORRENT_IP}
+        integrations:
+          metallb:
+            enabled: true
+        ports:
+          i2p:
+            enabled: true
+            port: 7656
+            protocol: tcp
+          i2pudp:
+            enabled: true
+            port: 7656
+            protocol: udp
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: external
+        hosts:
+          - host: qbittorrent.${DOMAIN_0}
+        integrations:
+          certManager:
+            enabled: true
+            certificateIssuer: le-prod
+          nginx:
+            enabled: true
+            auth:
+              type: authelia
+              internalHost: ${AUTHELIA_INTERNAL_DNS}
+              externalHost: ${AUTHELIA_EXTERNAL_DNS}
+          homepage:
+            enabled: true
+            name: qBittorrent
+            group: Apps
+            href: https://{{ ( index .Values.ingress.main.hosts 0 ).host }}
+            widget:
+              enabled: true
+              type: qbittorrent
+              custom:
+                username: ${QBITTORRENT_USER}
+                password: ${QBITTORRENT_PASSWORD}
+    persistence:
+      config:
+        volsync:
+          - credentials: home-s3
+            name: home-s3
+            type: restic
+            dest:
+              enabled: true
+            src:
+              enabled: true
+              trigger:
+                schedule: 20 5 * * *
+      data:
+        enabled: true
+        type: nfs
+        path: ${NFS_APP_DATA}/qBittorrent
+        mountPath: /mnt/Torrents
+        server: ${TRUENAS_IP}

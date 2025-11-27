@@ -1,0 +1,64 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: stirling-pdf
+  namespace: stirling-pdf
+spec:
+  interval: 2m
+  chart:
+    spec:
+      chart: stirling-pdf
+      version: 5.26.3
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  releaseName: stirling-pdf
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    release_name: stirling-pdf
+    global:
+      stopAll: false
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: external
+        hosts:
+          - host: pdf.${DOMAIN_0}
+        integrations:
+          certManager:
+            enabled: true
+            certificateIssuer: le-prod
+          nginx:
+            enabled: true
+            auth:
+              type: authelia
+              internalHost: ${AUTHELIA_INTERNAL_DNS}
+              externalHost: ${AUTHELIA_EXTERNAL_DNS}
+          homepage:
+            enabled: true
+            name: Stirling PDF
+            description: "#1 Locally hosted web application that allows you to perform various operations on PDF files."
+            group: Apps
+            icon: stirling-pdf.svg
+            widget:
+              enabled: false
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              imageSelector: fullImage
+              env:
+                INSTALL_BOOK_AND_ADVANCED_HTML_OPS: true
+    resources:
+      limits:
+        cpu: 1000m
+        memory: 2Gi
