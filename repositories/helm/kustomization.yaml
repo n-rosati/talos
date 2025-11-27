@@ -13,4 +13,4 @@ resources:
   - prometheus-community.yaml
   - spegel.yaml
   - truecharts.yaml
-  # - topolvm.yaml
+  - topolvm.yaml
