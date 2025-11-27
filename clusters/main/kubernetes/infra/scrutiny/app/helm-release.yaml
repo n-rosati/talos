@@ -40,7 +40,7 @@ spec:
           nginx:
             enabled: true
           homepage:
-            enabled: false
+            enabled: true
             group: Apps
             widget:
               enabled: false

@@ -58,7 +58,7 @@ spec:
             #   internalHost: ${AUTHELIA_INTERNAL_DNS}
             #   externalHost: ${AUTHELIA_EXTERNAL_DNS}
           homepage:
-            enabled: false
+            enabled: true
             name: LLDAP
             group: Infrastructure
             href: https://{{ ( index .Values.ingress.main.hosts 0 ).host }}

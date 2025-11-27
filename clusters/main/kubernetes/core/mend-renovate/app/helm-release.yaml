@@ -38,7 +38,7 @@ spec:
           nginx:
             enabled: true
           homepage:
-            enabled: false
+            enabled: true
             group: Infrastructure
             href: " "
             icon: renovate.svg
@@ -66,6 +66,6 @@ spec:
                 MEND_RNV_GITHUB_APP_ID: ${RENOVATE_APP_ID}
                 MEND_RNV_GITHUB_APP_KEY: null
                 MEND_RNV_WEBHOOK_SECRET: ${RENOVATE_WEBHOOK_SECRET}
-                RENOVATE_GIT_IGNORED_AUTHORS: '236480601+redecorate-bot[bot]@users.noreply.github.com'
+                RENOVATE_GIT_IGNORED_AUTHORS: "236480601+redecorate-bot[bot]@users.noreply.github.com"
                 LOG_LEVEL: debug
                 MEND_RNV_API_ENABLE_PROMETHEUS_METRICS: true
