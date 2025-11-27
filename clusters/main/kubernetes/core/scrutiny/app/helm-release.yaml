@@ -37,8 +37,8 @@ spec:
           certManager:
             enabled: true
             certificateIssuer: le-prod
-          # nginx:
-          #   enabled: true
+          nginx:
+            enabled: true
           homepage:
             enabled: false
             group: Apps
