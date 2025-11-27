@@ -5,15 +5,15 @@ resources:
   - forgejo/ks.yaml
   - github-release-monitor/ks.yaml
   - homepage/ks.yaml
-  - jdownloader2/ks.yaml
+  # - jdownloader2/ks.yaml
   - kubernetes-dashboard/ks.yaml
   - nextcloud/ks.yaml
   - orcaslicer/ks.yaml
   - part-db/ks.yaml
   - pgadmin/ks.yaml
   - qbittorrent/ks.yaml
-  - remmina/ks.yaml
+  # - remmina/ks.yaml
   - spoolman/ks.yaml
   - stirling-pdf/ks.yaml
-  - thelounge/ks.yaml
+  # - thelounge/ks.yaml
   - vaultwarden/ks.yaml
