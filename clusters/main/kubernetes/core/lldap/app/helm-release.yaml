@@ -44,7 +44,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: external
+        ingressClassName: internal
         hosts:
           - host: lldap.${DOMAIN_0}
         integrations:
@@ -53,12 +53,12 @@ spec:
             certificateIssuer: le-prod
           nginx:
             enabled: true
-            auth:
-              type: authelia
-              internalHost: ${AUTHELIA_INTERNAL_DNS}
-              externalHost: ${AUTHELIA_EXTERNAL_DNS}
+            # auth:
+            #   type: authelia
+            #   internalHost: ${AUTHELIA_INTERNAL_DNS}
+            #   externalHost: ${AUTHELIA_EXTERNAL_DNS}
           homepage:
-            enabled: true
+            enabled: false
             name: LLDAP
             group: Infrastructure
             href: https://{{ ( index .Values.ingress.main.hosts 0 ).host }}
@@ -71,7 +71,7 @@ spec:
             name: data
             type: restic
             dest:
-              enabled: false # CHANGE TO TRUE WHEN REINSTALLING
+              enabled: true
             src:
               enabled: true
               trigger:
