@@ -14,3 +14,4 @@ resources:
   - spegel.yaml
   - truecharts.yaml
   - topolvm.yaml
+  - ingress-nginx.yaml
