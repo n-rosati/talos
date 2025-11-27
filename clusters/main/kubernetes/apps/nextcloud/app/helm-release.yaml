@@ -1,0 +1,141 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: nextcloud
+  namespace: nextcloud
+spec:
+  interval: 2m
+  timeout: 20m
+  chart:
+    spec:
+      chart: nextcloud
+      version: 40.0.8
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    global:
+      stopAll: false
+    credentials:
+      home-s3:
+        name: home-s3
+        type: s3
+        url: ${S3_URL}
+        bucket: nextcloud
+        encrKey: ${BACKUP_ENCRYPTION_KEY}
+        accessKey: ${S3_ACCESS_KEY}
+        secretKey: ${S3_SECRET_KEY}
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: external
+        hosts:
+          - host: nextcloud.${DOMAIN_0}
+            paths:
+              - path: /
+                pathType: Prefix
+        integrations:
+          certManager:
+            certificateIssuer: le-prod
+            enabled: true
+          homepage:
+            enabled: true
+            group: Apps
+            widget:
+              enabled: true
+              custom:
+                key: ${HOMEPAGE_NEXTCLOUD_KEY}
+    persistence:
+      html:
+        volsync:
+          - credentials: home-s3
+            name: app-html
+            type: restic
+            dest:
+              enabled: true
+            src:
+              enabled: true
+              trigger:
+                schedule: 50 4 * * *
+      config:
+        volsync:
+          - credentials: home-s3
+            name: app-config
+            type: restic
+            dest:
+              enabled: true
+            src:
+              enabled: true
+              trigger:
+                schedule: 50 4 * * *
+      data:
+        type: nfs
+        server: ${TRUENAS_IP}
+        path: ${NFS_APP_DATA}/Nextcloud
+      software-external-storage:
+        enabled: true
+        type: nfs
+        server: ${TRUENAS_IP}
+        path: ${NFS_BULK_DATA}/Software
+        mountPath: /mnt/Software
+      orcaslicer-external-storage:
+        enabled: true
+        type: nfs
+        server: ${TRUENAS_IP}
+        path: ${NFS_APP_DATA}/OrcaSlicer
+        mountPath: /mnt/OrcaSlicer
+    cnpg:
+      main:
+        pgVersion: 15
+        password: ${CNPG_PASSWORD}
+        mode: recovery
+        backups:
+          enabled: true
+          credentials: home-s3
+          revision: "7"
+          retentionPolicy: "14d"
+        recovery:
+          enabled: true
+          credentials: home-s3
+          revision: "7"
+        cluster:
+          singleNode: true
+          postgresql:
+            wal_keep_size: 5GB
+    nextcloud:
+      collabora:
+        enabled: true
+        username: ${COLLABORA_USERNAME}
+        password: ${COLLABORA_PASSWORD}
+      credentials:
+        initialAdminUser: ${NEXTCLOUD_ADMIN_USER}
+        initialAdminPassword: ${NEXTCLOUD_ADMIN_PASSWORD}
+      general:
+        default_phone_region: CA
+        accessIP: ${NGINX_EXTERNAL_IP}
+      logging:
+        log_date_format: Y-m-d H:i:s
+      php:
+        memory_limit: 4G
+        upload_limit: 1000G
+      previews:
+        providers:
+          - BMP
+          - GIF
+          - JPEG
+          - Krita
+          - MarkDown
+          - MP3
+          - OpenDocument
+          - PNG
+          - TXT
+          - XBitmap
