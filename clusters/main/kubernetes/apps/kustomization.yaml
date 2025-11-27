@@ -4,3 +4,4 @@ resources:
   - kubernetes-dashboard/ks.yaml
   - cloudflareddns/ks.yaml
   - homepage/ks.yaml
+  - vaultwarden/ks.yaml

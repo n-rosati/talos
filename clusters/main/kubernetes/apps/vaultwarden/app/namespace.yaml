@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: vaultwarden
+  labels:
+    # needed for cnpg restore (see: https://discord.com/channels/830763548678291466/1313457434747998249)
+    pod-security.kubernetes.io/enforce: privileged
