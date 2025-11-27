@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  path: clusters/main/kubernetes/devices/home-assistant/app
+  path: clusters/main/kubernetes/infra/home-assistant/app
   prune: true
   sourceRef:
     kind: GitRepository

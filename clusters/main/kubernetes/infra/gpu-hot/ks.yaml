@@ -5,7 +5,7 @@ metadata:
   namespace: flux-system
 spec:
   interval: 10m
-  path: clusters/main/kubernetes/devices/gpu-hot/app
+  path: clusters/main/kubernetes/infra/gpu-hot/app
   prune: true
   sourceRef:
     kind: GitRepository
