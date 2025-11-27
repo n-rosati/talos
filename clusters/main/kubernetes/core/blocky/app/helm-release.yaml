@@ -1,4 +1,3 @@
----
 # yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
@@ -29,8 +28,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    ## set stopAll to "true" if you do not want to use blocky
-    # and/or disable its service
     global:
       stopAll: false
     service:
@@ -41,6 +38,29 @@ spec:
         integrations:
           metallb:
             enabled: true
+    blocking:
+      whitelist:
+        - name: customList
+          lists:
+            - https://raw.githubusercontent.com/n-rosati/talos/refs/heads/main/clusters/main/kubernetes/core/blocky/app/allowlist.txt
+            # - https://raw.githubusercontent.com/rahilpathan/pihole-whitelist/main/1.LowWL.txt
+            # - https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/whitelist.txt
+            # - https://raw.githubusercontent.com/anudeepND/whitelist/master/domains/optional-list.txt
+      blacklist:
+        - name: customList
+          lists:
+            - https://raw.githubusercontent.com/n-rosati/talos/refs/heads/main/clusters/main/kubernetes/core/blocky/app/denylist.txt
+            # see https://github.com/hagezi/dns-blocklists
+            - https://raw.githubusercontent.com/hagezi/dns-blocklists/main/wildcard/multi.txt
+      clientGroupsBlock:
+        - name: default
+          groups:
+            # - default
+            # - default-ads
+            # - default-tracking
+            # - default-malicious
+            # - default-suspicious
+            - customList
     k8sgateway:
       # -- list of processed domains
       domains:
@@ -51,7 +71,6 @@ spec:
         dnsChallenge:
           enabled: false
           domain: dns01.clouddns.com
-
       forward:
         enabled: false
         primary: tls://1.1.1.1
@@ -59,18 +78,15 @@ spec:
         options:
           - name: tls_servername
             value: cloudflare-dns.com
-
     # CANNOT be defined in above yaml section
     queryLog:
       # optional one of: mysql, postgresql, csv, csv-client. If empty, log to console only
       type: ""
-
     configmap:
       dashboard:
         enabled: false
       datasource:
         enabled: false
-
     cnpg:
       main:
         enabled: false
