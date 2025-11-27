@@ -25,7 +25,7 @@ spec:
       retries: 3
   values:
     image:
-      tag: 0.18.1
+      tag: latest
     lvmd:
       managed: false
       env:
