@@ -108,7 +108,7 @@ spec:
         enabled: true
         type: secret
         readOnly: true
-        objectName: forgejo-app-template-ssh-secrets
+        objectName: ssh-secrets
         expandObjectName: false
         mountPath: "/var/lib/ssh-key"
     workload:
