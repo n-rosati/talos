@@ -1,0 +1,64 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: govee2mqtt
+  namespace: govee2mqtt
+spec:
+  interval: 2m
+  chart:
+    spec:
+      chart: app-template
+      version: 15.24.53
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  releaseName: govee2mqtt
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    release_name: govee2mqtt
+    global:
+      stopAll: false
+    image:
+      repository: ghcr.io/wez/govee2mqtt
+      pullPolicy: IfNotPresent
+      tag: 2025.04.13-17d43d72@sha256:48bc6917ee88ef8421d19dd5422b8ca7b69f7b1ba3f926516a773ccd088c4f9b
+    service:
+      main:
+        enabled: true
+        ports:
+          main:
+            enabled: true
+            port: 1883
+            protocol: tcp
+            targetPort: 1883
+    persistence:
+      data:
+        enabled: true
+        type: pvc
+        mountPath: /data
+    workload:
+      main:
+        podSpec:
+          hostNetwork: true
+          containers:
+            main:
+              probes:
+                liveness:
+                  enabled: false
+                readiness:
+                  enabled: false
+                startup:
+                  enabled: false
+              env:
+                GOVEE_MQTT_HOST: mosquitto.mosquitto.svc.cluster.local
+                GOVEE_EMAIL: ${GOVEE_EMAIL}
+                GOVEE_PASSWORD: ${GOVEE_PASSWORD}
+                GOVEE_API_KEY: ${GOVEE_API_KEY}

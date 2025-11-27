@@ -1,0 +1,108 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: home-assistant
+  namespace: home-assistant
+spec:
+  interval: 2m
+  timeout: 20m
+  chart:
+    spec:
+      chart: home-assistant
+      version: 28.15.4
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    global:
+      stopAll: false
+    credentials:
+      home-s3:
+        name: home-s3
+        type: s3
+        url: ${S3_URL}
+        bucket: home-assistant
+        encrKey: ${BACKUP_ENCRYPTION_KEY}
+        accessKey: ${S3_ACCESS_KEY}
+        secretKey: ${S3_SECRET_KEY}
+    workload:
+      main:
+        podSpec:
+          hostNetwork: true # main service: 8123; codeserver: 12321
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: external
+        hosts:
+          - host: homeassistant.${DOMAIN_0}
+        integrations:
+          certManager:
+            enabled: true
+            certificateIssuer: le-prod
+          homepage:
+            enabled: true
+            name: Home Assistant
+            group: Infrastructure
+            widget:
+              enabled: true
+              custom:
+                key: ${HOMEPAGE_HOMEASSISTANT_KEY}
+    persistence:
+      config:
+        volsync:
+          - credentials: home-s3
+            name: home-s3
+            type: restic
+            dest:
+              enabled: true
+            src:
+              enabled: true
+              trigger:
+                schedule: 20 4 * * *
+    cnpg:
+      main:
+        password: ${CNPG_PASSWORD}
+        mode: recovery
+        backups:
+          enabled: true
+          credentials: home-s3
+          revision: "2"
+          retentionPolicy: "14d"
+        recovery:
+          enabled: true
+          credentials: home-s3
+          revision: "2"
+        cluster:
+          singleNode: true
+          postgresql:
+            wal_keep_size: 5GB
+    addons:
+      codeserver:
+        enabled: true
+        workingDir: "/config"
+        service:
+          type: LoadBalancer
+        ingress:
+          enabled: true
+          ingressClassName: external
+          hosts:
+            - host: edit-homeassistant.${DOMAIN_0}
+          integrations:
+            certManager:
+            enabled: true
+            certificateIssuer: le-prod
+          nginx:
+            enabled: true
+            auth:
+              type: authelia
+              internalHost: ${AUTHELIA_INTERNAL_DNS}
+              externalHost: ${AUTHELIA_EXTERNAL_DNS}

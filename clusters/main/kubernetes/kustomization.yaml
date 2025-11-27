@@ -9,4 +9,4 @@ resources:
   - networking
   - system
   - external-services
-
+  - infra
