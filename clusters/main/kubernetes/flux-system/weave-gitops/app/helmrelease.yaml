@@ -31,34 +31,6 @@ spec:
       create: true
       username: admin
       passwordHash: "$2y$10$uLU2VgEA.uFxrqExlOOi7OcXVzeIwHeC65vvCPNCczRv4.3MhDlpC"
-    ingress:
-      enabled: true
-      ingressClassName: external
-      annotations:
-        cert-manager.io/cluster-issuer: le-staging
-        cert-manager.io/private-key-rotation-policy: Always
-        # add auth
-        nginx.ingress.kubernetes.io/auth-method: "GET"
-        nginx.ingress.kubernetes.io/auth-url: "http://${AUTHELIA_INTERNAL_DNS}/api/verify"
-        nginx.ingress.kubernetes.io/auth-signin: "https://auth.${DOMAIN_0}?rm=$request_method"
-        nginx.ingress.kubernetes.io/auth-response-headers: "Remote-User,Remote-Name,Remote-Groups,Remote-Email"
-        # homepage integration
-        gethomepage.dev/description: Provides insights into your application deployments, and makes continuous delivery with GitOps easier to adopt and scale across your teams.
-        gethomepage.dev/enabled: "true"
-        gethomepage.dev/group: Infrastructure
-        gethomepage.dev/href: https://weave.${DOMAIN_0}/
-        gethomepage.dev/icon: https://raw.githubusercontent.com/weaveworks/weave-gitops/160cb9aa0461fb1fca97f92afbe2935a5387ae96/ui/images/logoDark.svg
-        gethomepage.dev/name: Weave GitOps
-        gethomepage.dev/pod-selector: app.kubernetes.io/instance=weave-gitops
-      tls:
-        - hosts:
-            - weave.${DOMAIN_0}
-          secretName: flux-system-weave-gitops
-      hosts:
-        - host: weave.${DOMAIN_0}
-          paths:
-            - path: /
-              pathType: Prefix
     networkPolicy:
       create: false
     metrics:
