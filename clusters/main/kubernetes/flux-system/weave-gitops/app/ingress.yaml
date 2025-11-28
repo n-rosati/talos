@@ -29,7 +29,7 @@ spec:
             path: /
             backend:
               service:
-                name: weave-weave-gitops
+                name: weave-gitops
                 port:
                   number: 9001
   tls:
