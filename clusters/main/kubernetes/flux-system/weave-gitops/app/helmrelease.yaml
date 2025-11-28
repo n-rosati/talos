@@ -33,7 +33,7 @@ spec:
       passwordHash: "$2y$10$uLU2VgEA.uFxrqExlOOi7OcXVzeIwHeC65vvCPNCczRv4.3MhDlpC"
     ingress:
       enabled: true
-      ingressClassName: internal
+      ingressClassName: external
       annotations:
         cert-manager.io/cluster-issuer: le-staging
         cert-manager.io/private-key-rotation-policy: Always
