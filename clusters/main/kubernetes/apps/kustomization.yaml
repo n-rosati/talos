@@ -8,7 +8,7 @@ resources:
   - jdownloader2/ks.yaml
   - kubernetes-dashboard/ks.yaml
   - nextcloud/ks.yaml
-  # - orcaslicer/ks.yaml
+  - orcaslicer/ks.yaml
   - part-db/ks.yaml
   - pgadmin/ks.yaml
   - qbittorrent/ks.yaml
