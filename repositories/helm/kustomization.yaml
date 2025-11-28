@@ -16,6 +16,5 @@ resources:
   - topolvm.yaml
   - ingress-nginx.yaml
   - stakater.yaml
-  - cert-manager.yaml
   - cilium.yaml
   - weave-gitops.yaml
