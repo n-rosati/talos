@@ -18,4 +18,3 @@ resources:
   - stakater.yaml
   - cert-manager.yaml
   - cilium.yaml
-  - weave-gitops.yaml
