@@ -52,10 +52,10 @@ spec:
         gethomepage.dev/pod-selector: app.kubernetes.io/instance=weave-gitops
       tls:
         - hosts:
-            - gitops.${DOMAIN_0}
+            - weave.${DOMAIN_0}
           secretName: flux-system-weave-gitops
       hosts:
-        - host: gitops.${DOMAIN_0}
+        - host: weave.${DOMAIN_0}
           paths:
             - path: /
               pathType: Prefix
