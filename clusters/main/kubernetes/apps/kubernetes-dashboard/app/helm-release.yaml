@@ -40,3 +40,31 @@ spec:
         ports:
           main:
             port: 80
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: external
+        hosts:
+          - host: k8s-dash.${DOMAIN_0}
+        integrations:
+          certManager:
+            enabled: true
+            certificateIssuer: le-prod
+          nginx:
+            enabled: true
+            auth:
+              type: authelia
+              internalHost: ${AUTHELIA_INTERNAL_DNS}
+              externalHost: ${AUTHELIA_EXTERNAL_DNS}
+          homepage:
+            enabled: true
+            group: Apps
+            href: https://{{ ( index .Values.ingress.main.hosts 0 ).host }}
+            icon: kubernetes.png
+            name: Kubernetes Dashboard
+            widget:
+              enabled: false
+    configmap:
+      kubernetes-dashboard-settings:
+        data:
+          settings: '{"itemsPerPage":25,"defaultNamespace":"_all"}'
