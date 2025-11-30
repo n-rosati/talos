@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: lvm-disk-watcher
-      version: 4.2.1
+      version: 3.11.3
       sourceRef:
         kind: HelmRepository
         name: truecharts
@@ -23,13 +23,4 @@ spec:
     crds: CreateReplace
     remediation:
       retries: 3
-  values:
-    workload:
-      main:
-        podSpec:
-          containers:
-            main:
-              command: ["sh", "-c"]
-              args:
-                - |
-                  sleep 180
+  values: {}
