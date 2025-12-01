@@ -68,7 +68,7 @@ spec:
             src:
               enabled: true
               trigger:
-                schedule: 10 6 * * *
+                schedule: 10 5 * * *
     workload:
       rcon-api:
         enabled: true

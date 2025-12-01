@@ -70,7 +70,7 @@ spec:
             src:
               enabled: true
               trigger:
-                schedule: 20 7 * * *
+                schedule: 50 5 * * *
       library:
         type: nfs
         enabled: true

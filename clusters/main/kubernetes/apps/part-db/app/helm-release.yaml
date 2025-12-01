@@ -101,7 +101,7 @@ spec:
             src:
               enabled: true
               trigger:
-                schedule: 0 5 * * *
+                schedule: 30 4 * * *
       uploads:
         enabled: true
         type: pvc
@@ -115,7 +115,7 @@ spec:
             src:
               enabled: true
               trigger:
-                schedule: 0 5 * * *
+                schedule: 35 4 * * *
       run:
         enabled: true
         type: pvc

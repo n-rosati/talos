@@ -58,7 +58,7 @@ spec:
             src:
               enabled: true
               trigger:
-                schedule: 20 6 * * *
+                schedule: 30 5 * * *
       backups:
         type: nfs
         path: ${NFS_BULK_DATA}/Backups/Minecraft/monifactory

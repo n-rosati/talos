@@ -54,7 +54,7 @@ spec:
             src:
               enabled: true
               trigger:
-                schedule: 20 6 * * *
+                schedule: 20 5 * * *
       backups:
         type: nfs
         path: ${NFS_BULK_DATA}/Backups/Minecraft/ftb-skies-2

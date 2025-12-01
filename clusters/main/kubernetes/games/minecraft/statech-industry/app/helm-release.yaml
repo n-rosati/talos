@@ -54,7 +54,7 @@ spec:
             src:
               enabled: true
               trigger:
-                schedule: 50 6 * * *
+                schedule: 35 5 * * *
       backups:
         type: nfs
         path: ${NFS_BULK_DATA}/Backups/Minecraft/statech-industry

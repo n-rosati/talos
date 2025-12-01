@@ -53,7 +53,7 @@ spec:
             src:
               enabled: true
               trigger:
-                schedule: 30 6 * * *
+                schedule: 15 5 * * *
       backups:
         type: nfs
         path: ${NFS_BULK_DATA}/Backups/Minecraft/jan

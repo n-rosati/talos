@@ -85,7 +85,7 @@ spec:
             src:
               enabled: true
               trigger:
-                schedule: 50 5 * * *
+                schedule: 0 5 * * *
     cnpg:
       main:
         mode: recovery

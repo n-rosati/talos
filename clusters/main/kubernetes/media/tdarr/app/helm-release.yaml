@@ -84,7 +84,7 @@ spec:
             src:
               enabled: true
               trigger:
-                schedule: 40 7 * * *
+                schedule: 0 6 * * *
       server:
         volsync:
           - name: server
@@ -95,7 +95,7 @@ spec:
             src:
               enabled: true
               trigger:
-                schedule: 40 7 * * *
+                schedule: 0 6 * * *
       media:
         type: nfs
         enabled: true
