@@ -23,6 +23,10 @@ spec:
     remediation:
       retries: 3
   values:
+    # TEMP! until https://github.com/trueforge-org/containerforge/issues/535 is fixed
+    image:
+      repository: docker.io/homeassistant/home-assistant
+      tag: "2025.11.3"
     global:
       stopAll: false
     credentials:
@@ -38,6 +42,10 @@ spec:
       main:
         podSpec:
           hostNetwork: true # main service: 8123; codeserver: 12321
+    homeassistant:
+      trusted_proxies:
+        - ${PODNET}
+        - ${SVCNET}
     ingress:
       main:
         enabled: true
