@@ -88,7 +88,7 @@ spec:
             name: data
             type: restic
             dest:
-              enabled: true
+              enabled: false # CHANGE TO true ON REINSTALL
             src:
               enabled: true
               trigger:
