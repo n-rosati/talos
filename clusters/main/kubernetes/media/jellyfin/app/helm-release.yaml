@@ -9,6 +9,7 @@ spec:
   chart:
     spec:
       chart: jellyfin
+      # version: 21.12.9 # KNOWN GOOD
       version: 21.12.9
       sourceRef:
         kind: HelmRepository
@@ -78,7 +79,7 @@ spec:
             dest:
               enabled: true
             src:
-              enabled: true
+              enabled: false
               trigger:
                 schedule: 55 5 * * *
       media:
@@ -115,6 +116,7 @@ spec:
         strategy: RollingUpdate
         replicas: 1
         podSpec:
+          terminationGracePeriodSeconds: 10
           containers:
             jellyfin-up:
               primary: true
