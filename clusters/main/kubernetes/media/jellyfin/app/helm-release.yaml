@@ -105,6 +105,9 @@ spec:
           runtimeClassName: "nvidia"
           containers:
             main:
+              command: ["sh", "-c"]
+              args:
+                - sleep 300
               env:
                 JELLYFIN_DATA_DIR: /config
                 JELLYFIN_CONFIG_DIR: /config/config
