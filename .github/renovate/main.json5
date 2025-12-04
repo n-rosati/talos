@@ -3,6 +3,7 @@
     "extends": [
         "github>n-rosati/talos//.github/renovate/packageRules/scheduledAutomergePackages.json5",
         "github>n-rosati/talos//.github/renovate/packageRules/kube-talos.json5",
+        "github>n-rosati/talos//.github/renovate/packageRules/disableAutomerge.json5",
         "github>n-rosati/talos//.github/renovate/updates/major.json5",
         "github>n-rosati/talos//.github/renovate/hostRules.json5"
     ],

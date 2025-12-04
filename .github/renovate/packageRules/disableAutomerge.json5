@@ -1,0 +1,17 @@
+{
+    "packageRules": [
+        {
+            "description": [
+                "Disable automerge for selected apps"
+            ],
+            "matchDataSources": [
+                "docker",
+                "helm"
+            ],
+            "automerge": false,
+            "matchPackagePatterns": [
+                "cloudflareddns"
+            ]
+        }
+    ]
+}
