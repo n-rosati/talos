@@ -79,7 +79,18 @@ spec:
             dest:
               enabled: true
             src:
-              enabled: false
+              enabled: true
+              trigger:
+                schedule: 55 5 * * *
+      data:
+        volsync:
+          - credentials: home-s3
+            name: data
+            type: restic
+            dest:
+              enabled: true
+            src:
+              enabled: true
               trigger:
                 schedule: 55 5 * * *
       media:
@@ -88,7 +99,7 @@ spec:
         path: ${NFS_BULK_DATA}/Media
         mountPath: /media
         server: ${TRUENAS_IP}
-      mount:
+      jellyfin-update-poster:
         enabled: true
         type: nfs
         path: ${NFS_APP_DATA}/JellyfinUpdatePoster
