@@ -71,6 +71,10 @@ spec:
               enabled: true
               trigger:
                 schedule: 15 4 * * *
+      temp:
+        enabled: true
+        type: pvc
+        mountPath: /temp
       output:
         type: nfs
         enabled: true
