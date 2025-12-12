@@ -26,7 +26,7 @@ spec:
     # TEMP! until https://github.com/trueforge-org/containerforge/issues/535 is fixed
     image:
       repository: docker.io/homeassistant/home-assistant
-      tag: "2025.12.2"
+      tag: "2025.12.3"
     global:
       stopAll: false
     credentials:
