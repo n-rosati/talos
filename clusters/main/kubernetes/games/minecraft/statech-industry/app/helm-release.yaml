@@ -95,3 +95,10 @@ spec:
                 PLAYERS_ONLINE_CHECK_INTERVAL: "5m"
                 PRUNE_BACKUPS_DAYS: "2"
                 TAR_COMPRESS_METHOD: "zstd"
+    resources:
+      requests:
+        cpu: 100m
+        memory: 8Gi
+      limits:
+        cpu: null
+        memory: 10Gi
