@@ -24,7 +24,7 @@ spec:
       retries: 3
   values:
     global:
-      stopAll: false
+      stopAll: true
     credentials:
       home-s3:
         name: home-s3
