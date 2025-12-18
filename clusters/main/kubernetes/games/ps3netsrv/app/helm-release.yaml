@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: ps3netsrv
-      version: 3.13.2
+      version: 3.13.1
       sourceRef:
         kind: HelmRepository
         name: truecharts
@@ -23,7 +23,7 @@ spec:
       retries: 3
   values:
     global:
-      stopAll: true
+      stopAll: false
     service:
       main:
         type: LoadBalancer
