@@ -13,7 +13,8 @@
                 "minecraft-java",
                 "factorio",
                 "wg-easy",
-                "app-template"
+                "app-template",
+                "jellyfin"
             ],
             "automergeSchedule": [
                 "* 0-9 * * *"
