@@ -13,11 +13,25 @@
                 "minecraft-java",
                 "factorio",
                 "wg-easy",
-                "app-template",
+                "app-template"
+            ],
+            "automergeSchedule": [
+                "* 1-9 * * *"
+            ]
+        },
+        {
+            "description": [
+                "Other more different schedule for apps where restarting would be disruptive"
+            ],
+            "matchDataSources": [
+                "docker",
+                "helm"
+            ],
+            "matchPackagePatterns": [
                 "jellyfin"
             ],
             "automergeSchedule": [
-                "* 0-9 * * *"
+                "* 3-9 * * *"
             ]
         }
     ]
