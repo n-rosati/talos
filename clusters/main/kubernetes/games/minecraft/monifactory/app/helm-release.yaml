@@ -28,7 +28,7 @@ spec:
     #   tag: 2025.10.2-java25@sha256:3eccc5ddd0f669827e7f894282cc2c1854286a5b51aaab94b5857ef9348b5883
     #   pullPolicy: Always
     global:
-      stopAll: true
+      stopAll: false
     credentials:
       home-s3:
         name: home-s3
