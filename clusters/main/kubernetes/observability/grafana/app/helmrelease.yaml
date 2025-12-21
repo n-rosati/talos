@@ -90,7 +90,7 @@ spec:
         cert-manager:
           enabled: true
           datasource:
-            - name: "${DS_PROMETHEUS}"
+            - name: "$${DS_PROMETHEUS}"
               value: Prometheus
           marketplace:
             # renovate: depName="Cert-manager-Kubernetes"
@@ -99,7 +99,7 @@ spec:
         cnpg:
           enabled: true
           datasource:
-            - name: "${DS_PROMETHEUS}"
+            - name: "$${DS_PROMETHEUS}"
               value: Prometheus
           marketplace:
             # renovate: depName="CloudNativePG"
@@ -108,19 +108,19 @@ spec:
         flux-cluster:
           enabled: true
           datasource:
-            - name: "${DS_PROMETHEUS}"
+            - name: "$${DS_PROMETHEUS}"
               value: Prometheus
           url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/refs/heads/main/monitoring/configs/dashboards/cluster.json
         flux-control-plane:
           enabled: true
           datasource:
-            - name: "${DS_PROMETHEUS}"
+            - name: "$${DS_PROMETHEUS}"
               value: Prometheus
           url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/refs/heads/main/monitoring/configs/dashboards/control-plane.json
         metallb:
           enabled: true
           datasource:
-            - name: "${DS_PROMETHEUS}"
+            - name: "$${DS_PROMETHEUS}"
               value: Prometheus
           marketplace:
             # renovate: depName="Metallb"
@@ -129,21 +129,21 @@ spec:
         nginx:
           enabled: true
           datasource:
-            - name: "${DS_PROMETHEUS}"
+            - name: "$${DS_PROMETHEUS}"
               value: Prometheus
           url: https://github.com/kubernetes/ingress-nginx/raw/refs/tags/ingress-nginx-3.15.2/deploy/grafana/dashboards/nginx.json
         blocky:
           enabled: true
           datasource:
-            - name: "${DS_PROMETHEUS}"
+            - name: "$${DS_PROMETHEUS}"
               value: Prometheus
-            - name: "${VAR_BLOCKY_URL}"
+            - name: "$${VAR_BLOCKY_URL}"
               value: "https://blocky.${DOMAIN_0}"
           url: https://raw.githubusercontent.com/0xERR0R/blocky/refs/heads/main/docs/blocky-grafana.json
         blocky-postgres:
           enabled: true
           datasource:
-            - name: "${DS_BLOCKY-POSTGRESQL}"
+            - name: "$${DS_BLOCKY-POSTGRESQL}"
               value: blockypostgres
           marketplace:
             # renovate: depName="Blocky-Postgres"
@@ -152,9 +152,9 @@ spec:
         volsync:
           enabled: true
           datasource:
-            - name: "${DS_PROMETHEUS}"
+            - name: "$${DS_PROMETHEUS}"
               value: Prometheus
-            - name: "${VAR_REPLICATIONDESTNAME}"
+            - name: "$${VAR_REPLICATIONDESTNAME}"
               value: ".*-dest|.*-bootstrap"
           marketplace:
             # renovate: depName="VolSync Dashboard"
