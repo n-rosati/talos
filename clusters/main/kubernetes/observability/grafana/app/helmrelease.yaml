@@ -78,7 +78,6 @@ spec:
                 version: "2"
                 username: "admin"
                 password: "testpassword"
-
     cnpg:
       main:
         cluster:
@@ -96,15 +95,15 @@ spec:
             # renovate: depName="Cert-manager-Kubernetes"
             id: 20842
             revision: 3
-        # cnpg:
-        #   enabled: true
-        #   datasource:
-        #     - name: "$${DS_PROMETHEUS}"
-        #       value: Prometheus
-        #   marketplace:
-        #     # renovate: depName="CloudNativePG"
-        #     id: 20417
-        #     revision: 4
+        cnpg:
+          enabled: true
+          datasource:
+            - name: "$${DS_PROMETHEUS}"
+              value: Prometheus
+          marketplace:
+            # renovate: depName="CloudNativePG"
+            id: 20417
+            revision: 4
         flux-cluster:
           enabled: true
           datasource:
