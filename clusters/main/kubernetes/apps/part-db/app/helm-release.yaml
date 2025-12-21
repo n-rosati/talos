@@ -142,6 +142,8 @@ spec:
           enabled: true
           revision: "4"
           credentials: home-s3
+        monitoring:
+          enablePodMonitor: true
     workload:
       main:
         podSpec:

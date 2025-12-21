@@ -101,3 +101,5 @@ spec:
           singleNode: true
           postgresql:
             wal_keep_size: 5GB
+        monitoring:
+          enablePodMonitor: true
