@@ -58,7 +58,7 @@ spec:
         enabled: true
         ingressClassName: internal
         hosts:
-          - host: grafana.${BASE_DOMAIN}
+          - host: grafana.${DOMAIN_0}
         integrations:
           certManager:
             enabled: true
@@ -138,7 +138,7 @@ spec:
             - name: "${DS_PROMETHEUS}"
               value: Prometheus
             - name: "${VAR_BLOCKY_URL}"
-              value: "https://blocky.${DOMAIN_0"
+              value: "https://blocky.${DOMAIN_0}"
           url: https://raw.githubusercontent.com/0xERR0R/blocky/refs/heads/main/docs/blocky-grafana.json
         blocky-postgres:
           enabled: true
