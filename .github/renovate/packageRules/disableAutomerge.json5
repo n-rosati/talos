@@ -10,7 +10,8 @@
             ],
             "automerge": false,
             "matchPackagePatterns": [
-                "cloudflareddns"
+                "cloudflareddns",
+                "spegel"
             ]
         }
     ]
