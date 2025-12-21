@@ -43,4 +43,4 @@ spec:
         cpu: 10m
     configmap:
       dashboard:
-        enabled: false
+        enabled: true
