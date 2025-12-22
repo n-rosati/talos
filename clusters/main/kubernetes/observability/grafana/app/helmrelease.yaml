@@ -56,13 +56,13 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: internal
+        ingressClassName: external
         hosts:
           - host: grafana.${DOMAIN_0}
         integrations:
           certManager:
             enabled: true
-            certificateIssuer: external
+            certificateIssuer: le-prod
           nginx:
             enabled: true
             auth:
