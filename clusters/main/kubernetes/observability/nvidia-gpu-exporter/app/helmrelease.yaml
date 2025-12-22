@@ -29,14 +29,33 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    # See https://discord.com/channels/830763548678291466/1371521205667889173/1371919253371883560 https://pastebin.com/9E17Pnu9
     global:
       stopAll: false
+    # disable all persistence options as they don't work on talos.
+    persistence:
+      nviaictl:
+        enabled: false
+      nvidia0:
+        enabled: false
+      nvidiasmi:
+        enabled: false
+      libnvidiamlso:
+        enabled: false
+      libnvidiamlso1:
+        enabled: false
     workload:
       main:
         podSpec:
           runtimeClassName: "nvidia"
-          containers:
-            main:
-              resources:
-                limits:
-                  nvidia.com/gpu: 1
+    # .. instead assign the nvidia device to the pod as gpu slicing is active.
+    resources:
+      limits:
+        nvidia.com/gpu: 1
+    metrics:
+      main:
+        endpoints:
+          - port: main
+            relabelings:
+              - sourceLabels: [__meta_kubernetes_endpoint_node_name]
+                targetLabel: instance
