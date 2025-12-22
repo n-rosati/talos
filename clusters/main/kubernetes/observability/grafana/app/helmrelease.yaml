@@ -145,12 +145,12 @@ spec:
             - name: "$${DS_PROMETHEUS}"
               value: Prometheus
           url: https://raw.githubusercontent.com/utkuozdemir/nvidia_gpu_exporter/refs/heads/master/grafana/dashboard.json
-        # smartctl-exporter:
-        #   enabled: true
-        #   datasource:
-        #     - name: "$${DS_PROMETHEUS}"
-        #       value: Prometheus
-        #   marketplace:
-        #     # renovate: depName="SmartCTL"
-        #     id: 22604
-        #     revision: 2
+        smartctl-exporter:
+          enabled: true
+          datasource:
+            - name: "$${DS_PROMETHEUS}"
+              value: Prometheus
+          marketplace:
+            # renovate: depName="SmartCTL"
+            id: 22604
+            revision: 2
