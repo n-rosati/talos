@@ -52,10 +52,10 @@ spec:
     resources:
       limits:
         nvidia.com/gpu: 1
-    metrics:
-      main:
-        endpoints:
-          - port: main
-            relabelings:
-              - sourceLabels: [__meta_kubernetes_endpoint_node_name]
-                targetLabel: instance
+    # metrics:
+    #   main:
+    #     endpoints:
+    #       - port: main
+    #         relabelings:
+    #           - sourceLabels: [__meta_kubernetes_endpoint_node_name]
+    #             targetLabel: instance
