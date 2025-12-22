@@ -4,3 +4,4 @@ resources:
   - grafana/ks.yaml
   - truenas-exporter/ks.yaml
   - nvidia-gpu-exporter/ks.yaml
+  - smartctl-exporter/ks.yaml
