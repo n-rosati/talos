@@ -151,6 +151,15 @@ spec:
             - name: "$${DS_PROMETHEUS}"
               value: Prometheus
           marketplace:
-            # renovate: depName="SmartCTL"
+            # renovate: depName="Kubernetes-PVC-Stats"
             id: 22604
             revision: 2
+        pvc-stats:
+          enabled: true
+          datasource:
+            - name: "$${DS_PROMETHEUS}"
+              value: Prometheus
+          marketplace:
+            # renovate: depName="SmartCTL"
+            id: 23233
+            revision: 6
