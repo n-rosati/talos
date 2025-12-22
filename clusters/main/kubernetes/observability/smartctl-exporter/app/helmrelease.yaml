@@ -31,3 +31,6 @@ spec:
   values:
     global:
       stopAll: false
+    configmap:
+      dashboards:
+        enabled: false
