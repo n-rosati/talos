@@ -3,3 +3,4 @@ kind: Kustomization
 resources:
   - grafana/ks.yaml
   - truenas-exporter/ks.yaml
+  - nvidia-gpu-exporter/ks.yaml
