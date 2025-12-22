@@ -43,7 +43,7 @@ spec:
         enabled: true
         ingressClassName: internal
         hosts:
-          - host: blocky.${DOMAIN_0
+          - host: blocky.${DOMAIN_0}
             paths:
               - path: /
         integrations:
