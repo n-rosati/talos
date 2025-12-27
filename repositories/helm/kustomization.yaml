@@ -18,3 +18,4 @@ resources:
   - stakater.yaml
   - cilium.yaml
   - weave-gitops.yaml
+  - node-feature-discovery.yaml
