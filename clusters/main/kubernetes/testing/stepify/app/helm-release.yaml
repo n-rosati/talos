@@ -67,10 +67,10 @@ spec:
     redis:
       enabled: true
       username: default
-    # workload:
-    #   main:
-    #     podSpec:
-    #       containers:
-    #         main:
-    #           env:
-    #             K: V
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              env:
+                REDIS_HOST: stepify-redis
