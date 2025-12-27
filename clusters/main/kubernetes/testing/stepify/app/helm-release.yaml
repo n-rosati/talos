@@ -27,7 +27,7 @@ spec:
     image:
       repository: ghcr.io/n-rosati/stepify
       pullPolicy: IfNotPresent
-      tag: v1.0.3@sha256:538658dda976d151d649653878e7eae8fda122eabe4175d396a4b77ae70f4814
+      tag: v1.0.3
     service:
       main:
         enabled: true
