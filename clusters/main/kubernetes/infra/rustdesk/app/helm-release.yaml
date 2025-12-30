@@ -33,6 +33,14 @@ spec:
         encrKey: ${BACKUP_ENCRYPTION_KEY}
         accessKey: ${S3_ACCESS_KEY}
         secretKey: ${S3_SECRET_KEY}
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              env:
+                RELAY: "home.${DOMAIN_0}:21117"
+                ALWAYS_USE_RELAY: "Y"
     persistence:
       data:
         volsync:
