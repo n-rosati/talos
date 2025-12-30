@@ -39,7 +39,7 @@ spec:
           containers:
             main:
               env:
-                RELAY: "home.${DOMAIN_0}:21117"
+                RELAY: "70.24.36.148:21117"
                 ALWAYS_USE_RELAY: "Y"
     persistence:
       data:
