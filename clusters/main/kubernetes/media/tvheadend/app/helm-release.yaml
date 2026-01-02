@@ -42,10 +42,10 @@ spec:
           metallb:
             enabled: true
     persistence:
-      data:
+      config:
         volsync:
           - credentials: home-s3
-            name: data
+            name: config
             type: restic
             dest:
               enabled: true
