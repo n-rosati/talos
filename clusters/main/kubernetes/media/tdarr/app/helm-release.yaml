@@ -34,19 +34,6 @@ spec:
         encrKey: ${BACKUP_ENCRYPTION_KEY}
         accessKey: ${S3_ACCESS_KEY}
         secretKey: ${S3_SECRET_KEY}
-    service:
-      main:
-        type: LoadBalancer
-        loadBalancerIP: ${TDARR_IP}
-        integrations:
-          metallb:
-            enabled: true
-      comm:
-        type: LoadBalancer
-        loadBalancerIP: ${TDARR_IP}
-        integrations:
-          metallb:
-            enabled: true
     ingress:
       main:
         enabled: true
@@ -110,12 +97,6 @@ spec:
         server: ${TRUENAS_IP}
         path: ${NFS_BULK_DATA}/Media/Other
         mountPath: /othermedia
-      # Temp mount for a temp remote worker node
-      # transcode-cache:
-      #   type: nfs
-      #   path: ${NFS_APPS_PATH}/Tdarr
-      #   server: ${TRUENAS_IP}
-      #   mountPath: /temp
     workload:
       main:
         podSpec:
