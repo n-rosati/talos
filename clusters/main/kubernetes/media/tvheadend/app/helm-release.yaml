@@ -25,6 +25,10 @@ spec:
   values:
     global:
       stopAll: false
+    workload:
+      main:
+        podSpec:
+          terminationGracePeriodSeconds: 20
     credentials:
       home-s3:
         name: home-s3

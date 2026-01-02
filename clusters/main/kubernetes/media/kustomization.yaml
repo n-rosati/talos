@@ -5,4 +5,4 @@ resources:
   - calibre-web/ks.yaml
   - jellyfin/ks.yaml
   - tdarr/ks.yaml
-  - tvheadend/ks.yaml
+  # - tvheadend/ks.yaml
