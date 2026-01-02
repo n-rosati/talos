@@ -59,3 +59,23 @@ spec:
         path: ${NFS_BULK_DATA}/Media
         mountPath: /media
         server: ${TRUENAS_IP}
+    addons:
+      codeserver:
+        enabled: true
+        service:
+          type: LoadBalancer
+        # ingress:
+        #   enabled: true
+        #   ingressClassName: external
+        #   hosts:
+        #     - host: edit-iptv.${DOMAIN_0}
+        #   integrations:
+        #     certManager:
+        #     enabled: true
+        #     certificateIssuer: le-prod
+        #   nginx:
+        #     enabled: true
+        #     auth:
+        #       type: authelia
+        #       internalHost: ${AUTHELIA_INTERNAL_DNS}
+        #       externalHost: ${AUTHELIA_EXTERNAL_DNS}
