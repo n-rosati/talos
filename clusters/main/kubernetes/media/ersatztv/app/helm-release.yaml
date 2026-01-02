@@ -59,6 +59,15 @@ spec:
         path: ${NFS_BULK_DATA}/Media
         mountPath: /media
         server: ${TRUENAS_IP}
+    workload:
+      main:
+        podSpec:
+          runtimeClassName: "nvidia"
+          containers:
+            main:
+              resources:
+                limits:
+                  nvidia.com/gpu: 1
     addons:
       codeserver:
         enabled: true
