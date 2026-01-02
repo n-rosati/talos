@@ -1,11 +1,11 @@
 apiVersion: kustomize.toolkit.fluxcd.io/v1
 kind: Kustomization
 metadata:
-  name: dispatcharr
+  name: tvheadend
   namespace: flux-system
 spec:
   interval: 10m
-  path: clusters/main/kubernetes/media/dispatcharr/app
+  path: clusters/main/kubernetes/media/tvheadend/app
   prune: true
   sourceRef:
     kind: GitRepository
