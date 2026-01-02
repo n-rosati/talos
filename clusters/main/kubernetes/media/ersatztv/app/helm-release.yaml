@@ -68,23 +68,3 @@ spec:
               resources:
                 limits:
                   nvidia.com/gpu: 1
-    addons:
-      codeserver:
-        enabled: true
-        service:
-          type: LoadBalancer
-        # ingress:
-        #   enabled: true
-        #   ingressClassName: external
-        #   hosts:
-        #     - host: edit-iptv.${DOMAIN_0}
-        #   integrations:
-        #     certManager:
-        #     enabled: true
-        #     certificateIssuer: le-prod
-        #   nginx:
-        #     enabled: true
-        #     auth:
-        #       type: authelia
-        #       internalHost: ${AUTHELIA_INTERNAL_DNS}
-        #       externalHost: ${AUTHELIA_EXTERNAL_DNS}
