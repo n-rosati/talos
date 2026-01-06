@@ -161,11 +161,9 @@ spec:
         user: forgejo
         password: ${FORGEJO_DB_PASSWORD}
         pgVersion: 16
-        mode: standalone # CHANGE TO RECOVERY WHEN REINSTALLING
+        mode: recovery
         cluster:
           singleNode: true
-          postgresql:
-            wal_keep_size: 5GB
         backups:
           enabled: true
           revision: "2"
