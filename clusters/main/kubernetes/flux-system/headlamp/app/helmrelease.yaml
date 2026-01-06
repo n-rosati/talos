@@ -28,6 +28,22 @@ spec:
   values:
     global:
       stopAll: true
+    persistence:
+      token:
+        enabled: true
+        type: secret
+        objectName: headlamp-token
+        subPath: headlamp-token
+        expandObjectName: false
+        mountPath: /var/run/secrets/kubernetes.io/serviceaccount
+    workload:
+      main:
+        replicas: 1
+        podSpec:
+          containers:
+            main:
+              env:
+                HEADLAMP_KUBERNETES_TOKEN: /var/run/secrets/kubernetes.io/serviceaccount/headlamp-token
     ingress:
       enabled: true
       annotations:
