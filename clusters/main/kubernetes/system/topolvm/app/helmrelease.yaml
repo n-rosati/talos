@@ -51,4 +51,4 @@ spec:
       lvmdEmbedded: true
     # Optional setting for a single node cluster:
     controller:
-      replicaCount: 2
+      replicaCount: 1
