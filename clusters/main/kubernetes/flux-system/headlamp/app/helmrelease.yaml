@@ -29,16 +29,36 @@ spec:
     env:
       - name: HEADLAMP_KUBERNETES_TOKEN
         value: "/var/run/secrets/kubernetes.io/serviceaccount/token"
-    pluginsManager:
+    config:
+      pluginsDir: /build/plugins
+    initContainers:
+      - command:
+          - /bin/sh
+          - -c
+          - mkdir -p /build/plugins && cp -r /plugins/* /build/plugins/ && chown -R 100:101 /build
+        image: ghcr.io/headlamp-k8s/headlamp-plugin-flux:latest
+        imagePullPolicy: Always
+        name: headlamp-plugins
+        securityContext:
+          runAsNonRoot: false
+          privileged: false
+          runAsUser: 0
+          runAsGroup: 0
+        volumeMounts:
+          - mountPath: /build/plugins
+            name: headlamp-plugins
+    persistentVolumeClaim:
+      accessModes:
+        - ReadWriteOnce
       enabled: true
-      configContent: |
-        plugins:
-          - name: my-plugin
-            source: ghcr.io/headlamp-k8s/headlamp-plugin-flux
-            version: v0.5.0
-        installOptions:
-          parallel: true
-          maxConcurrent: 2
+      size: 1Gi
+    volumeMounts:
+      - mountPath: /build/plugins
+        name: headlamp-plugins
+    volumes:
+      - name: headlamp-plugins
+        persistentVolumeClaim:
+          claimName: headlamp # The name of the Helm release
     ingress:
       enabled: true
       annotations:
