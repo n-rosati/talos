@@ -4,3 +4,4 @@ resources:
   - helmrelease.yaml
   - namespace.yaml
   - headlamp-rbac.yaml
+  - token.secret.yaml
