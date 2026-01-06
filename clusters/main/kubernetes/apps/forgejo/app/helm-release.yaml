@@ -166,11 +166,11 @@ spec:
           singleNode: true
         backups:
           enabled: true
-          revision: "2"
+          revision: "1"
           credentials: home-s3
         recovery:
           enabled: true
-          revision: "2"
+          revision: "1"
           credentials: home-s3
         monitoring:
           enablePodMonitor: true
