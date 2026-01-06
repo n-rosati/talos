@@ -26,9 +26,6 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    env:
-      - name: HEADLAMP_KUBERNETES_TOKEN
-        value: "/var/run/secrets/kubernetes.io/serviceaccount/token"
     config:
       pluginsDir: /build/plugins
     initContainers:
