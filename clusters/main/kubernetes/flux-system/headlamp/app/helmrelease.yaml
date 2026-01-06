@@ -38,6 +38,8 @@ spec:
         nginx.ingress.kubernetes.io/auth-url: 'http://${AUTHELIA_INTERNAL_DNS}/api/verify'
         nginx.ingress.kubernetes.io/auth-signin: 'https://auth.${DOMAIN_0}?rm=$request_method'
         nginx.ingress.kubernetes.io/auth-response-headers: 'Remote-User,Remote-Name,Remote-Groups,Remote-Email'
+        # Add auth header
+        nginx.ingress.kubernetes.io/proxy-set-headers: "headlamp/headlamp-proxy-headers"
         # Homepage integration
         gethomepage.dev/description: Headlamp is a user-friendly Kubernetes UI focused on extensibility.
         gethomepage.dev/enabled: "true"
