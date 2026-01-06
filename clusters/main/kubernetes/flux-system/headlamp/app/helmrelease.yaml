@@ -39,10 +39,7 @@ spec:
         readOnly: true
     env:
       - name: HEADLAMP_KUBERNETES_TOKEN
-        valueFrom:
-          secretKeyRef:
-            name: headlamp-token
-            key: headlamp-token
+        value: "/var/run/secrets/kubernetes.io/serviceaccount/headlamp-token"
     ingress:
       enabled: true
       annotations:
