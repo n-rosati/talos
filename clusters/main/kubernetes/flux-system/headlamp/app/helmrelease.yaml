@@ -29,6 +29,8 @@ spec:
     env:
       - name: HEADLAMP_KUBERNETES_TOKEN
         value: "/var/run/secrets/kubernetes.io/serviceaccount/token"
+    pluginsManager:
+      enabled: true
     ingress:
       enabled: true
       annotations:
