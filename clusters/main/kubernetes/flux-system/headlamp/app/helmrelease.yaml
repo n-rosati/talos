@@ -26,17 +26,18 @@ spec:
   uninstall:
     keepHistory: false
   values:
-    extraVolumes:
-      - name: headlamp-sa-token
-        secret:
-          secretName: headlamp-token
-          items:
-            - key: headlamp-token
-              path: headlamp-token   # this will appear as /var/run/secrets/headlamp-sa/token
-    extraVolumeMounts:
-      - name: headlamp-sa-token
-        mountPath: /var/run/secrets/headlamp-sa
-        readOnly: true
+    pod:
+      extraVolumes:
+        - name: headlamp-sa-token
+          secret:
+            secretName: headlamp-token
+            items:
+              - key: headlamp-token
+                path: headlamp-token   # this will appear as /var/run/secrets/headlamp-sa/token
+      extraVolumeMounts:
+        - name: headlamp-sa-token
+          mountPath: /var/run/secrets/headlamp-sa
+          readOnly: true
     env:
       - name: HEADLAMP_KUBERNETES_TOKEN
         value: "/var/run/secrets/kubernetes.io/serviceaccount/token"
