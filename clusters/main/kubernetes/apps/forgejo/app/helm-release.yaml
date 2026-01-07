@@ -176,23 +176,3 @@ spec:
           credentials: home-s3
         monitoring:
           enablePodMonitor: true
-    addons:
-      codeserver:
-        enabled: false
-        service:
-          type: LoadBalancer
-        ingress:
-          enabled: true
-          ingressClassName: external
-          hosts:
-            - host: edit-code.${DOMAIN_0}
-          integrations:
-            certManager:
-            enabled: true
-            certificateIssuer: le-prod
-          nginx:
-            enabled: true
-            auth:
-              type: authelia
-              internalHost: ${AUTHELIA_INTERNAL_DNS}
-              externalHost: ${AUTHELIA_EXTERNAL_DNS}
