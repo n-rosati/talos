@@ -148,6 +148,8 @@ spec:
                 FORGEJO__openid__ENABLE_OPENID_SIGNIN: false
                 FORGEJO__openid__ENABLE_OPENID_SIGNUP: true
                 FORGEJO__openid__WHITELISTED_URIS: auth.${DOMAIN_0}
+                FORGEJO__server__ROOT_URL: code.${DOMAIN_0}
+                FORGEJO__server__SSH_DOMAIN: git.code.${DOMAIN_0}
                 FORGEJO__service__ENABLE_INTERNAL_SIGNIN: "true"
                 FORGEJO__service__DISABLE_REGISTRATION: "false"
                 FORGEJO__service__ALLOW_ONLY_EXTERNAL_REGISTRATION: "true"
