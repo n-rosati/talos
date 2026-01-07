@@ -168,7 +168,7 @@ spec:
                 - "authorization_code"
               access_token_signed_response_alg: "none"
               userinfo_signed_response_alg: "none"
-              token_endpoint_auth_method: "client_secret_basic"
+              token_endpoint_auth_method: "client_secret_post"
             - client_id: "HJ5PKeEu4kyBQkneNOld3wC5Nu2XHK73fqbYg2r3V4zIwRvuaGaSLT2KFCGJtSXC641ezfeH"
               client_name: "pgAdmin"
               client_secret: ${AUTHELIA_PGADMIN_CLIENT_SECRET_DIGEST}
