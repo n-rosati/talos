@@ -52,9 +52,9 @@ spec:
             targetPort: 3000
           ssh:
             enabled: true
-            port: 2222
+            port: 22
             protocol: tcp
-            targetPort: 2222
+            targetPort: 22
     ingress:
       main:
         enabled: true
