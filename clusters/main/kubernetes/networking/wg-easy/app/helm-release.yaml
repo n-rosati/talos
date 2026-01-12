@@ -113,3 +113,9 @@ spec:
                 INIT_HOST: wireguard.${DOMAIN_0}
                 INIT_PORT: 51820
                 INIT_DNS: ${BLOCKY_IP}
+    metrics:
+      main:
+        enabled: true
+        endpoints:
+          - port: main
+            path: /metrics/prometheus
