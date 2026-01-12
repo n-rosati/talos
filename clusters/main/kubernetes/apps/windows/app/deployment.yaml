@@ -80,6 +80,8 @@ kind: Service
 metadata:
   name: windows
   namespace: windows
+  annotations:
+    
 spec:
   internalTrafficPolicy: Cluster
   ports:
@@ -101,4 +103,4 @@ spec:
       targetPort: 5900
   selector:
     app: windows
-  type: ClusterIP
+  type: LoadBalancer
