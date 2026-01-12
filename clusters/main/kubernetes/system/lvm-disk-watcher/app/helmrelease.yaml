@@ -23,4 +23,10 @@ spec:
     crds: CreateReplace
     remediation:
       retries: 3
-  values: {}
+  values:
+    configmap:
+      disk-config:
+        enabled: true
+        data:
+          disk-config: |
+            k8s-control-1: sda
