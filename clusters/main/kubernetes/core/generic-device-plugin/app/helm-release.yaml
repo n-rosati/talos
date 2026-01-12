@@ -14,27 +14,27 @@ spec:
         name: truecharts
         namespace: flux-system
   releaseName: generic-device-plugin
-  values:
-    workload:
-      main:
-        podSpec:
-          containers:
-            main:
-              args:
-                - --domain
-                - truecharts.org
-                - --device
-                - |
-                  name: tun
-                  groups:
-                    - count: 1000
-                      paths:
-                        - path: /dev/net/tun
-                - --device
-                - |
-                  name: serial
-                  groups:
-                    - paths:
-                        - path: /dev/ttyUSB*
-                    - paths:
-                        - path: /dev/ttyACM*
+  values: {}
+    # workload:
+    #   main:
+    #     podSpec:
+    #       containers:
+    #         main:
+    #           args:
+    #             - --domain
+    #             - truecharts.org
+    #             - --device
+    #             - |
+    #               name: tun
+    #               groups:
+    #                 - count: 1000
+    #                   paths:
+    #                     - path: /dev/net/tun
+    #             - --device
+    #             - |
+    #               name: serial
+    #               groups:
+    #                 - paths:
+    #                     - path: /dev/ttyUSB*
+    #                 - paths:
+    #                     - path: /dev/ttyACM*

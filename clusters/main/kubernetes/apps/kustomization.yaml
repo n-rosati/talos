@@ -16,4 +16,3 @@ resources:
   - stirling-pdf/ks.yaml
   - thelounge/ks.yaml
   - vaultwarden/ks.yaml
-  - windows/ks.yaml
