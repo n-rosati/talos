@@ -32,6 +32,9 @@ spec:
       containers:
       - name: windows
         image: dockurr/windows
+        resources:
+          requests:
+            truecharts.org/serial: 1
         env:
         - name: VERSION
           value: "11"
@@ -81,7 +84,7 @@ metadata:
   name: windows
   namespace: windows
   annotations:
-    
+
 spec:
   internalTrafficPolicy: Cluster
   ports:
