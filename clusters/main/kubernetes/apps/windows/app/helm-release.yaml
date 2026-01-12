@@ -1,0 +1,185 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: windows
+  namespace: windows
+spec:
+  interval: 2m
+  timeout: 20m
+  chart:
+    spec:
+      chart: app-template
+      version: 15.29.54
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  releaseName: windows
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    release_name: windows
+    global:
+      stopAll: false
+    image:
+      repository: ghcr.io/dockurr/windows
+      pullPolicy: IfNotPresent
+      tag: 5.14
+    credentials:
+      home-s3:
+        name: home-s3
+        type: s3
+        url: ${S3_URL}
+        bucket: windows
+        encrKey: ${BACKUP_ENCRYPTION_KEY}
+        accessKey: ${S3_ACCESS_KEY}
+        secretKey: ${S3_SECRET_KEY}
+    service:
+      main:
+        enabled: true
+        type: LoadBalancer
+        ports:
+          main:
+            enabled: true
+            port: 5900
+            protocol: tcp
+      rdp:
+        enabled: true
+        type: LoadBalancer
+        ports:
+          main:
+            enabled: true
+            port 3389
+            protocol: tcp
+          main-udp:
+            enabled: true
+            port 3389
+            protocol: udp
+      http:
+        enabled: true
+        ports:
+          main:
+            enabled: true
+            port: 8006
+            protocol: tcp
+    # ingress:
+    #   main:
+    #     enabled: true
+    #     ingressClassName: external
+    #     hosts:
+    #       - host: windows.${DOMAIN_0}
+    #     integrations:
+    #       certManager:
+    #         enabled: true
+    #         certificateIssuer: le-prod
+    #       nginx:
+    #         enabled: true
+    #       homepage:
+    #         enabled: false
+    persistence:
+      forgejo:
+        enabled: true
+        type: pvc
+        mountPath: /etc/gitea
+        volsync:
+          - name: forgejo
+            type: restic
+            credentials: home-s3
+            dest:
+              enabled: true
+            src:
+              enabled: true
+              trigger:
+                schedule: 0 4 * * *
+      conf:
+        enabled: true
+        type: pvc
+        mountPath: /var/lib/gitea
+        volsync:
+          - name: conf
+            type: restic
+            credentials: home-s3
+            dest:
+              enabled: true
+            src:
+              enabled: true
+              trigger:
+                schedule: 0 4 * * *
+      ssh-key:
+        enabled: true
+        type: secret
+        readOnly: true
+        objectName: ssh-secrets
+        expandObjectName: false
+        mountPath: "/var/lib/ssh-key"
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              probes:
+                liveness:
+                  enabled: true
+                  path: "/"
+                  port: 3000
+                  type: http
+                readiness:
+                  enabled: true
+                  port: 3000
+                  type: http
+                startup:
+                  enabled: false
+              env:
+                FORGEJO__database__DB_TYPE: postgres
+                FORGEJO__database__HOST: "{{ .Values.cnpg.main.creds.host }}"
+                FORGEJO__database__NAME: "{{ .Values.cnpg.main.database }}"
+                FORGEJO__database__USER: "{{ .Values.cnpg.main.user }}"
+                FORGEJO__database__PASSWD: "{{ .Values.cnpg.main.password }}"
+                FORGEJO__mailer__ENABLED: "true"
+                FORGEJO__mailer__SMTP_ADDR: "${SMTP_SERVER}"
+                FORGEJO__mailer__SMTP_PORT: "${SMTP_PORT}"
+                FORGEJO__mailer__USER: "${SERVICE_EMAIL}"
+                FORGEJO__mailer__PASSWD: "${SERVICE_EMAIL_PASSWORD}"
+                FORGEJO__mailer__FROM: "Forgejo <${SERVICE_EMAIL}>"
+                FORGEJO__security__PASSWORD_CHECK_PWN: "true"
+                FORGEJO__repository.signing__FORMAT: "ssh"
+                FORGEJO__repository.signing__SIGNING_KEY: "/var/lib/ssh-key/public.key"
+                FORGEJO__security__SECRET_KEY: "${FORGEJO_SECRET_KEY}"
+                FORGEJO__repository.signing__DEFAULT_TRUST_MODEL: "committer"
+                FORGEJO__openid__ENABLE_OPENID_SIGNIN: false
+                FORGEJO__openid__ENABLE_OPENID_SIGNUP: true
+                FORGEJO__openid__WHITELISTED_URIS: auth.${DOMAIN_0}
+                FORGEJO__server__ROOT_URL: https://code.${DOMAIN_0}
+                FORGEJO__server__SSH_DOMAIN: git.${DOMAIN_0}
+                FORGEJO__service__ENABLE_INTERNAL_SIGNIN: "true"
+                FORGEJO__service__DISABLE_REGISTRATION: "false"
+                FORGEJO__service__ALLOW_ONLY_EXTERNAL_REGISTRATION: "true"
+                FORGEJO__service__SHOW_REGISTRATION_BUTTON: "false"
+                FORGEJO__oauth2__USERNAME: userid
+                FORGEJO__oauth2__ENABLE_AUTO_REGISTRATION: true
+    cnpg:
+      main:
+        enabled: true
+        database: forgejo
+        user: forgejo
+        password: ${FORGEJO_DB_PASSWORD}
+        pgVersion: 16
+        mode: standalone # CHANGE TO RECOVERY ON RESTORE
+        cluster:
+          singleNode: true
+        backups:
+          enabled: true
+          revision: "1"
+          credentials: home-s3
+        recovery:
+          enabled: true
+          revision: "1"
+          credentials: home-s3
+        monitoring:
+          enablePodMonitor: true
