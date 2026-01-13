@@ -92,7 +92,7 @@ spec:
                 MAX_PLAYERS: 10
                 MOTD: Monifactory!
                 PVP: true
-                MEMORY: "8G"
+                MEMORY: "6G"
                 JVM_OPTS: "-Xms6G -Xmx6G -XX:+UseCompactObjectHeaders"
                 MAX_TICK_TIME: 60000
                 RCON_PASSWORD: ${MC_RCON_PASSWORD}
