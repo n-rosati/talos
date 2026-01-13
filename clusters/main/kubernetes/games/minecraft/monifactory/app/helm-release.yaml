@@ -82,7 +82,6 @@ spec:
             main:
               imageSelector: j25Image
               env:
-                JVM_OPTS: "-XX:+UseCompactObjectHeaders"
                 OPS: Hydranoid620,b227,BlueMoon_Live
                 WHITELIST: Hydranoid620,b227,BlueMoon_Live
                 DIFFICULTY: peaceful
@@ -94,7 +93,7 @@ spec:
                 MOTD: Monifactory!
                 PVP: true
                 MEMORY: "8G"
-                JVM_OPTS: -Xms6G -Xmx6G
+                JVM_OPTS: "-Xms6G -Xmx6G -XX:+UseCompactObjectHeaders"
                 MAX_TICK_TIME: 60000
                 RCON_PASSWORD: ${MC_RCON_PASSWORD}
                 SEED: "2118187812067679219"
