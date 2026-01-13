@@ -82,6 +82,7 @@ spec:
             main:
               imageSelector: j25Image
               env:
+                JVM_OPTS: "-XX:+UseCompactObjectHeaders"
                 OPS: Hydranoid620,b227,BlueMoon_Live
                 WHITELIST: Hydranoid620,b227,BlueMoon_Live
                 DIFFICULTY: peaceful
