@@ -23,10 +23,10 @@ spec:
     remediation:
       retries: 3
   values:
-    # j25Image:
-    #   repository: ghcr.io/itzg/minecraft-server
-    #   tag: 2025.10.2-java25@sha256:3eccc5ddd0f669827e7f894282cc2c1854286a5b51aaab94b5857ef9348b5883
-    #   pullPolicy: Always
+    j25Image:
+      repository: ghcr.io/itzg/minecraft-server
+      tag: 2026.1.1-java25@sha256:7423a4cf59ec510a58294f853fc7b07cdf0a50c5bc4618ee172327d7913941eb
+      pullPolicy: Always
     global:
       stopAll: false
     credentials:
@@ -80,7 +80,7 @@ spec:
         podSpec:
           containers:
             main:
-              imageSelector: j21Image
+              imageSelector: j25Image
               env:
                 OPS: Hydranoid620,b227,BlueMoon_Live
                 WHITELIST: Hydranoid620,b227,BlueMoon_Live
