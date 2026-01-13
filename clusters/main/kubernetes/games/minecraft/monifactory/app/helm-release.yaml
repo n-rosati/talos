@@ -94,7 +94,7 @@ spec:
                 MOTD: Monifactory!
                 PVP: true
                 MEMORY: "8G"
-                JVM_OPTS: -Xms8G -Xmx8G
+                JVM_OPTS: -Xms6G -Xmx6G
                 MAX_TICK_TIME: 60000
                 RCON_PASSWORD: ${MC_RCON_PASSWORD}
                 SEED: "2118187812067679219"
@@ -122,7 +122,7 @@ spec:
     resources:
       requests:
         cpu: 100m
-        memory: 8Gi
+        memory: 6Gi
       limits:
         cpu: null
-        memory: 10Gi
+        memory: 8Gi
