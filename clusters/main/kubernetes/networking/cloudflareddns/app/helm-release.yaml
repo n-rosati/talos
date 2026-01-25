@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: cloudflareddns
-      version: 12.14.17
+      version: 13.0.10
       sourceRef:
         kind: HelmRepository
         name: truecharts
@@ -22,10 +22,12 @@ spec:
     remediation:
       retries: 3
   values:
-    cloudflareddns:
-      api_token: ${DOMAIN_0_CLOUDFLARE_TOKEN}
-      host_zone_record:
-        - domain: home.${DOMAIN_0}
-          record: A
-          zone: ${DOMAIN_0_CLOUDFLARE_ZONE_ID}
-      user: ${PERSONAL_EMAIL}
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              env:
+                UPDATE_IPV6: false
+                CF_APITOKEN: ${DOMAIN_0_CLOUDFLARE_TOKEN}
+                CF_HOSTS: "home.${DOMAIN_0}"
