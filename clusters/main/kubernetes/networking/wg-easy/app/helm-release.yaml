@@ -37,29 +37,29 @@ spec:
         encrKey: ${BACKUP_ENCRYPTION_KEY}
         accessKey: ${S3_ACCESS_KEY}
         secretKey: ${S3_SECRET_KEY}
-    securityContext:
-      container:
-        PUID: 0
-        UMASK: "0022"
-        advanced: false
-        capabilities:
-          add:
-            - NET_ADMIN
-            - NET_RAW
-            - SYS_MODULE
-        readOnlyRootFilesystem: false
-        runAsGroup: 0
-        runAsNonRoot: false
-        runAsUser: 0
-        privileged: true
+    # securityContext:
+    #   container:
+    #     PUID: 0
+    #     UMASK: "0022"
+    #     advanced: false
+    #     capabilities:
+    #       add:
+    #         - NET_ADMIN
+    #         - NET_RAW
+    #         - SYS_MODULE
+    #     readOnlyRootFilesystem: false
+    #     runAsGroup: 0
+    #     runAsNonRoot: false
+    #     runAsUser: 0
+    #     privileged: true
     service:
       vpn:
+        externalTrafficPolicy: Local
         type: LoadBalancer
         loadBalancerIP: ${WG_EASY_IP}
         integrations:
           metallb:
             enabled: true
-        externalTrafficPolicy: Local
     ingress:
       main:
         enabled: true
