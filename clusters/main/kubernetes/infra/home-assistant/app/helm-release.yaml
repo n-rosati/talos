@@ -23,10 +23,6 @@ spec:
     remediation:
       retries: 3
   values:
-    # # TEMP! until https://github.com/trueforge-org/containerforge/issues/535 is fixed
-    # image:
-    #   repository: docker.io/homeassistant/home-assistant
-    #   tag: "2025.12.5"
     global:
       stopAll: false
     credentials:
@@ -76,25 +72,6 @@ spec:
               enabled: true
               trigger:
                 schedule: 25 4 * * *
-#--------------------------Temp psycopg2 fix---------------------------------------
-# See: https://github.com/trueforge-org/containerforge/issues/535
-      init-script:
-        enabled: true
-        type: configmap
-        objectName: init-script
-        mountPath: "/docker-entrypoint.d/99-install-psycopg2.sh"
-        subPath: install-psycopg2.sh
-        defaultMode: "0777"
-        readOnly: true     
-    configmap:
-      init-script:
-        enabled: true
-        data: 
-          install-psycopg2.sh: |-
-            #!/bin/bash
-            echo "Installing psycopg2-binary for PostgreSQL support..."
-            pip install psycopg2-binary 
-#---------------------------------------------------------------------------------- 
     cnpg:
       main:
         password: ${CNPG_PASSWORD}
