@@ -6,7 +6,7 @@ resources:
   - homepage/ks.yaml
   - jdownloader2/ks.yaml
   - kubernetes-dashboard/ks.yaml
-  - matrix/ks.yaml
+  # - matrix/ks.yaml
   - nextcloud/ks.yaml
   - orcaslicer/ks.yaml
   - part-db/ks.yaml

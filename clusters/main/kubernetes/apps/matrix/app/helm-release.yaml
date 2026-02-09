@@ -64,6 +64,12 @@ spec:
     externalDatabase:
       enabled: true
       existingSecret: "matrix-app"
+      secretKeys:
+        databaseHostname: ""
+        database: ""
+        databaseUsername: ""
+        userPasswordKey: ""
+        adminPasswordKey: ""
     synapse:
       ingress:
         enabled: true
