@@ -60,13 +60,10 @@ spec:
     s3: # todo
       enabled: false
     postgresql:
-      enabled: true
-      global:
-        postgresql:
-          auth:
-            password: ${CNPG_PASSWORD}
-    externalDatabase:
       enabled: false
+    externalDatabase:
+      enabled: true
+      existingSecret: "matrix-app"
     synapse:
       ingress:
         enabled: true
