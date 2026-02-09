@@ -60,10 +60,13 @@ spec:
     s3: # todo
       enabled: false
     postgresql:
-      enabled: false
-    externalDatabase:
       enabled: true
-      existingSecret: "matrix-app"
+      global:
+        postgresql:
+          auth:
+            password: ${CNPG_PASSWORD}
+    externalDatabase:
+      enabled: false
     synapse:
       ingress:
         enabled: true
@@ -99,16 +102,13 @@ spec:
               proxy_intercept_errors off;
             cert-manager.io/cluster-issuer: le-staging
         integrations:
-          enabgled: true
+          enabled: true
       coturn:
         enabled: true
         certificate:
           enabled: true
           host: turn.${DOMAIN_0}
           issuerName: le-staging
-        externalDatabase:
-          enabled: true
-          existingSecret: "matrix-app"
         coturn:
           realm: turn.${DOMAIN_0}
           auth:
