@@ -20,4 +20,4 @@ resources:
   - weave-gitops.yaml
   - node-feature-discovery.yaml
   - headlamp.yaml
-  - small-hack.yaml
+  - element-hq.yaml
