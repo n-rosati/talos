@@ -51,6 +51,13 @@ spec:
               port: ${SMTP_PORT}
               username: "${SERVICE_EMAIL}"
               password: "${SERVICE_EMAIL_PASSWORD}"
+        auth.yaml:
+          config: |
+            account:
+              password_registration_enabled: true
+              registration_token_required: true
+              password_registration_email_required: true
+              password_change_allowed: true
     matrixRTC:
       ingress:
         host: mrtc.${DOMAIN_0}
