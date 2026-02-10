@@ -27,6 +27,7 @@ spec:
   values:
     ingress:
       tlsEnabled: false
+      className: external
     elementAdmin:
       ingress:
         host: admin.${DOMAIN_0}
