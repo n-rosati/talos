@@ -48,7 +48,7 @@ spec:
               transport: smtp
               mode: tls
               hostname: "${SMTP_SERVER}"
-              port: "${SMTP_PORT}"
+              port: ${SMTP_PORT}
               username: "${SERVICE_EMAIL}"
               password: "${SERVICE_EMAIL_PASSWORD}"
     matrixRTC:
