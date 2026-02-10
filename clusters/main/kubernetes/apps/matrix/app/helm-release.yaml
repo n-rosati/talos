@@ -37,6 +37,20 @@ spec:
     matrixAuthenticationService:
       ingress:
         host: account.${DOMAIN_0}
+      additional:
+        user-config.yaml:
+          config: |
+            email:
+              from: '"Matrix" <${SERVICE_EMAIL}>'
+              reply_to: '"No reply" <no-reply@${EMAIL_DOMAIN}>'
+
+              # Send emails using SMTP
+              transport: smtp
+              mode: tls
+              hostname: "${SMTP_SERVER}"
+              port: "${SMTP_PORT}"
+              username: "${SERVICE_EMAIL}"
+              password: "${SERVICE_EMAIL_PASSWORD}"
     matrixRTC:
       ingress:
         host: mrtc.${DOMAIN_0}
