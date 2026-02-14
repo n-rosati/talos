@@ -10,7 +10,7 @@ spec:
     spec:
       chart: jellyfin
       # version: 21.12.9 # KNOWN GOOD
-      version: 22.2.32
+      version: 22.2.33
       sourceRef:
         kind: HelmRepository
         name: truecharts
