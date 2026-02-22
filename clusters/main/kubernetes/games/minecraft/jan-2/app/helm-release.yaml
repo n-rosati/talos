@@ -68,7 +68,7 @@ spec:
         podSpec:
           containers:
             main:
-              imageSelector: j17image
+              imageSelector: j17Image
               env:
                 OPS: SunnyEar4432867,Hydranoid620
                 WHITELIST: Hydranoid620,SunnyEar4432867
