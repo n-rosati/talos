@@ -1,15 +1,15 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: monifactory
-  namespace: mc-monifactory
+  name: nomifactory
+  namespace: mc-nomifactory
 spec:
   interval: 2m
   timeout: 10m
   chart:
     spec:
       chart: minecraft-java
-      version: 33.8.3
+      version: 33.7.8
       sourceRef:
         kind: HelmRepository
         name: truecharts
@@ -23,10 +23,6 @@ spec:
     remediation:
       retries: 3
   values:
-    j25Image:
-      repository: ghcr.io/itzg/minecraft-server
-      tag: 2026.2.1-java25@sha256:44aacf3902c1c2e18dddfe8585dd44badbf56a0a768c773a5e0bcfe4bc1d0443
-      pullPolicy: Always
     global:
       stopAll: true
     credentials:
@@ -34,7 +30,7 @@ spec:
         name: home-s3
         type: s3
         url: ${S3_URL}
-        bucket: mc-monifactory
+        bucket: mc-nomifactory
         encrKey: ${BACKUP_ENCRYPTION_KEY}
         accessKey: ${S3_ACCESS_KEY}
         secretKey: ${S3_SECRET_KEY}
@@ -43,7 +39,7 @@ spec:
         enabled: true
         type: LoadBalancer
         annotations:
-          mc-router.itzg.me/externalServerName: "monifactory.${DOMAIN_0}"
+          mc-router.itzg.me/externalServerName: "nomifactory.${DOMAIN_0}"
       rcon:
         enabled: true
         type: LoadBalancer
@@ -58,10 +54,10 @@ spec:
             src:
               enabled: true
               trigger:
-                schedule: 30 5 * * *
+                schedule: 30 6 * * *
       backups:
         type: nfs
-        path: ${NFS_BULK_DATA}/Backups/Minecraft/monifactory
+        path: ${NFS_BULK_DATA}/Backups/Minecraft/nomifactory
         server: ${TRUENAS_IP}
       mods:
         enabled: true
@@ -80,23 +76,26 @@ spec:
         podSpec:
           containers:
             main:
-              imageSelector: j25Image
+              imageSelector: image
               env:
-                OPS: Hydranoid620,b227,BlueMoon_Live
-                WHITELIST: Hydranoid620,b227,BlueMoon_Live
+                FORGE_INSTALLER_URL: https://github.com/CleanroomMC/Cleanroom/releases/download/0.4.4-alpha/cleanroom-0.4.4-alpha-installer.jar
+                OPS: Hydranoid620
+                WHITELIST: Hydranoid620
                 DIFFICULTY: peaceful
-                VERSION: 1.20.1
+                VERSION: 1.12.2
                 TYPE: AUTO_CURSEFORGE
                 CF_API_KEY: ${CF_API_KEY}
-                CF_SLUG: monifactory
+                CF_SLUG: nomi-ceu
                 MAX_PLAYERS: 10
-                MOTD: Monifactory!
+                MOTD: Nomifactory!
                 PVP: true
                 MEMORY: "6G"
-                JVM_OPTS: "-Xms6G -Xmx6G -XX:+UseCompactObjectHeaders"
+                JVM_OPTS: "-Xms6G -Xmx6G -XX:+UseCompactObjectHeaders -XX:+UseZGC"
                 MAX_TICK_TIME: 60000
                 RCON_PASSWORD: ${MC_RCON_PASSWORD}
-                SEED: "2118187812067679219"
+                SEED: "8881742655673709427"
+                LEVEL_TYPE: "lostcities"
+                GENERATOR_SETTINGS: "{'profile':'uncommoncities'}"
                 FORCE_REDOWNLOAD: false
                 VIEW_DISTANCE: 12
                 SIMULATION_DISTANCE: 12
