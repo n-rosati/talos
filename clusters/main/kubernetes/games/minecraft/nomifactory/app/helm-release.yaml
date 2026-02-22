@@ -79,6 +79,12 @@ spec:
               imageSelector: image
               env:
                 FORGE_INSTALLER_URL: https://github.com/CleanroomMC/Cleanroom/releases/download/0.4.4-alpha/cleanroom-0.4.4-alpha-installer.jar
+                CURSEFORGE_FILES: |
+                  ae2-fluid-crafting-rework
+                  flux-networks
+                  lazy-ae2
+                  project-red-illumination
+                  zbgt
                 OPS: Hydranoid620
                 WHITELIST: Hydranoid620
                 DIFFICULTY: peaceful
