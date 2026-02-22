@@ -74,6 +74,7 @@ spec:
                   ae2-fluid-crafting-rework
                   flux-networks
                   lazy-ae2
+                  libnine
                   project-red-illumination
                   zbgt
                 TYPE: AUTO_CURSEFORGE
