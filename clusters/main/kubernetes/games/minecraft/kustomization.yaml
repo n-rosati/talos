@@ -7,4 +7,4 @@ resources:
   - ftb-skies-2/ks.yaml
   - monifactory/ks.yaml
   - omnifactory/ks.yaml
-  - nomifactory/ks.yaml
+  # - nomifactory/ks.yaml
