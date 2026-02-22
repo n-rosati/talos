@@ -80,11 +80,11 @@ spec:
                 TYPE: AUTO_CURSEFORGE
                 CF_API_KEY: ${CF_API_KEY}
                 CF_SLUG: nomi-ceu
+                CF_FILENAME_MATCHER: "1.7.7" # Pack version, is here to pin it
                 MAX_PLAYERS: 10
                 MOTD: Nomifactory!
                 PVP: true
                 MEMORY: "10G"
-                # JVM_OPTS: "-Xms8G -Xmx8G -XX:+UseCompactObjectHeaders -XX:+UseZGC"
                 MAX_TICK_TIME: 60000
                 RCON_PASSWORD: ${MC_RCON_PASSWORD}
                 SEED: "8881742655673709427"
