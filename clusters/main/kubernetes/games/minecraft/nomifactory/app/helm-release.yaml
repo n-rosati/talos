@@ -24,7 +24,7 @@ spec:
       retries: 3
   values:
     global:
-      stopAll: true
+      stopAll: false
     credentials:
       home-s3:
         name: home-s3
@@ -59,44 +59,31 @@ spec:
         type: nfs
         path: ${NFS_BULK_DATA}/Backups/Minecraft/nomifactory
         server: ${TRUENAS_IP}
-      mods:
-        enabled: true
-        type: pvc
-        mountPath: /mods
-        targetSelectAll: true
-        size: 1Gi
-      downloads:
-        enabled: true
-        type: pvc
-        mountPath: /downloads
-        targetSelectAll: true
-        size: 1Gi
     workload:
       main:
         podSpec:
           containers:
             main:
-              imageSelector: image
+              imageSelector: j8Image
               env:
-                FORGE_INSTALLER_URL: https://github.com/CleanroomMC/Cleanroom/releases/download/0.4.4-alpha/cleanroom-0.4.4-alpha-installer.jar
+                OPS: Hydranoid620
+                WHITELIST: Hydranoid620
+                DIFFICULTY: peaceful
+                VERSION: 1.12.2
                 CURSEFORGE_FILES: |
                   ae2-fluid-crafting-rework
                   flux-networks
                   lazy-ae2
                   project-red-illumination
                   zbgt
-                OPS: Hydranoid620
-                WHITELIST: Hydranoid620
-                DIFFICULTY: peaceful
-                VERSION: 1.12.2
                 TYPE: AUTO_CURSEFORGE
                 CF_API_KEY: ${CF_API_KEY}
                 CF_SLUG: nomi-ceu
                 MAX_PLAYERS: 10
                 MOTD: Nomifactory!
                 PVP: true
-                MEMORY: "6G"
-                JVM_OPTS: "-Xms6G -Xmx6G -XX:+UseCompactObjectHeaders -XX:+UseZGC"
+                MEMORY: "10G"
+                # JVM_OPTS: "-Xms8G -Xmx8G -XX:+UseCompactObjectHeaders -XX:+UseZGC"
                 MAX_TICK_TIME: 60000
                 RCON_PASSWORD: ${MC_RCON_PASSWORD}
                 SEED: "8881742655673709427"
@@ -105,7 +92,7 @@ spec:
                 FORCE_REDOWNLOAD: false
                 VIEW_DISTANCE: 12
                 SIMULATION_DISTANCE: 12
-                USE_AIKAR_FLAGS: false
+                USE_AIKAR_FLAGS: true
                 USE_FLARE_FLAGS: false
                 USE_MEOWICE_FLAGS: false
                 USE_MEOWICE_GRAALVM_FLAGS: false
@@ -129,4 +116,4 @@ spec:
         memory: 6Gi
       limits:
         cpu: null
-        memory: 8Gi
+        memory: 12Gi
