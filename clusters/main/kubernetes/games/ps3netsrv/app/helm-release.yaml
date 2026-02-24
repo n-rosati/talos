@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: ps3netsrv
-      version: 3.14.1
+      version: 3.15.0
       sourceRef:
         kind: HelmRepository
         name: truecharts
