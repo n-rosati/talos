@@ -23,6 +23,10 @@ spec:
     remediation:
       retries: 3
   values:
+    j21graalvmImage:
+      repository: ghcr.io/itzg/minecraft-server
+      tag: 2026.1.0-java21-graalvm@sha256:edd7b66781574ebb67c66f96635d7d1aa733f2886f6589fa4c4c1d8fdca96aac
+      pullPolicy: Always
     mcBackupImage:
       repository: docker.io/itzg/mc-backup
       tag: latest@sha256:11d38fb3f08e677f98d1d95c032a50c37a1737c2893564fc12492abae082555e
