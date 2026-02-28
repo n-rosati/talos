@@ -172,7 +172,7 @@ spec:
                   enabled: false
               env:
                 BACKUP_METHOD: "tar"
-                DEST_DIR: "{{.Values.persistence.backups.mountPath }}"
+                DEST_DIR: "{{.Values.persistence.backups.targetSelector.main.mcbackup.mountPath }}"
                 SRC_DIR: "{{.Values.persistence.data.mountPath }}"
                 SERVER_PORT: "{{ .Values.service.main.ports.main.port }}"
                 RCON_HOST: '{{ printf "%s-rcon" (include "tc.v1.common.lib.chart.names.fullname" $) }}'
