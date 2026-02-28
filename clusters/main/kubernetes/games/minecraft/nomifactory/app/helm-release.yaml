@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: minecraft-java
-      version: 33.10.2
+      version: 34.0.0
       sourceRef:
         kind: HelmRepository
         name: truecharts
@@ -25,6 +25,10 @@ spec:
   values:
     global:
       stopAll: false
+    mcBackupImage:
+      repository: docker.io/itzg/mc-backup
+      tag: latest@sha256:11d38fb3f08e677f98d1d95c032a50c37a1737c2893564fc12492abae082555e
+      pullPolicy: Always
     credentials:
       home-s3:
         name: home-s3
@@ -45,6 +49,13 @@ spec:
         type: LoadBalancer
     persistence:
       data:
+        targetSelector:
+          main:
+            main:
+              mountPath: /data
+            mcbackup:
+              mountPath: /data
+              readOnly: true
         volsync:
           - credentials: home-s3
             name: home-s3
@@ -56,9 +67,23 @@ spec:
               trigger:
                 schedule: 30 6 * * *
       backups:
+        enabled: true
         type: nfs
         path: ${NFS_BULK_DATA}/Backups/Minecraft/nomifactory
         server: ${TRUENAS_IP}
+        targetSelector:
+          main:
+            mcbackup:
+              mountPath: /backups
+    mcbackup:
+      zstd_params:
+        - --long=25
+        - --single-thread
+      excludes:
+        - "*.jar"
+        - "cache"
+        - "logs"
+        - "*.tmp"
     workload:
       main:
         podSpec:
@@ -103,7 +128,25 @@ spec:
                 STOP_DURATION: 40
             mcbackup:
               enabled: true
+              imageSelector: mcBackupImage
+              probes:
+                liveness:
+                  enabled: false
+                readiness:
+                  enabled: false
+                startup:
+                  enabled: false
               env:
+                BACKUP_METHOD: "tar"
+                DEST_DIR: "{{.Values.persistence.backups.targetSelector.main.mcbackup.mountPath }}"
+                SRC_DIR: "{{.Values.persistence.data.mountPath }}"
+                SERVER_PORT: "{{ .Values.service.main.ports.main.port }}"
+                RCON_HOST: '{{ printf "%s-rcon" (include "tc.v1.common.lib.chart.names.fullname" $) }}'
+                RCON_PORT: "{{ .Values.service.rcon.ports.rcon.port }}"
+                RCON_PASSWORD: "{{ .Values.workload.main.podSpec.containers.main.env.RCON_PASSWORD }}"
+                SERVER_HOST: '{{ include "tc.v1.common.lib.chart.names.fullname" $ }}'
+                ZSTD_PARAMETERS: '{{ join " " .Values.mcbackup.zstd_params }}'
+                EXCLUDES: '{{ join "," .Values.mcbackup.excludes }}'
                 BACKUP_INTERVAL: "4h"
                 INITIAL_DELAY: "2m"
                 LINK_LATEST: "false"
