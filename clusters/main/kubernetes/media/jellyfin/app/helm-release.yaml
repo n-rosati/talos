@@ -9,7 +9,6 @@ spec:
   chart:
     spec:
       chart: jellyfin
-      # version: 21.12.9 # KNOWN GOOD
       version: 22.5.2
       sourceRef:
         kind: HelmRepository
