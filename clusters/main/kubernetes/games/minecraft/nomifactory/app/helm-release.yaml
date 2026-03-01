@@ -75,6 +75,16 @@ spec:
           main:
             mcbackup:
               mountPath: /backups
+      config-overrides:
+        enabled: true
+        type: configmap
+        objectName: config-overrides
+        expandObjectName: false
+        targetSelector:
+          main:
+            main:
+              mountPath: /config
+              readOnly: true
     mcbackup:
       zstd_params:
         - --long=25
