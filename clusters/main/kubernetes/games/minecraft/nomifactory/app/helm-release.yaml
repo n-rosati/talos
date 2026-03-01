@@ -103,6 +103,7 @@ spec:
                   project-red-illumination
                   zbgt
                   chunkpregenerator
+                  carbon-config
                 TYPE: AUTO_CURSEFORGE
                 CF_API_KEY: ${CF_API_KEY}
                 CF_SLUG: nomi-ceu
