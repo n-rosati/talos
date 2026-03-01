@@ -8,6 +8,7 @@ resources:
   - kubernetes-dashboard/ks.yaml
   # - matrix/ks.yaml
   - nextcloud/ks.yaml
+  - ollama/ks.yaml
   - orcaslicer/ks.yaml
   - part-db/ks.yaml
   - pgadmin/ks.yaml
