@@ -11,6 +11,7 @@
             "matchPackagePatterns": [
                 "minecraft-router",
                 "minecraft-java",
+                "mc-backup",
                 "factorio",
                 "wg-easy",
                 "app-template",
