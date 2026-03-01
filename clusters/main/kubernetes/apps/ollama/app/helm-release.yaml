@@ -1,8 +1,8 @@
 apiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
-  name: nextcloud
-  namespace: nextcloud
+  name: ollama
+  namespace: ollama
 spec:
   interval: 2m
   timeout: 20m
@@ -25,3 +25,16 @@ spec:
   values:
     global:
       stopAll: false
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: internal
+        hosts:
+          - host: ollama.${DOMAIN_0}
+            paths:
+              - path: /
+                pathType: Prefix
+        integrations:
+          certManager:
+            certificateIssuer: le-staging
+            enabled: true
