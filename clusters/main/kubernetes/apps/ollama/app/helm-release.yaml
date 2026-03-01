@@ -67,5 +67,4 @@ spec:
         memory: 2Gi
       limits:
         cpu: null
-        memory: 8Gi
-
+        memory: 12Gi
