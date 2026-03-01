@@ -102,6 +102,7 @@ spec:
                   libnine
                   project-red-illumination
                   zbgt
+                  chunkpregenerator
                 TYPE: AUTO_CURSEFORGE
                 CF_API_KEY: ${CF_API_KEY}
                 CF_SLUG: nomi-ceu
