@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: minecraft-java
-      version: 33.10.2
+      version: 34.0.0
       sourceRef:
         kind: HelmRepository
         name: truecharts
@@ -25,6 +25,10 @@ spec:
   values:
     global:
       stopAll: true
+    mcBackupImage:
+      repository: docker.io/itzg/mc-backup
+      tag: latest@sha256:da610560a2b5a6b2f488dd8a26a33e821e07f3f40d8ed1c6c8399348b228c313
+      pullPolicy: Always
     credentials:
       home-s3:
         name: home-s3
@@ -45,6 +49,13 @@ spec:
         type: LoadBalancer
     persistence:
       data:
+        targetSelector:
+          main:
+            main:
+              mountPath: /data
+            mcbackup:
+              mountPath: /data
+              readOnly: true
         volsync:
           - credentials: home-s3
             name: home-s3
@@ -56,9 +67,14 @@ spec:
               trigger:
                 schedule: 20 5 * * *
       backups:
+        enabled: true
         type: nfs
         path: ${NFS_BULK_DATA}/Backups/Minecraft/ftb-skies-2
         server: ${TRUENAS_IP}
+        targetSelector:
+          main:
+            mcbackup:
+              mountPath: /backups
       mods:
         enabled: true
         type: pvc
@@ -75,6 +91,15 @@ spec:
               mountPath: /patches/rs-config-patch.json
               subPath: rs-config-patch.json
               readOnly: true
+    mcbackup:
+      zstd_params:
+        - --long=25
+        - --single-thread
+      excludes:
+        - "*.jar"
+        - "cache"
+        - "logs"
+        - "*.tmp"
     configmap:
       rs-config-patch:
         enabled: true
@@ -96,7 +121,7 @@ spec:
         podSpec:
           containers:
             main:
-              imageSelector: j21Image
+              imageSelector: j21alpineImage
               env:
                 PATCH_DEFINITIONS: "/patches"
                 OPS: Hydranoid620,b227,BlueMoon_Live
@@ -130,12 +155,30 @@ spec:
                 STOP_DURATION: 40
             mcbackup:
               enabled: true
+              imageSelector: mcBackupImage
+              probes:
+                liveness:
+                  enabled: false
+                readiness:
+                  enabled: false
+                startup:
+                  enabled: false
               env:
+                BACKUP_METHOD: "tar"
+                DEST_DIR: "{{.Values.persistence.backups.targetSelector.main.mcbackup.mountPath }}"
+                SRC_DIR: "{{.Values.persistence.data.mountPath }}"
+                SERVER_PORT: "{{ .Values.service.main.ports.main.port }}"
+                RCON_HOST: '{{ printf "%s-rcon" (include "tc.v1.common.lib.chart.names.fullname" $) }}'
+                RCON_PORT: "{{ .Values.service.rcon.ports.rcon.port }}"
+                RCON_PASSWORD: "{{ .Values.workload.main.podSpec.containers.main.env.RCON_PASSWORD }}"
+                SERVER_HOST: '{{ include "tc.v1.common.lib.chart.names.fullname" $ }}'
+                ZSTD_PARAMETERS: '{{ join " " .Values.mcbackup.zstd_params }}'
+                EXCLUDES: '{{ join "," .Values.mcbackup.excludes }}'
                 BACKUP_INTERVAL: "4h"
                 INITIAL_DELAY: "2m"
                 LINK_LATEST: "false"
-                PAUSE_IF_NO_PLAYERS: "false"
-                PLAYERS_ONLINE_CHECK_INTERVAL: "5m"
+                PAUSE_IF_NO_PLAYERS: "true"
+                PLAYERS_ONLINE_CHECK_INTERVAL: "1m"
                 PRUNE_BACKUPS_DAYS: "4"
                 TAR_COMPRESS_METHOD: "zstd"
     resources:
@@ -145,21 +188,3 @@ spec:
       limits:
         cpu: null
         memory: 10Gi
-    addons:
-      codeserver:
-        enabled: false
-        ingress:
-          enabled: true
-          ingressClassName: external
-          hosts:
-            - host: ftb-skies-2-config.${DOMAIN_0}
-          integrations:
-            certManager:
-              enabled: true
-              certificateIssuer: le-prod
-            nginx:
-              enabled: true
-              auth:
-                type: authelia
-                internalHost: ${AUTHELIA_INTERNAL_DNS}
-                externalHost: ${AUTHELIA_EXTERNAL_DNS}
