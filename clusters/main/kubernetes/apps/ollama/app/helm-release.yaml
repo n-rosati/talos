@@ -61,4 +61,11 @@ spec:
         model_device_type: "cuda"
         # embedding model
         model: "all-MiniLM-L6-v2"
+    resources:
+      requests:
+        cpu: 100m
+        memory: 2Gi
+      limits:
+        cpu: null
+        memory: 8Gi
 
