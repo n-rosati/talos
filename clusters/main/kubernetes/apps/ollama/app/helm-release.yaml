@@ -38,3 +38,27 @@ spec:
           certManager:
             certificateIssuer: le-staging
             enabled: true
+    workload:
+      main:
+        podSpec:
+          runtimeClassName: "nvidia"
+          containers:
+            main:
+              resources:
+                limits:
+                  nvidia.com/gpu: 1
+    ollama:
+      registration:
+        enabled: true
+        # admin | user | pending
+        def_user_role: "pending"
+      stable_diffusion:
+        base_url: ""
+      whisper:
+        model: "base"
+      rag:
+        # cpu | cuda | mps
+        model_device_type: "cuda"
+        # embedding model
+        model: "all-MiniLM-L6-v2"
+
