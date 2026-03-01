@@ -4,7 +4,7 @@ metadata:
   name: config-overrides
   namespace: mc-nomifactory
 data:
-  ftbbackup.cfg: |
+  ftbbackups.cfg: |
     # Configuration file
 
     general {
