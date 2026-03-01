@@ -13,7 +13,8 @@
                 "minecraft-java",
                 "factorio",
                 "wg-easy",
-                "app-template"
+                "app-template",
+                "ollama"
             ],
             "automergeSchedule": [
                 "* 1-9 * * *"
