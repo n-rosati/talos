@@ -28,7 +28,7 @@ spec:
     ingress:
       main:
         enabled: true
-        ingressClassName: internal
+        ingressClassName: external
         hosts:
           - host: ollama.${DOMAIN_0}
             paths:
@@ -36,8 +36,20 @@ spec:
                 pathType: Prefix
         integrations:
           certManager:
-            certificateIssuer: le-prod
             enabled: true
+            certificateIssuer: le-prod
+          nginx:
+            enabled: true
+            auth:
+              type: authelia
+              internalHost: ${AUTHELIA_INTERNAL_DNS}
+              externalHost: ${AUTHELIA_EXTERNAL_DNS}
+          homepage:
+            enabled: true
+            group: Apps
+            href: https://{{ ( index .Values.ingress.main.hosts 0 ).host }}
+            widget:
+              enabled: false
     workload:
       main:
         podSpec:
@@ -67,4 +79,4 @@ spec:
         memory: 2Gi
       limits:
         cpu: null
-        memory: 12Gi
+        memory: 16Gi
