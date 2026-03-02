@@ -22,6 +22,7 @@ spec:
     remediation:
       retries: 3
   values:
+    TZ: America/Toronto
     global:
       stopAll: false
     ingress:
