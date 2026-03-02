@@ -29,6 +29,7 @@ spec:
     rcon-api-image:
       repository: ghcr.io/nekomeowww/factorio-rcon-api
       tag: 2.1.4@sha256:5ceb891de25c1b0f5161a5bbbecb910a8084ec39425dcac87e9743ba142633dc
+    TZ: America/Toronto
     global:
       stopAll: false
     credentials:
