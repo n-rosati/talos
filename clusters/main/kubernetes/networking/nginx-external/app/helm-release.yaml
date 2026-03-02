@@ -29,6 +29,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    TZ: America/Toronto
     controller:
       replicaCount: 2
       service:

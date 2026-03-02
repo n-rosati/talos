@@ -26,6 +26,7 @@ spec:
   uninstall:
     keepHistory: false
   values:
+    TZ: America/Toronto
     global:
       stopAll: false
     credentials:
