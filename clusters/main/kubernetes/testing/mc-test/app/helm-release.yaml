@@ -29,7 +29,7 @@ spec:
       pullPolicy: Always
     mcBackupImage:
       repository: docker.io/itzg/mc-backup
-      tag: 2026.3.0@sha256:e1972d1fe5fcd97fea2895c635bf5e7f677711766c69c2ef89910a20d784d96a
+      tag: 2026.3.1@sha256:e4a25f13ae0a58407107695cc37e04752a09994028656b4710a305be09b25a43
       pullPolicy: Always
     global:
       stopAll: false
