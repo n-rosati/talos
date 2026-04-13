@@ -3,4 +3,3 @@ kind: Kustomization
 resources:
   - jellyfin/ks.yaml
   - tdarr/ks.yaml
-  - invidious/ks.yaml
