@@ -32,7 +32,7 @@ spec:
       pullPolicy: Always
     mcBackupImage:
       repository: docker.io/itzg/mc-backup
-      tag: 2026.4.0@sha256:b0a41e55bf9fe0b36cc1847d6fad44c638ba14d40b9dcd8cab5a555d454398a9
+      tag: 2026.4.1@sha256:37d21862cbd8a5d2d96667c70b447ba981c956f5d9dc3fd9e7d704cf9ffc589a
       pullPolicy: Always
     credentials:
       home-s3:
