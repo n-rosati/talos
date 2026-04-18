@@ -45,6 +45,7 @@ nodes:
                     - siderolabs/amd-ucode
                     - siderolabs/nonfree-kmod-nvidia-lts
                     - siderolabs/nvidia-container-toolkit-lts
+                    - siderolabs/wireguard
       patches:
         - "@./patches/nvidia.yaml"
         - "@./patches/image-gc.yaml"
