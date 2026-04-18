@@ -90,7 +90,7 @@ spec:
     workload:
       main:
         podSpec:
-          hostNetwork: true
+          #hostNetwork: true
           containers:
             main:
               env:
