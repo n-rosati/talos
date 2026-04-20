@@ -45,15 +45,6 @@ spec:
               enabled: true
               trigger:
                 schedule: 15 6 * * *
-    workload:
-      main:
-        podSpec:
-          runtimeClassName: "nvidia"
-          containers:
-            main:
-              resources:
-                limits:
-                  nvidia.com/gpu: 1
     ingress:
       main:
         enabled: true
