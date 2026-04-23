@@ -26,7 +26,7 @@ spec:
   values:
     image:
       repository: ghcr.io/trueforge-org/lvm-disk-watcher
-      tag: 1.1.0@sha256:c90e5ccbc1b54e843f13b1833d3b82f2c7e4280d4eb459b4441f31ea0097f6eb
+      tag: 1.1.0@sha256:d297e0dc65fae55a791100c5df1b525f511f675dedc5ce653b3aacf3791067a3
     configmap:
       disk-config:
         enabled: true
