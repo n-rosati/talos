@@ -9,7 +9,6 @@ resources:
   # - matrix/ks.yaml
   - nextcloud/ks.yaml
   - ollama/ks.yaml
-  - orcaslicer/ks.yaml
   - part-db/ks.yaml
   - pgadmin/ks.yaml
   - qbittorrent/ks.yaml
