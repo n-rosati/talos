@@ -4,5 +4,4 @@ resources:
   - govee2mqtt/ks.yaml
   - home-assistant/ks.yaml
   - mosquitto/ks.yaml
-  - scrutiny/ks.yaml
   # - rustdesk/ks.yaml

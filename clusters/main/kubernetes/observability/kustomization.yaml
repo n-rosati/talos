@@ -5,3 +5,4 @@ resources:
   - truenas-exporter/ks.yaml
   - nvidia-gpu-exporter/ks.yaml
   - smartctl-exporter/ks.yaml
+  - scrutiny/ks.yaml
