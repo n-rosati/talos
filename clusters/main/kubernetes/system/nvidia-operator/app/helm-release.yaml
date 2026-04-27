@@ -29,3 +29,7 @@ spec:
       enabled: false
     hostPaths:
       driverInsallDir: /usr/local
+    devicePlugin:
+      config:
+        name: time-slicing-config
+        default: any
