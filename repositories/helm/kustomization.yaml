@@ -19,5 +19,6 @@ resources:
   - cilium.yaml
   - weave-gitops.yaml
   - node-feature-discovery.yaml
+  - nvidia.yaml
   - headlamp.yaml
   - element-hq.yaml
