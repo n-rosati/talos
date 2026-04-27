@@ -31,7 +31,7 @@ spec:
   values:
     # See https://discord.com/channels/830763548678291466/1371521205667889173/1371919253371883560 https://pastebin.com/9E17Pnu9
     global:
-      stopAll: true
+      stopAll: false
     # disable all persistence options as they don't work on talos.
     persistence:
       nviaictl:
@@ -58,5 +58,5 @@ spec:
         endpoints:
           - port: main
             relabelings:
-              - sourceLabels: [__meta_kubernetes_endpoint_node_name]
+              - sourceLabels: [ __meta_kubernetes_endpoint_node_name ]
                 targetLabel: instance
