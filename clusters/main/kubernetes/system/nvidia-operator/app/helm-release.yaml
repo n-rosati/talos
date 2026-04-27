@@ -24,8 +24,8 @@ spec:
       retries: 3
   values:
     driver:
-      enabled: false
+      enabled: true
     toolkit:
-      enabled: false
+      enabled: true
     hostPaths:
       driverInsallDir: /usr/local
