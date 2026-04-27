@@ -24,7 +24,7 @@ spec:
       retries: 3
   values:
     global:
-      stopAll: false
+      stopAll: true
     ingress:
       main:
         enabled: true
