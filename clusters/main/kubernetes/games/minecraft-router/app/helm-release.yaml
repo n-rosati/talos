@@ -35,6 +35,7 @@ spec:
           - host: statech-industry.${DOMAIN_0}
           - host: ftb-skies-2.${DOMAIN_0}
           - host: monifactory.${DOMAIN_0}
+          - host: nomifactory.${DOMAIN_0}
         integrations:
           certManager:
             enabled: true
