@@ -30,7 +30,7 @@ spec:
     image:
       repository: codeberg.org/forgejo/forgejo
       pullPolicy: IfNotPresent
-      tag: 15.0.0-rootless
+      tag: 15.0.1-rootless
     credentials:
       home-s3:
         name: home-s3
