@@ -19,53 +19,53 @@ clusterSvcNets:
 cniConfig:
     name: none
 patches:
-    - '@./patches/all.yaml'
+    - "@./patches/all.yaml"
 nodes:
     # We would adivce to always stick to a "k8s-something-1" style naming scheme
     - hostname: k8s-control-1
       ipAddress: ${MASTER1IP_IP}
       controlPlane: true
       nameservers:
-        - 1.1.1.1
-        - 8.8.8.8
+          - 1.1.1.1
+          - 8.8.8.8
       installDiskSelector:
-        model: ADATA*
+          model: ADATA*
       kernelModules:
-        - name: dm_thin_pool
-        - name: dm_mod
+          - name: dm_thin_pool
+          - name: dm_mod
       schematic:
-        customization:
-            extraKernelArgs:
-                - net.ifnames=0
-                - sysctl.kernel.kexec_load_disabled=1
-            systemExtensions:
-                officialExtensions:
-                    - siderolabs/util-linux-tools
-                    - siderolabs/iscsi-tools
-                    - siderolabs/amd-ucode
-                    - siderolabs/nonfree-kmod-nvidia-lts
-                    - siderolabs/nvidia-container-toolkit-lts
-                    - siderolabs/wireguard
+          customization:
+              extraKernelArgs:
+                  - net.ifnames=0
+                  - sysctl.kernel.kexec_load_disabled=1
+              systemExtensions:
+                  officialExtensions:
+                      - siderolabs/util-linux-tools
+                      - siderolabs/iscsi-tools
+                      - siderolabs/amd-ucode
+                      - siderolabs/nonfree-kmod-nvidia-lts
+                      - siderolabs/nvidia-container-toolkit-lts
+                      - siderolabs/wireguard
       patches:
-        - "@./patches/nvidia.yaml"
-        - "@./patches/image-gc.yaml"
+          - "@./patches/nvidia.yaml"
+          - "@./patches/image-gc.yaml"
       networkInterfaces:
-        # suffix is the adapter mac adres.
-        - interface: eth0
-          addresses:
-            - ${MASTER1IP_CIDR}
-          routes:
-            - network: 0.0.0.0/0
-              gateway: ${GATEWAY}
-          vip:
-            ip: ${VIP}
+          # suffix is the adapter mac adres.
+          - interface: eth0
+            addresses:
+                - ${MASTER1IP_CIDR}
+            routes:
+                - network: 0.0.0.0/0
+                  gateway: ${GATEWAY}
+            vip:
+                ip: ${VIP}
 controlPlane:
     patches:
-        - '@./patches/controlplane.yaml'
+        - "@./patches/controlplane.yaml"
     kernelModules:
-     - name: nvme_tcp
-     - name: vfio_pci
-     - name: uio_pci_generic
+        - name: nvme_tcp
+        - name: vfio_pci
+        - name: uio_pci_generic
     schematic:
         customization:
             extraKernelArgs:
@@ -75,29 +75,29 @@ controlPlane:
                     - siderolabs/util-linux-tools
                     - siderolabs/iscsi-tools
     machineFiles:
-    - content: |
-        [plugins."io.containerd.cri.v1.images"]
-          discard_unpacked_layers = false
-      permissions: 0
-      path: /etc/cri/conf.d/20-customization.part
-      op: create
-    - content: |
-        [ NFSMount_Global_Options ]
-        nfsvers=4.2
-        hard=True
-        nconnect=16
-        noatime=True
-      permissions: 420
-      path: /etc/nfsmount.conf
-      op: overwrite
+        - content: |
+              [plugins."io.containerd.cri.v1.images"]
+                discard_unpacked_layers = false
+          permissions: 0
+          path: /etc/cri/conf.d/20-customization.part
+          op: create
+        - content: |
+              [ NFSMount_Global_Options ]
+              nfsvers=4.2
+              hard=True
+              nconnect=16
+              noatime=True
+          permissions: 420
+          path: /etc/nfsmount.conf
+          op: overwrite
 
 worker:
     patches:
-        - '@./patches/worker.yaml'
+        - "@./patches/worker.yaml"
     kernelModules:
-     - name: nvme_tcp
-     - name: vfio_pci
-     - name: uio_pci_generic
+        - name: nvme_tcp
+        - name: vfio_pci
+        - name: uio_pci_generic
     schematic:
         customization:
             systemExtensions:
@@ -105,18 +105,18 @@ worker:
                     - siderolabs/util-linux-tools
                     - siderolabs/iscsi-tools
     machineFiles:
-    - content: |
-        [plugins."io.containerd.cri.v1.images"]
-          discard_unpacked_layers = false
-      permissions: 0
-      path: /etc/cri/conf.d/20-customization.part
-      op: create
-    - content: |
-        [ NFSMount_Global_Options ]
-        nfsvers=4.2
-        hard=True
-        nconnect=16
-        noatime=True
-      permissions: 420
-      path: /etc/nfsmount.conf
-      op: overwrite
+        - content: |
+              [plugins."io.containerd.cri.v1.images"]
+                discard_unpacked_layers = false
+          permissions: 0
+          path: /etc/cri/conf.d/20-customization.part
+          op: create
+        - content: |
+              [ NFSMount_Global_Options ]
+              nfsvers=4.2
+              hard=True
+              nconnect=16
+              noatime=True
+          permissions: 420
+          path: /etc/nfsmount.conf
+          op: overwrite

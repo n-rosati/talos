@@ -12,5 +12,8 @@
   "updateRemoteUserUID": false,
   "runArgs": [
     "--privileged"
-  ]
+  ],
+  "containerEnv": {
+    "TALOSCONFIG": "/workspaces/talos/clusters/main/talos/generated/talosconfig"
+  }
 }
