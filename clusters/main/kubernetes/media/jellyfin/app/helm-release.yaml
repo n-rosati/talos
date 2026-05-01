@@ -39,9 +39,6 @@ spec:
         accessKey: ${S3_ACCESS_KEY}
         secretKey: ${S3_SECRET_KEY}
     service:
-      main:
-        enabled: true
-        type: LoadBalancer
       jellyfin-up:
         enabled: true
         targetSelector: jellyfin-up
