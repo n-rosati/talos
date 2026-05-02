@@ -12,10 +12,12 @@ metadata:
     nginx.ingress.kubernetes.io/auth-signin: "https://auth.${DOMAIN_0}?rm=$request_method"
     nginx.ingress.kubernetes.io/auth-response-headers: "Remote-User,Remote-Name,Remote-Groups,Remote-Email"
     # Homepage integration
-    gethomepage.dev/description: Weave GitOps provides insights into your application deployments, and makes continuous delivery with GitOps easier to adopt and scale across your teams.
+    gethomepage.dev/description: Weave GitOps provides insights into your
+      application deployments, and makes continuous delivery with GitOps easier
+      to adopt and scale across your teams.
     gethomepage.dev/enabled: "true"
     gethomepage.dev/group: Infrastructure
-    gethomepage.dev/href: https://gitops.${DOMAIN_0}/
+    gethomepage.dev/href: https://weave.${DOMAIN_0}/
     gethomepage.dev/icon: https://raw.githubusercontent.com/weaveworks/weave-gitops/refs/heads/main/ui/images/logoLight.svg
     gethomepage.dev/name: Weave GitOps
     gethomepage.dev/pod-selector: app.kubernetes.io/instance=weave-gitops
