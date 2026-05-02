@@ -47,7 +47,6 @@ spec:
         ingressClassName: external
         hosts:
           - host: vaultwarden.${DOMAIN_0}
-          - host: vaultwarden.${DOMAIN_OLD}
         integrations:
           certManager:
             enabled: true
