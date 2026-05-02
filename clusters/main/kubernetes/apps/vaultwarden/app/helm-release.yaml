@@ -75,6 +75,8 @@ spec:
         enabled: true
         installationId: ${VAULTWARDEN_INST_ID}
         installationKey: ${VAULTWARDEN_INST_KEY}
+      log:
+        level: "info"
     persistence:
       data:
         volsync:
