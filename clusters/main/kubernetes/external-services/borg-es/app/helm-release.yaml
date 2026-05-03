@@ -81,3 +81,25 @@ subsets:
       - ip: ${TRUENAS_IP}
     ports:
       - port: 30407
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: ingress-nginx-borg-es-access
+rules:
+  - apiGroups: [""]
+    resources: ["services", "endpoints", "pods"]
+    verbs: ["get", "list", "watch"]
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: ingress-nginx-borg-es-access
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: ingress-nginx-borg-es-access
+subjects:
+  - kind: ServiceAccount
+    name: ingress-nginx
+    namespace: nginx-internal
