@@ -91,7 +91,7 @@ spec:
         useSlice: false
         ports:
           main:
-            protocol: https
+            protocol: tcp
             port: 30407
     ingress:
       main:
