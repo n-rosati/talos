@@ -46,7 +46,7 @@ spec:
       config:
         allow-snippet-annotations: true
         annotations-risk-level: Critical
-        client-body-buffer-size: 128M
+        client-body-buffer-size: 100M
         client-body-timeout: 120
         client-header-timeout: 120
         enable-brotli: "true"
@@ -86,3 +86,5 @@ spec:
           memory: 2Gi
     defaultBackend:
       enabled: false
+    tcp:
+      "30407": "borg-es/borg-es-tcp:30407"

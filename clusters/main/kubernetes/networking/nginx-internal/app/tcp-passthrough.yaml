@@ -1,7 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: tcp-services
-  namespace: nginx-internal
-data:
-  "30407": "borg-es/borg-es-tcp:30407"

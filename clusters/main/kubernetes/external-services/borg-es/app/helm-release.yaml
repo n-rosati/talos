@@ -102,4 +102,4 @@ roleRef:
 subjects:
   - kind: ServiceAccount
     name: ingress-nginx
-    namespace: nginx-internal
+    namespace: nginx-external
