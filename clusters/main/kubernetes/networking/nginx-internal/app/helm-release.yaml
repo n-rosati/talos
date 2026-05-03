@@ -72,7 +72,7 @@ spec:
       extraArgs:
         default-ssl-certificate: "clusterissuer/certificate-issuer-domain-0-wildcard"
         publish-status-address: ${NGINX_INTERNAL_IP}
-        tcp-services-configmap: "nginx-internal/tcp-services"
+        # tcp-services-configmap: "nginx-internal/tcp-services"
       terminationGracePeriodSeconds: 120
       publishService:
         enabled: false
@@ -83,3 +83,5 @@ spec:
           memory: 500Mi
     defaultBackend:
       enabled: true
+    tcp:
+      "30407": "borg-es/borg-es-tcp:30407"
