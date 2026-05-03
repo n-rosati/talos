@@ -37,11 +37,6 @@ spec:
         annotations:
           metallb.io/ip-allocated-from-pool: main
           metallb.io/loadBalancerIPs: ${NGINX_INTERNAL_IP}
-        extraPorts:
-          - name: borg-ssh
-            port: 30407
-            targetPort: 30407
-            protocol: TCP
       ingressClassByName: true
       watchIngressWithoutClass: true
       ingressClassResource:
