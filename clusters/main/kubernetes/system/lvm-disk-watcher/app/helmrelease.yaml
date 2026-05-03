@@ -24,9 +24,6 @@ spec:
     remediation:
       retries: 3
   values:
-    image:
-      repository: ghcr.io/trueforge-org/lvm-disk-watcher
-      tag: 1.1.0@sha256:531d22fd97fd7086ef6854c232f45d61c9e0e1b8e91f8c6bf1207b8648d8aab2
     configmap:
       disk-config:
         enabled: true
