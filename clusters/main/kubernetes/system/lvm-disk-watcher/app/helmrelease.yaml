@@ -24,6 +24,9 @@ spec:
     remediation:
       retries: 3
   values:
+    image:
+      repository: oci.trueforge.org/containerforge/lvm-disk-watcher
+      tag: 1.1.0
     configmap:
       disk-config:
         enabled: true
