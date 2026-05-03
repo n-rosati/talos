@@ -4,4 +4,4 @@ metadata:
   name: tcp-services
   namespace: nginx-internal
 data:
-  "30407": "borg-es/borg-es-external-service:30407"
+  "30407": "${TRUENAS_IP}:30407"

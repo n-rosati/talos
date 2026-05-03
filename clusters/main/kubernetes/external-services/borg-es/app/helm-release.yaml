@@ -26,27 +26,26 @@ spec:
       main:
         type: ExternalIP
         externalIP: ${TRUENAS_IP}
-        useSlice: false
         ports:
           main:
-            protocol: https
+            protocol: http
             port: 30406
     ingress:
       main:
         enabled: true
-        ingressClassName: internal
+        ingressClassName: external
         hosts:
           - host: borgui.${DOMAIN_0}
         integrations:
           certManager:
             enabled: true
             certificateIssuer: le-prod
-          # nginx:
-          #   enabled: true
-          #   auth:
-          #     type: authelia
-          #     internalHost: ${AUTHELIA_INTERNAL_DNS}
-          #     externalHost: ${AUTHELIA_EXTERNAL_DNS}
+          nginx:
+            enabled: true
+            auth:
+              type: authelia
+              internalHost: ${AUTHELIA_INTERNAL_DNS}
+              externalHost: ${AUTHELIA_EXTERNAL_DNS}
           # homepage:
           #   enabled: true
           #   name: TrueNAS
@@ -88,7 +87,6 @@ spec:
       main:
         type: ExternalIP
         externalIP: ${TRUENAS_IP}
-        useSlice: false
         ports:
           main:
             protocol: tcp
