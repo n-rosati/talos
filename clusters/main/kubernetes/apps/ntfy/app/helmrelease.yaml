@@ -51,6 +51,10 @@ spec:
             icon: https://github.com/binwiederhier/ntfy/blob/main/web/public/static/images/ntfy.png
             widget:
               enabled: false
+    persistence:
+      webpush:
+        enabled: true
+        mountPath: "/var/lib/ntfy"
     workload:
       main:
         podSpec:
