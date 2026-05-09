@@ -31,4 +31,4 @@ spec:
               env:
                 UPDATE_IPV6: false
                 CF_APITOKEN: ${DOMAIN_0_CLOUDFLARE_TOKEN}
-                CF_HOSTS: "home.${DOMAIN_0}"
+                CF_HOSTS: "home.${DOMAIN_0},${DOMAIN_0}"
