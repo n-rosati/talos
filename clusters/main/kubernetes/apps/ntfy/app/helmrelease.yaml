@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: ntfy
-      version: 2.22.0
+      version: 13.5.0
       sourceRef:
         kind: HelmRepository
         name: truecharts
@@ -43,7 +43,8 @@ spec:
           homepage:
             enabled: true
             name: Ntfy
-            description: ntfy is a simple HTTP-based pub-sub notification service. It allows
+            description:
+              ntfy is a simple HTTP-based pub-sub notification service. It allows
               you to send notifications to your phone or desktop via scripts
               from any computer.
             group: Apps

@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: static-web-server
-      version: 2.42.0
+      version: 8.3.0
       sourceRef:
         kind: HelmRepository
         name: truecharts
@@ -64,7 +64,8 @@ spec:
           homepage:
             enabled: true
             name: static-web-server
-            description: A cross-platform, high-performance and asynchronous web server for
+            description:
+              A cross-platform, high-performance and asynchronous web server for
               static files-serving.
             group: Apps
             icon: https://github.com/static-web-server/static-web-server/blob/master/docs/content/assets/sws.svg
