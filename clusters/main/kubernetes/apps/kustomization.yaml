@@ -8,12 +8,14 @@ resources:
   - kubernetes-dashboard/ks.yaml
   # - matrix/ks.yaml
   - nextcloud/ks.yaml
+  - ntfy/ks.yaml
   - ollama/ks.yaml
   - part-db/ks.yaml
   - pgadmin/ks.yaml
   - qbittorrent/ks.yaml
   - remmina/ks.yaml
   - spoolman/ks.yaml
+  - static-web-server/ks.yaml
   - stirling-pdf/ks.yaml
   - thelounge/ks.yaml
   - vaultwarden/ks.yaml

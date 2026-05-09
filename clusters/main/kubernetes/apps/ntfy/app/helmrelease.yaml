@@ -1,0 +1,74 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: ntfy
+  namespace: ntfy
+spec:
+  interval: 2m
+  chart:
+    spec:
+      chart: ntfy
+      version: 2.22.0
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    global:
+      stopAll: false
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: external
+        hosts:
+          - host: ntfy.${DOMAIN_0}
+        integrations:
+          certManager:
+            enabled: true
+            certificateIssuer: le-prod
+          nginx:
+            enabled: true
+            auth:
+              type: authelia
+              internalHost: ${AUTHELIA_INTERNAL_DNS}
+              externalHost: ${AUTHELIA_EXTERNAL_DNS}
+          homepage:
+            enabled: true
+            name: Ntfy
+            description: ntfy is a simple HTTP-based pub-sub notification service. It allows
+              you to send notifications to your phone or desktop via scripts
+              from any computer.
+            group: Apps
+            icon: https://github.com/binwiederhier/ntfy/blob/main/web/public/static/images/ntfy.png
+            widget:
+              enabled: false
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              env:
+                NTFY_BASE_URL: "{{ ( index .Values.ingress.main.hosts 0 ).host }}"
+                NTFY_BEHIND_PROXY: "true"
+                NTFY_ATTACHMENT_CACHE_DIR: "/var/cache/ntfy/attachments"
+                NTFY_ATTACHMENT_FILE_SIZE_LIMIT: "1G"
+                NTFY_ATTACHMENT_TOTAL_SIZE_LIMIT: "9500M"
+                NTFY_ATTACHMENT_EXPIRY_DURATION: "72h"
+                NTFY_CACHE_FILE: "/var/cache/ntfy/cache.db"
+                NTFY_CACHE_DURATION: "168h"
+                NTFY_WEB_PUSH_PUBLIC_KEY: "${NTFY_WEBPUSH_PUBLIC_KEY}"
+                NTFY_WEB_PUSH_PRIVATE_KEY: "${NTFY_WEBPUSH_PRIVATE_KEY}"
+                NTFY_WEB_PUSH_FILE: "/var/lib/ntfy/webpush.db"
+                NTFY_WEB_PUSH_EMAIL_ADDRESS: "${PERSONAL_EMAIL}"
+                NTFY_UPSTREAM_BASE_URL: "https://ntfy.sh"
+    metrics:
+      main:
+        enabled: true

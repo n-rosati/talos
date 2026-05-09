@@ -1,0 +1,93 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: static-web-server
+  namespace: static-web-server
+spec:
+  interval: 2m
+  chart:
+    spec:
+      chart: static-web-server
+      version: 2.42.0
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    global:
+      stopAll: false
+    credentials:
+      home-s3:
+        name: home-s3
+        type: s3
+        url: ${S3_URL}
+        bucket: static-web-server
+        encrKey: ${BACKUP_ENCRYPTION_KEY}
+        accessKey: ${S3_ACCESS_KEY}
+        secretKey: ${S3_SECRET_KEY}
+    persistence:
+      config:
+        volsync:
+          - name: config
+            type: restic
+            credentials: home-s3
+            dest:
+              enabled: true
+            src:
+              enabled: true
+              trigger:
+                schedule: 15 6 * * *
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: external
+        hosts:
+          - host: ${DOMAIN_0}
+        integrations:
+          certManager:
+            enabled: true
+            certificateIssuer: le-staging
+          nginx:
+            enabled: true
+            auth:
+              type: authelia
+              internalHost: ${AUTHELIA_INTERNAL_DNS}
+              externalHost: ${AUTHELIA_EXTERNAL_DNS}
+          homepage:
+            enabled: true
+            name: static-web-server
+            description: A cross-platform, high-performance and asynchronous web server for
+              static files-serving.
+            group: Apps
+            icon: https://github.com/static-web-server/static-web-server/blob/master/docs/content/assets/sws.svg
+            widget:
+              enabled: false
+    addons:
+      codeserver:
+        enabled: true
+        workingDir: "/public"
+        service:
+          type: ClusterIP
+        ingress:
+          enabled: true
+          ingressClassName: external
+          hosts:
+            - host: edit-sws.${DOMAIN_0}
+          integrations:
+            certManager:
+              enabled: true
+              certificateIssuer: le-prod
+            nginx:
+              enabled: true
+              auth:
+                type: authelia
+                internalHost: ${AUTHELIA_INTERNAL_DNS}
+                externalHost: ${AUTHELIA_EXTERNAL_DNS}
