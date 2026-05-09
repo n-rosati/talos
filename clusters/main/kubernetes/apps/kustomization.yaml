@@ -15,7 +15,7 @@ resources:
   - qbittorrent/ks.yaml
   - remmina/ks.yaml
   - spoolman/ks.yaml
-  - static-web-server/ks.yaml
+  # - static-web-server/ks.yaml
   - stirling-pdf/ks.yaml
   - thelounge/ks.yaml
   - vaultwarden/ks.yaml
