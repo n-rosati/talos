@@ -52,7 +52,7 @@ spec:
         enabled: true
         ingressClassName: external
         hosts:
-          - host: release-mon.${DOMAIN_0}
+          - host: grm.${DOMAIN_0}
         integrations:
           certManager:
             enabled: true
@@ -95,6 +95,9 @@ spec:
                 AUTH_SECRET: ${GRM_AUTH_SECRET}
                 AUTH_USERNAME: ${GRM_AUTH_USERNAME}
                 AUTH_PASSWORD: ${GRM_AUTH_PASSWORD}
+                BETTER_AUTH_SECRET: ${GRM_BETTER_AUTH_SECRET}
+                BETTER_AUTH_URL: "{{ ( index .Values.ingress.main.hosts 0 ).host }}"
+                AUTH_SETUP_TOKEN: ${GRM_SETUP_TOKEN}
                 GITHUB_ACCESS_TOKEN: ${GRM_GITHUB_ACCESS_TOKEN}
                 MAIL_HOST: ${SMTP_SERVER}
                 MAIL_PORT: ${SMTP_PORT}
