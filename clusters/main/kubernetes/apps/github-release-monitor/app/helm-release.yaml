@@ -96,7 +96,7 @@ spec:
                 AUTH_USERNAME: ${GRM_AUTH_USERNAME}
                 AUTH_PASSWORD: ${GRM_AUTH_PASSWORD}
                 BETTER_AUTH_SECRET: ${GRM_BETTER_AUTH_SECRET}
-                BETTER_AUTH_URL: "{{ ( index .Values.ingress.main.hosts 0 ).host }}"
+                BETTER_AUTH_URL: "https://{{ ( index .Values.ingress.main.hosts 0 ).host }}"
                 AUTH_SETUP_TOKEN: ${GRM_SETUP_TOKEN}
                 GITHUB_ACCESS_TOKEN: ${GRM_GITHUB_ACCESS_TOKEN}
                 MAIL_HOST: ${SMTP_SERVER}
