@@ -19,3 +19,6 @@ spec:
   secretRef: renovate-secret
   githubAppReference:
     secretName: renovate-github-secret
+    appIdSecretKey: appId
+    installationIdSecretKey: installationId
+    pemSecretKey: pem

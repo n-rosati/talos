@@ -5,4 +5,3 @@ resources:
   - helm-release.yaml
   - renovatejob.yaml
   - renovate-github.secret.yaml
-  - renovate.secret.yaml
