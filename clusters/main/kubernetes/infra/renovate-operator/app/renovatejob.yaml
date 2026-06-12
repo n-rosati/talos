@@ -18,7 +18,7 @@ spec:
   schedule: 0/15 * * * *
   secretRef: renovate-secret
   githubAppReference:
-    appIdSecretKey: ${RENOVATE_APP_ID}
-    installationIdSecretKey: ${RENOVATE_INSTALLATION_ID}
-    pemSecretKey: ${RENOVATE_SECRET_KEY}
+    appIdSecretKey: "${RENOVATE_APP_ID}"
+    installationIdSecretKey: "${RENOVATE_INSTALLATION_ID}"
+    pemSecretKey: "${RENOVATE_SECRET_KEY}"
     secretName: renovate-github-secret
