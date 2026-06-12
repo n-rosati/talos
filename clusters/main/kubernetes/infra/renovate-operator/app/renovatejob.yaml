@@ -17,7 +17,7 @@ spec:
       memory: 128Mi
   schedule: 0/15 * * * *
   githubAppReference:
-    secretName: renovate-github-secret
+    secretName: renovate-github-secrets
     appIdSecretKey: appId
     installationIdSecretKey: installationId
     pemSecretKey: pem
@@ -25,5 +25,5 @@ spec:
     enabled: true
     authentication: true
     secretRef:
-      name: renovate-webhook-token
-      key: token
+      name: renovate-github-secrets
+      key: webhookToken
