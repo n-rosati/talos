@@ -1,7 +1,7 @@
 apiVersion: renovate-operator.mogenius.com/v1alpha1
 kind: RenovateJob
 metadata:
-  name: renovate-github
+  name: renovate-talos
   namespace: renovate-operator
 spec:
   discoveryFilters:
@@ -21,3 +21,9 @@ spec:
     appIdSecretKey: appId
     installationIdSecretKey: installationId
     pemSecretKey: pem
+  webhook:
+    enabled: true
+    authentication: true
+    secretRef:
+      name: renovate-webhook-token
+      key: token
