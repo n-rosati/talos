@@ -4,4 +4,6 @@ resources:
   - namespace.yaml
   - helm-release.yaml
   - renovatejob.yaml
-  # - renovate.secret.yaml
+  - renovate-github.secret
+  - renovate-github.secret.yaml
+  - renovate.secret.yaml
