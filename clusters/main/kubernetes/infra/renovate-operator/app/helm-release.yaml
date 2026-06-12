@@ -50,11 +50,7 @@ spec:
           cert-manager.io/cluster-issuer: le-prod
           cert-manager.io/private-key-rotation-policy: Always
         ingressClassName: external
-        hosts:
-          - host: renovate-webhook.${DOMAIN_0}
-            paths:
-              - pathType: Prefix
-                path: /
+        host: renovate-webhook.${DOMAIN_0}
         tls:
           - secretName: renovate-operator-webhook-tls-0
             hosts:
