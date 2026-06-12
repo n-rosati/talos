@@ -16,7 +16,6 @@ spec:
       cpu: 100m
       memory: 128Mi
   schedule: 0/15 * * * *
-  secretRef: renovate-secret
   githubAppReference:
     secretName: renovate-github-secret
     appIdSecretKey: appId
