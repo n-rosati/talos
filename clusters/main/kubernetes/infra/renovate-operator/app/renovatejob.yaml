@@ -23,7 +23,8 @@ spec:
     pemSecretKey: pem
   webhook:
     enabled: true
-    authentication: true
-    secretRef:
-      name: renovate-github-secrets
-      key: webhookToken
+    authentication:
+      enabled: true
+      secretRef:
+        name: renovate-github-secrets
+        key: webhookToken
