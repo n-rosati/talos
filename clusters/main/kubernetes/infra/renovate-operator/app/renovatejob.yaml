@@ -5,7 +5,7 @@ metadata:
   namespace: renovate-operator
 spec:
   discoveryFilters:
-    - "${GITHUB_COM_USER}/talos"
+    - "n-rosati/talos"
   provider:
     name: github
   extraEnv: []
