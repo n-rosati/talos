@@ -59,6 +59,12 @@ spec:
       enabled: true
       auth:
         enabled: false
+      dataStorage:
+        enabled: true
+      metrics:
+        enabled: true
+        serviceMonitor:
+          enabled: true
     metrics:
       enabled: true
       serviceMonitor:
