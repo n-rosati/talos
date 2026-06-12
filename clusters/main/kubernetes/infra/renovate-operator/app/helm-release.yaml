@@ -38,12 +38,6 @@ spec:
           paths:
             - pathType: Prefix
               path: /
-              # type: ImplementationSpecific
-              # backend:
-              #   service:
-              #     name: renovate-operator
-              #     port:
-              #       number: 80
       tls:
         - secretName: renovate-operator-tls-0
           hosts:

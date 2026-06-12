@@ -1,0 +1,24 @@
+apiVersion: renovate-operator.mogenius.com/v1alpha1
+kind: RenovateJob
+metadata:
+  name: renovate-github
+  namespace: renovate-operator
+spec:
+  discoveryFilters:
+    - "${GITHUB_COM_USER}/talos"
+  provider:
+    name: github
+  extraEnv: []
+  image: renovate/renovate:43.104.1
+  parallelism: 5
+  resources:
+    requests:
+      cpu: 100m
+      memory: 128Mi
+  schedule: 0/15 * * * *
+  secretRef: renovate-secret
+  githubAppReference:
+    appIdSecretKey: ${RENOVATE_APP_ID}
+    installationIdSecretKey: ${RENOVATE_INSTALLATION_ID}
+    pemSecretKey: ${RENOVATE_SECRET_KEY}
+    secretName: renovate-github-secret
