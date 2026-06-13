@@ -8,5 +8,5 @@
         "github>n-rosati/talos//.github/renovate/hostRules.json5"
     ],
     "timezone": "America/Toronto",
-    "platformAutomerge": true
+    "platformAutomerge": false
 }
