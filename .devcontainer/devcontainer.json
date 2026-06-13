@@ -13,6 +13,7 @@
     "--privileged"
   ],
   "containerEnv": {
-    "TALOSCONFIG": "/workspaces/talos/clusters/main/talos/generated/talosconfig"
+    "TALOSCONFIG": "/workspaces/talos/clusters/main/talos/generated/talosconfig",
+    "KUBECONFIG": "/workspaces/talos/clusters/main/talos/generated/kubeconfig"
   }
 }
