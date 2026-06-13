@@ -8,7 +8,9 @@ spec:
     - "n-rosati/talos"
   provider:
     name: github
-  extraEnv: []
+  extraEnv:
+    - name: RENOVATE_GIT_IGNORED_AUTHORS
+      value: "236480601+redecorate-bot[bot]@users.noreply.github.com"
   image: renovate/renovate:43.104.1
   parallelism: 5
   resources:
