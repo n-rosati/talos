@@ -78,7 +78,6 @@ spec:
                 NTFY_CACHE_DURATION: "168h"
                 NTFY_WEB_PUSH_PUBLIC_KEY: "${NTFY_WEBPUSH_PUBLIC_KEY}"
                 NTFY_WEB_PUSH_PRIVATE_KEY: "${NTFY_WEBPUSH_PRIVATE_KEY}"
-                NTFY_WEB_PUSH_FILE: "/var/lib/ntfy/webpush.db"
                 NTFY_WEB_PUSH_EMAIL_ADDRESS: "${PERSONAL_EMAIL}"
                 NTFY_UPSTREAM_BASE_URL: "https://ntfy.sh"
                 NTFY_DATABASE_URL: "{{ .Values.cnpg.main.creds.std }}"
