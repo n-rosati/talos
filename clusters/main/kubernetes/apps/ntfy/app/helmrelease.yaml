@@ -73,10 +73,10 @@ spec:
                 NTFY_ENABLE_LOGIN: "true"
                 NTFY_REQUIRE_LOGIN: "true"
                 ENABLE_ATTACHMENT_CACHE_DIR: true
-                NTFY_CACHE_DURATION: "1d"
+                NTFY_CACHE_DURATION: "7d"
                 NTFY_ATTACHMENT_FILE_SIZE_LIMIT: "1G"
                 NTFY_ATTACHMENT_TOTAL_SIZE_LIMIT: "9500M"
-                NTFY_ATTACHMENT_EXPIRY_DURATION: "72h"
+                NTFY_ATTACHMENT_EXPIRY_DURATION: "7d"
                 NTFY_WEB_PUSH_PUBLIC_KEY: "${NTFY_WEBPUSH_PUBLIC_KEY}"
                 NTFY_WEB_PUSH_PRIVATE_KEY: "${NTFY_WEBPUSH_PRIVATE_KEY}"
                 NTFY_WEB_PUSH_EMAIL_ADDRESS: "${PERSONAL_EMAIL}"
@@ -84,6 +84,8 @@ spec:
                 NTFY_AUTH_ACCESS: "*:up*:write-only"
                 NTFY_LOG_LEVEL: debug
                 NTFY_AUTH_USERS: ${NTFY_USERS}
+                NTFY_PROXY_TRUSTED_HOSTS: ${PODNET}
+                NTFY_MESSAGE_DELAY_LIMIT: 7d
     metrics:
       main:
         enabled: true
