@@ -72,16 +72,22 @@ spec:
               env:
                 NTFY_BASE_URL: "https://{{ ( index .Values.ingress.main.hosts 0 ).host }}"
                 NTFY_BEHIND_PROXY: "true"
+                NTFY_DATABASE_URL: "{{ .Values.cnpg.main.creds.std }}"
+                NTFY_AUTH_DEFAULT_ACCESS: "deny-all"
+                NTFY_ENABLE_LOGIN: "true"
+                NTFY_REQUIRE_LOGIN: "true"
+                ENABLE_ATTACHMENT_CACHE_DIR: true
+                NTFY_CACHE_DURATION: "1d"
                 NTFY_ATTACHMENT_FILE_SIZE_LIMIT: "1G"
                 NTFY_ATTACHMENT_TOTAL_SIZE_LIMIT: "9500M"
                 NTFY_ATTACHMENT_EXPIRY_DURATION: "72h"
-                NTFY_CACHE_DURATION: "168h"
                 NTFY_WEB_PUSH_PUBLIC_KEY: "${NTFY_WEBPUSH_PUBLIC_KEY}"
                 NTFY_WEB_PUSH_PRIVATE_KEY: "${NTFY_WEBPUSH_PRIVATE_KEY}"
                 NTFY_WEB_PUSH_EMAIL_ADDRESS: "${PERSONAL_EMAIL}"
                 NTFY_UPSTREAM_BASE_URL: "https://ntfy.sh"
-                NTFY_DATABASE_URL: "{{ .Values.cnpg.main.creds.std }}"
+                NTFY_AUTH_ACCESS: "*:up*:write-only"
                 NTFY_LOG_LEVEL: debug
+                NTFY_AUTH_USERS: ${NTFY_USERS}
     metrics:
       main:
         enabled: true
