@@ -81,13 +81,13 @@ spec:
                 NTFY_WEB_PUSH_FILE: "/var/lib/ntfy/webpush.db"
                 NTFY_WEB_PUSH_EMAIL_ADDRESS: "${PERSONAL_EMAIL}"
                 NTFY_UPSTREAM_BASE_URL: "https://ntfy.sh"
-                NTFY_DATABASE_URL: "{{ .Values.cnpg.main.creds.host }}"
+                # NTFY_DATABASE_URL: "{{ .Values.cnpg.main.creds.host }}"
     metrics:
       main:
         enabled: true
     cnpg:
       main:
-        enabled: true
+        enabled: false
         database: ntfy
         user: ntfy
         password: ${NTFY_DB_PASSWORD}
