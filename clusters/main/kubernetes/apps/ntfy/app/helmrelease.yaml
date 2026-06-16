@@ -81,7 +81,7 @@ spec:
                 NTFY_WEB_PUSH_FILE: "/var/lib/ntfy/webpush.db"
                 NTFY_WEB_PUSH_EMAIL_ADDRESS: "${PERSONAL_EMAIL}"
                 NTFY_UPSTREAM_BASE_URL: "https://ntfy.sh"
-                NTFY_DATABASE_URL: "{{ .Values.cnpg.main.creds.url }}"
+                NTFY_DATABASE_URL: "{{ .Values.cnpg.main.creds.std }}"
                 NTFY_LOG_LEVEL: debug
     metrics:
       main:
