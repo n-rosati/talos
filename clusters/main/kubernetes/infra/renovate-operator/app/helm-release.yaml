@@ -52,7 +52,7 @@ spec:
             hosts:
               - renovate-webhook.${DOMAIN_0}
     valkey:
-      enabled: false
+      enabled: true
       auth:
         enabled: false
       dataStorage:
