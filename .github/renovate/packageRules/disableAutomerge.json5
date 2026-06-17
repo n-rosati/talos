@@ -9,9 +9,7 @@
                 "helm"
             ],
             "automerge": false,
-            "matchPackagePatterns": [
-                "renovate-operator"
-            ]
+            "matchPackagePatterns": []
         }
     ]
 }
