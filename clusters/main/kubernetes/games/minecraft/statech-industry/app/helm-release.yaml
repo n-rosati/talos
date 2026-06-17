@@ -28,7 +28,7 @@ spec:
       stopAll: true
     mcBackupImage:
       repository: docker.io/itzg/mc-backup
-      tag: 2026.6.0@sha256:f4f2b46f4cd67c74ba65ea3c2a4effb19804e834e84a64c071a4f3a47ebd6b44
+      tag: 2026.6.1@sha256:4c06080d7c465334ceae27954be3290f85b940c094ab3ef9096616e3e6cd2de4
       pullPolicy: Always
     credentials:
       home-s3:
