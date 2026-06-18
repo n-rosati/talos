@@ -66,6 +66,7 @@ spec:
           containers:
             main:
               env:
+                TZ: America/Toronto
                 NTFY_BASE_URL: "https://{{ ( index .Values.ingress.main.hosts 0 ).host }}"
                 NTFY_BEHIND_PROXY: "true"
                 NTFY_DATABASE_URL: "{{ .Values.cnpg.main.creds.std }}"
