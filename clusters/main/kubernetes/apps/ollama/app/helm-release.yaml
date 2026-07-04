@@ -25,7 +25,7 @@ spec:
   values:
     global:
       stopAll: false
-    services:
+    service:
       api:
         type: LoadBalancer
         loadBalancerIP: ${OLLAMA_API_IP}
