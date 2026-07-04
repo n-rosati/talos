@@ -26,12 +26,12 @@ spec:
     global:
       stopAll: false
     services:
-      api:
-        type: LoadBalancer
-        loadBalancerIP: ${OLLAMA_API_IP}
-        integrations:
-          metallb:
-            enabled: true
+      # api:
+      #   type: LoadBalancer
+      #   loadBalancerIP: ${OLLAMA_API_IP}
+      #   integrations:
+      #     metallb:
+      #       enabled: true
     ingress:
       main:
         enabled: true
