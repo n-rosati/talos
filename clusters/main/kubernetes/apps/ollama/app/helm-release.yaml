@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: ollama
-      version: 9.22.1
+      version: 9.19.0
       sourceRef:
         kind: HelmRepository
         name: truecharts
@@ -25,6 +25,13 @@ spec:
   values:
     global:
       stopAll: false
+    services:
+      api:
+        type: LoadBalancer
+        loadBalancerIP: ${OLLAMA_API_IP}
+        integrations:
+          metallb:
+            enabled: true
     ingress:
       main:
         enabled: true
