@@ -153,7 +153,7 @@ spec:
           marketplace:
             # renovate: depName="Kubernetes-PVC-Stats"
             id: 22604
-            revision: 2
+            revision: 3
         pvc-stats:
           enabled: true
           datasource:
