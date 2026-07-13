@@ -24,7 +24,7 @@ spec:
   values:
     image:
       repository: docker.io/factoriotools/factorio
-      tag: stable@sha256:d98a1554e7de21c299f263fde85cbec5c577afae2cef656378be8b658e929d6a
+      tag: stable@sha256:9c42c4100d908a9624e8834c2a7faf2b3407009c9311b4e0f3da1d29ab484f89
       pullPolicy: IfNotPresent
     rcon-api-image:
       repository: ghcr.io/nekomeowww/factorio-rcon-api
