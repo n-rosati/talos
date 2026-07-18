@@ -69,8 +69,6 @@ spec:
             description: A powerful, self-hostable application to automatically monitor GitHub repository releases and receive instant email notifications.
             icon: https://raw.githubusercontent.com/iamspido/github-release-monitor/refs/heads/main/src/app/icon.svg
             group: Apps
-            widget:
-              enabled: false
     persistence:
       data:
         enabled: true
@@ -103,6 +101,6 @@ spec:
                 MAIL_PORT: ${SMTP_PORT}
                 MAIL_USERNAME: ${SERVICE_EMAIL}
                 MAIL_PASSWORD: ${SERVICE_EMAIL_PASSWORD}
-                MAIL_FROM_ADDRESS: ${SERVICE_EMAIL}
                 MAIL_FROM_NAME: "GitHub Release Monitor"
+                MAIL_FROM_ADDRESS: ${SERVICE_EMAIL}
                 MAIL_TO_ADDRESS: ${PERSONAL_EMAIL}
