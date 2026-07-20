@@ -89,7 +89,6 @@ spec:
             main:
               env:
                 AUTHENTICATION_METHOD: "External"
-                AUTH_SECRET: ${GRM_AUTH_SECRET}
                 BETTER_AUTH_SECRET: ${GRM_BETTER_AUTH_SECRET}
                 BETTER_AUTH_URL: "https://{{ ( index .Values.ingress.main.hosts 0 ).host }}"
                 AUTH_SETUP_TOKEN: ${GRM_SETUP_TOKEN}
