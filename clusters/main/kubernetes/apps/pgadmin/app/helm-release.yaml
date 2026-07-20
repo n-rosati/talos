@@ -73,8 +73,6 @@ spec:
               enabled: true
             src:
               enabled: true
-              trigger:
-                schedule: 40 4 * * *
       config-py:
         enabled: true
         type: secret

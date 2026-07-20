@@ -64,8 +64,6 @@ spec:
               enabled: true
             src:
               enabled: true
-              trigger:
-                schedule: 20 4 * * *
       config:
         volsync:
           - credentials: home-s3
@@ -75,8 +73,6 @@ spec:
               enabled: true
             src:
               enabled: true
-              trigger:
-                schedule: 20 4 * * *
       data:
         type: nfs
         server: ${TRUENAS_IP}

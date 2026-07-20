@@ -76,8 +76,6 @@ spec:
               enabled: true
             src:
               enabled: true
-              trigger:
-                schedule: 50 4 * * *
     cnpg:
       main:
         password: ${CNPG_PASSWORD}

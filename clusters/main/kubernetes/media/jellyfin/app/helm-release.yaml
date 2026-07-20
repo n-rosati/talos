@@ -79,8 +79,6 @@ spec:
               enabled: true
             src:
               enabled: true
-              trigger:
-                schedule: 55 5 * * *
       data:
         volsync:
           - credentials: home-s3
@@ -90,8 +88,6 @@ spec:
               enabled: false # CHANGE TO true ON REINSTALL
             src:
               enabled: true
-              trigger:
-                schedule: 55 5 * * *
       media:
         enabled: true
         type: nfs

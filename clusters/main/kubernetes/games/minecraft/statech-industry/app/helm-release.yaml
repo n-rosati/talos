@@ -65,8 +65,6 @@ spec:
               enabled: true
             src:
               enabled: true
-              trigger:
-                schedule: 35 5 * * *
       backups:
         enabled: true
         type: nfs

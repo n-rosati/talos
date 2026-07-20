@@ -66,8 +66,6 @@ spec:
               enabled: true
             src:
               enabled: true
-              trigger:
-                schedule: 55 4 * * *
       uploads:
         enabled: true
         type: pvc
@@ -80,8 +78,6 @@ spec:
               enabled: true
             src:
               enabled: true
-              trigger:
-                schedule: 55 4 * * *
     addons:
       codeserver:
         enabled: true

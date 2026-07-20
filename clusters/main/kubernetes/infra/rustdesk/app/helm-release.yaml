@@ -44,15 +44,13 @@ spec:
     persistence:
       data:
         volsync:
-        - name: data
-          type: restic
-          credentials: home-s3
-          dest:
-            enabled: true
-          src:
-            enabled: true
-            trigger:
-              schedule: 20 6 * * *
+          - name: data
+            type: restic
+            credentials: home-s3
+            dest:
+              enabled: true
+            src:
+              enabled: true
     service:
       main:
         loadBalancerIP: ${RUSTDESK_IP}

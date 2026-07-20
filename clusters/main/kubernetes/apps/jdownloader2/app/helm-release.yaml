@@ -69,8 +69,6 @@ spec:
               enabled: true
             src:
               enabled: true
-              trigger:
-                schedule: 15 4 * * *
       output:
         type: nfs
         enabled: true
