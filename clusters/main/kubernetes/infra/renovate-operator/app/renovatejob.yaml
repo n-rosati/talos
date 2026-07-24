@@ -6,6 +6,7 @@ metadata:
 spec:
   discoveryFilters:
     - "n-rosati/talos"
+    - "n-rosati/TalosTesting"
   provider:
     name: github
   extraEnv:
