@@ -99,12 +99,6 @@ spec:
           containers:
             main:
               imageSelector: j8Image
-              command:
-                - /bin/sh
-                - -c
-                - |
-                  echo "Sleeping for 5 minutes..."
-                  sleep 600
               env:
                 OPS: Hydranoid620
                 WHITELIST: Hydranoid620
