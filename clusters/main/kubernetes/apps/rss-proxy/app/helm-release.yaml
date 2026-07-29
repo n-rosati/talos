@@ -28,6 +28,9 @@ spec:
         ports:
           main:
             enabled: true
+            port: 3000
+            protocol: http
+            targetPort: 3000
     ingress:
       main:
         enabled: true
