@@ -13,6 +13,7 @@ resources:
   - pgadmin/ks.yaml
   - qbittorrent/ks.yaml
   - remmina/ks.yaml
+  - rsshub/ks.yaml
   - spoolman/ks.yaml
   - stirling-pdf/ks.yaml
   - thelounge/ks.yaml
