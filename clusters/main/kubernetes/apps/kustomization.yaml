@@ -16,4 +16,5 @@ resources:
   - spoolman/ks.yaml
   - stirling-pdf/ks.yaml
   - thelounge/ks.yaml
+  - tt-rss/ks.yaml
   - vaultwarden/ks.yaml
