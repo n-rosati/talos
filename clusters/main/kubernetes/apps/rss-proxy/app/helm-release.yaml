@@ -42,7 +42,7 @@ spec:
             enabled: true
             certificateIssuer: le-prod
           nginx:
-            enabled: true
+            enabled: false
             auth:
               type: authelia
               internalHost: ${AUTHELIA_INTERNAL_DNS}
