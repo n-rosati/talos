@@ -41,9 +41,3 @@ spec:
           certManager:
             enabled: true
             certificateIssuer: le-prod
-          nginx:
-            enabled: false
-            auth:
-              type: authelia
-              internalHost: ${AUTHELIA_INTERNAL_DNS}
-              externalHost: ${AUTHELIA_EXTERNAL_DNS}
