@@ -41,12 +41,6 @@ spec:
           certManager:
             enabled: true
             certificateIssuer: le-prod
-          # nginx:
-          #   enabled: true
-          #   auth:
-          #     type: authelia
-          #     internalHost: ${AUTHELIA_INTERNAL_DNS}
-          #     externalHost: ${AUTHELIA_EXTERNAL_DNS}
     persistence:
       config:
         volsync:
@@ -57,3 +51,32 @@ spec:
               enabled: true
             src:
               enabled: true
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              initContainers:
+                install-extension-manager:
+                  enabled: true
+                  type: init
+                  imageSelector: alpine
+                  command:
+                    - /bin/sh
+                    - -c
+                    - |
+                      set -eux
+
+                      apk add --no-cache git
+
+                      if [ ! -d /config/www/freshrss/extensions/xExtension-ExtensionManager ]; then
+                          git clone https://github.com/featurecreep-cron/freshrss-extensions.git /tmp/exts
+
+                          mkdir -p /config/www/freshrss/extensions
+                          mv /tmp/exts/xExtension-ExtensionManager /config/www/freshrss/extensions/
+
+                          rm -rf /tmp/exts
+                      fi
+                  volumeMounts:
+                    - name: config
+                      mountPath: /config
