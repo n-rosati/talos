@@ -22,6 +22,10 @@ spec:
     remediation:
       retries: 3
   values:
+    images:
+      alpine:
+        repository: alpine
+        tag: "3.22"
     credentials:
       home-s3:
         name: home-s3
