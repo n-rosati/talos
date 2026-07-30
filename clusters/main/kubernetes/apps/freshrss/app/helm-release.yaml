@@ -58,6 +58,10 @@ spec:
     workload:
       main:
         podSpec:
+          additionalVolumes:
+            - name: config
+              persistentVolumeClaim:
+                claimName: freshrss-config
           initContainers:
             install-extension-manager:
               enabled: true
@@ -73,10 +77,8 @@ spec:
 
                   if [ ! -d /config/www/freshrss/extensions/xExtension-ExtensionManager ]; then
                       git clone https://github.com/featurecreep-cron/freshrss-extensions.git /tmp/exts
-
                       mkdir -p /config/www/freshrss/extensions
                       mv /tmp/exts/xExtension-ExtensionManager /config/www/freshrss/extensions/
-
                       rm -rf /tmp/exts
                   fi
               additionalVolumeMounts:
