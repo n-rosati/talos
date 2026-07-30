@@ -54,29 +54,27 @@ spec:
     workload:
       main:
         podSpec:
-          containers:
-            main:
-              initContainers:
-                install-extension-manager:
-                  enabled: true
-                  type: init
-                  imageSelector: alpine
-                  command:
-                    - /bin/sh
-                    - -c
-                    - |
-                      set -eux
+          initContainers:
+            install-extension-manager:
+              enabled: true
+              type: init
+              imageSelector: alpine
+              command:
+                - /bin/sh
+                - -c
+                - |
+                  set -eux
 
-                      apk add --no-cache git
+                  apk add --no-cache git
 
-                      if [ ! -d /config/www/freshrss/extensions/xExtension-ExtensionManager ]; then
-                          git clone https://github.com/featurecreep-cron/freshrss-extensions.git /tmp/exts
+                  if [ ! -d /config/www/freshrss/extensions/xExtension-ExtensionManager ]; then
+                      git clone https://github.com/featurecreep-cron/freshrss-extensions.git /tmp/exts
 
-                          mkdir -p /config/www/freshrss/extensions
-                          mv /tmp/exts/xExtension-ExtensionManager /config/www/freshrss/extensions/
+                      mkdir -p /config/www/freshrss/extensions
+                      mv /tmp/exts/xExtension-ExtensionManager /config/www/freshrss/extensions/
 
-                          rm -rf /tmp/exts
-                      fi
-                  volumeMounts:
-                    - name: config
-                      mountPath: /config
+                      rm -rf /tmp/exts
+                  fi
+              volumeMounts:
+                - name: config
+                  mountPath: /config
