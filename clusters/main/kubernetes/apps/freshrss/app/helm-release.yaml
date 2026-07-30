@@ -55,32 +55,3 @@ spec:
               enabled: true
             src:
               enabled: true
-    workload:
-      main:
-        podSpec:
-          additionalVolumes:
-            - name: config
-              persistentVolumeClaim:
-                claimName: freshrss-config
-          initContainers:
-            install-extension-manager:
-              enabled: true
-              type: init
-              imageSelector: alpine
-              command:
-                - /bin/sh
-                - -c
-                - |
-                  set -eux
-
-                  apk add --no-cache git
-
-                  if [ ! -d /config/www/freshrss/extensions/xExtension-ExtensionManager ]; then
-                      git clone https://github.com/featurecreep-cron/freshrss-extensions.git /tmp/exts
-                      mkdir -p /config/www/freshrss/extensions
-                      mv /tmp/exts/xExtension-ExtensionManager /config/www/freshrss/extensions/
-                      rm -rf /tmp/exts
-                  fi
-              additionalVolumeMounts:
-                - name: config
-                  mountPath: /config
