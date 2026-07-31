@@ -4,5 +4,4 @@ resources:
   - namespace.yaml
   - helm-release.yaml
   - mutatingadmissionpolicy.yaml
-  - grafanadashboard.yaml
   - prometheusrule.yaml
