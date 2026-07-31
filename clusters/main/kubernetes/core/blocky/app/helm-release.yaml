@@ -30,6 +30,9 @@ spec:
   values:
     global:
       stopAll: false
+    workload:
+      main:
+        replicas: 1
     service:
       dns:
         externalTrafficPolicy: Local
@@ -90,6 +93,11 @@ spec:
         options:
           - name: tls_servername
             value: cloudflare-dns.com
+    defaultUpstreams:
+    - "https://1.1.1.1/dns-query"
+    bootstrapDns:
+      ips: []
+      upstream: "1.1.1.1"
     # CANNOT be defined in above yaml section
     queryLog:
       # optional one of: mysql, postgresql, csv, csv-client. If empty, log to console only
@@ -101,4 +109,15 @@ spec:
         enabled: false
     cnpg:
       main:
-        enabled: false
+        enabled: 
+        
+    # -- Set manual custom DNS resolution
+    customDNS:
+      customTTL: 1h
+      filterUnmappedTypes: true
+      rewrite: []
+      # - in: something.com
+      #   out: somethingelse.com
+      mapping: []
+      # - domain: something.com
+      #   dnsserver: 192.168.178.1
