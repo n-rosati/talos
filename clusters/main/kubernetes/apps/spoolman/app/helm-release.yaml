@@ -87,7 +87,7 @@ spec:
         backups:
           enabled: true
           credentials: home-s3
-          revision: "1"
+          revision: "2"
         recovery:
           enabled: true
           credentials: home-s3

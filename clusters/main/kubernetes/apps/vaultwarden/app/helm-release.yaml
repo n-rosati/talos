@@ -91,7 +91,7 @@ spec:
         mode: recovery
         backups:
           enabled: true
-          revision: "4"
+          revision: "5"
           credentials: home-s3
         recovery:
           enabled: true
