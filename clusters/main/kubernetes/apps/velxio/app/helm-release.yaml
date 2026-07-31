@@ -1,0 +1,106 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: velxio
+  namespace: velxio
+spec:
+  interval: 2m
+  timeout: 20m
+  chart:
+    spec:
+      chart: app-template
+      version: 18.16.0
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  releaseName: velxio
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    release_name: forgejo
+    global:
+      stopAll: false
+    image:
+      repository: ghcr.io/davidmonterocrespo24/velxio
+      pullPolicy: IfNotPresent
+      tag: master@sha256:1fc6b53ab2bcae4c0c70e06a17a085a8f58976583b3fda17e25f7ee60532719c
+    credentials:
+      home-s3:
+        name: home-s3
+        type: s3
+        url: ${S3_URL}
+        bucket: velxio
+        encrKey: ${BACKUP_ENCRYPTION_KEY}
+        accessKey: ${S3_ACCESS_KEY}
+        secretKey: ${S3_SECRET_KEY}
+    service:
+      main:
+        enabled: true
+        type: LoadBalancer
+        ports:
+          main:
+            enabled: true
+            port: 3080
+            protocol: http
+            targetPort: 3080
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: external
+        hosts:
+          - host: velxio.${DOMAIN_0}
+        integrations:
+          certManager:
+            enabled: true
+            certificateIssuer: le-prod
+          nginx:
+            enabled: true
+            auth:
+              type: authelia
+              internalHost: ${AUTHELIA_INTERNAL_DNS}
+              externalHost: ${AUTHELIA_EXTERNAL_DNS}
+    persistence:
+      data:
+        enabled: true
+        type: pvc
+        mountPath: /app/data
+      arduino-libs:
+        enabled: true
+        type: pvc
+        mountPath: /root/.arduino15
+      arduino-user-libs:
+        enabled: true
+        type: pvc
+        mountPath: /root/Arduino
+      ccache:
+        enabled: true
+        type: pvc
+        mountPath: /var/cache/ccache
+      build:
+        enabled: true
+        type: pvc
+        mountPath: /var/lib/velxio-build
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              probes:
+                liveness:
+                  enabled: true
+                  path: "/"
+                  port: 3080
+                  type: http
+                readiness:
+                  enabled: true
+                  port: 3080
+                  type: http
+                startup:
+                  enabled: false

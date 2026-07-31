@@ -19,3 +19,4 @@ resources:
   - stirling-pdf/ks.yaml
   - thelounge/ks.yaml
   - vaultwarden/ks.yaml
+  - velxio/ks.yaml
