@@ -27,7 +27,7 @@ spec:
     image:
       repository: ghcr.io/iamspido/github-release-monitor
       pullPolicy: IfNotPresent
-      tag: v2.3.0@sha256:14b9b200915bd6e72d7b7d2a17bb76ab98c73a01b1a80b3627af4b1655a53d1d
+      tag: v2.4.0@sha256:5426cd323eeec35465b572b338c8480a98d96789386adc04e27902e18355f8bd
     credentials:
       home-s3:
         name: home-s3
