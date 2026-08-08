@@ -6,3 +6,4 @@ resources:
   - minecraft-router/ks.yaml
   - ps3netsrv/ks.yaml
   - rcon-webadmin/ks.yaml
+  - vita-save-sync/ks.yaml

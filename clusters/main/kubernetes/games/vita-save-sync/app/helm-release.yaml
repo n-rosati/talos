@@ -79,23 +79,3 @@ spec:
                   enabled: false
               env:
                 USER_TOKEN: ${VITA_SAVE_SYNC_TOKEN}
-    cnpg:
-      main:
-        enabled: true
-        database: forgejo
-        user: forgejo
-        password: ${FORGEJO_DB_PASSWORD}
-        pgVersion: 16
-        mode: standalone # CHANGE TO RECOVERY ON RESTORE
-        cluster:
-          singleNode: true
-        backups:
-          enabled: true
-          revision: "2"
-          credentials: home-s3
-        recovery:
-          enabled: true
-          revision: "1"
-          credentials: home-s3
-        monitoring:
-          enablePodMonitor: true
