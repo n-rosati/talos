@@ -67,16 +67,10 @@ spec:
             main:
               probes:
                 liveness:
-                  enabled: true
-                  port: 3000
-                  type: http
+                  enabled: false
                 readiness:
-                  enabled: true
-                  port: 3000
-                  type: http
+                  enabled: false
                 startup:
-                  enabled: true
-                  port: 3000
-                  type: http
+                  enabled: false
               env:
                 USER_TOKEN: ${VITA_SAVE_SYNC_TOKEN}
