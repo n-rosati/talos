@@ -59,7 +59,7 @@ spec:
         type: nfs
         path: ${NFS_BULK_DATA}/Backups/VitaSaves
         server: ${TRUENAS_IP}
-        mountPath: /data
+        mountPath: /app/data
     workload:
       main:
         podSpec:
@@ -67,10 +67,19 @@ spec:
             main:
               probes:
                 liveness:
-                  enabled: false
+                  enabled: true
+                  path: "/api/status"
+                  port: 3000
+                  type: http
                 readiness:
-                  enabled: false
+                  enabled: true
+                  path: "/api/status"
+                  port: 3000
+                  type: http
                 startup:
-                  enabled: false
+                  enabled: true
+                  path: "/api/status"
+                  port: 3000
+                  type: http
               env:
                 USER_TOKEN: ${VITA_SAVE_SYNC_TOKEN}
