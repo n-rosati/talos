@@ -38,9 +38,9 @@ spec:
         ports:
           main:
             enabled: true
-            port: 3099
+            port: 3000
             protocol: http
-            targetPort: 3099
+            targetPort: 3000
     ingress:
       main:
         enabled: true
@@ -67,15 +67,16 @@ spec:
             main:
               probes:
                 liveness:
-                  enabled: false
-                  path: "/"
+                  enabled: true
                   port: 3000
                   type: http
                 readiness:
-                  enabled: false
+                  enabled: true
                   port: 3000
                   type: http
                 startup:
-                  enabled: false
+                  enabled: true
+                  port: 3000
+                  type: http
               env:
                 USER_TOKEN: ${VITA_SAVE_SYNC_TOKEN}
