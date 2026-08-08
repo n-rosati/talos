@@ -1,0 +1,101 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: vita-save-sync
+  namespace: vita-save-sync
+spec:
+  interval: 2m
+  timeout: 20m
+  chart:
+    spec:
+      chart: app-template
+      version: 18.16.0
+      sourceRef:
+        kind: HelmRepository
+        name: truecharts
+        namespace: flux-system
+  releaseName: vita-save-sync
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    release_name: vita-save-sync
+    global:
+      stopAll: false
+    image:
+      repository: ghcr.io/unveroleone/vita-save-sync-server
+      pullPolicy: IfNotPresent
+      tag: latest@sha256:1a97a6734eedf249b53776e859f652a1168a4af8d22e83bd630fc105da3b8efb
+    service:
+      main:
+        enabled: true
+        type: LoadBalancer
+        ports:
+          main:
+            enabled: true
+            port: 3099
+            protocol: http
+            targetPort: 3099
+    ingress:
+      main:
+        enabled: true
+        ingressClassName: external
+        hosts:
+          - host: vss.${DOMAIN_0}
+        integrations:
+          certManager:
+            enabled: true
+            certificateIssuer: le-prod
+          nginx:
+            enabled: true
+    persistence:
+      data:
+        enabled: true
+        type: nfs
+        path: ${NFS_BULK_DATA}/Backups/VitaSaves
+        server: ${TRUENAS_IP}
+        mountPath: /data
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              probes:
+                liveness:
+                  enabled: false
+                  path: "/"
+                  port: 3000
+                  type: http
+                readiness:
+                  enabled: false
+                  port: 3000
+                  type: http
+                startup:
+                  enabled: false
+              env:
+                USER_TOKEN: ${VITA_SAVE_SYNC_TOKEN}
+    cnpg:
+      main:
+        enabled: true
+        database: forgejo
+        user: forgejo
+        password: ${FORGEJO_DB_PASSWORD}
+        pgVersion: 16
+        mode: standalone # CHANGE TO RECOVERY ON RESTORE
+        cluster:
+          singleNode: true
+        backups:
+          enabled: true
+          revision: "2"
+          credentials: home-s3
+        recovery:
+          enabled: true
+          revision: "1"
+          credentials: home-s3
+        monitoring:
+          enablePodMonitor: true
