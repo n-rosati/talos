@@ -125,7 +125,7 @@ spec:
           sender: "Authelia <${SERVICE_EMAIL}>"
           identifier: auth.${DOMAIN_0}
           subject: "{title}"
-          timeout: 15s
+          timeout: 20s
       access_control:
         default_policy: deny
         rules:
