@@ -42,17 +42,9 @@ spec:
             certificateIssuer: le-prod
           nginx:
             enabled: true
-            auth:
-              type: authelia
-              internalHost: ${AUTHELIA_INTERNAL_DNS}
-              externalHost: ${AUTHELIA_EXTERNAL_DNS}
           homepage:
             enabled: true
             name: Printer
             description: " "
             group: Infrastructure
-            icon: mainsail.png
-            widget:
-              enabled: true
-              type: moonraker
-              url: http://{{ .Values.service.main.externalIP }}
+            icon: fluidd.png
