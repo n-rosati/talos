@@ -30,7 +30,7 @@ spec:
     image:
       repository: ghcr.io/unveroleone/vita-save-sync-server
       pullPolicy: IfNotPresent
-      tag: latest@sha256:1a97a6734eedf249b53776e859f652a1168a4af8d22e83bd630fc105da3b8efb
+      tag: latest@sha256:820b31adba5795947f2b3072caa04169dea3284b761e5d51c82fa775dc8d769e
     service:
       main:
         enabled: true
