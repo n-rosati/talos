@@ -125,7 +125,7 @@ spec:
                 RCON_PASSWORD: ${MC_RCON_PASSWORD}
                 SEED: "8881742655673709427"
                 LEVEL_TYPE: "lostcities"
-                GENERATOR_SETTINGS: "{'profile':'uncommoncities'}"
+                GENERATOR_SETTINGS: "{'profile':'rarecities'}"
                 FORCE_REDOWNLOAD: false
                 VIEW_DISTANCE: 12
                 SIMULATION_DISTANCE: 12
@@ -149,17 +149,12 @@ spec:
                   enabled: false
               env:
                 BACKUP_METHOD: "tar"
-                DEST_DIR:
-                  "{{.Values.persistence.backups.targetSelector.main.mcbackup.mountPath
-                  }}"
+                DEST_DIR: "{{.Values.persistence.backups.targetSelector.main.mcbackup.mountPath}}"
                 SRC_DIR: "{{.Values.persistence.data.mountPath }}"
                 SERVER_PORT: "{{ .Values.service.main.ports.main.port }}"
-                RCON_HOST: '{{ printf "%s-rcon" (include
-                  "tc.v1.common.lib.chart.names.fullname" $) }}'
+                RCON_HOST: '{{ printf "%s-rcon" (include "tc.v1.common.lib.chart.names.fullname" $) }}'
                 RCON_PORT: "{{ .Values.service.rcon.ports.rcon.port }}"
-                RCON_PASSWORD: "{{
-                  .Values.workload.main.podSpec.containers.main.env.RCON_PASSWO\
-                  RD }}"
+                RCON_PASSWORD: "{{ .Values.workload.main.podSpec.containers.main.env.RCON_PASSWORD }}"
                 SERVER_HOST: '{{ include "tc.v1.common.lib.chart.names.fullname" $ }}'
                 ZSTD_PARAMETERS: '{{ join " " .Values.mcbackup.zstd_params }}'
                 EXCLUDES: '{{ join "," .Values.mcbackup.excludes }}'
