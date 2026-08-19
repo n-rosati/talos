@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/devcontainers/spec/main/schemas/devContainer.schema.json",
   "name": "ClusterTool Cluster",
-  "image": "ghcr.io/trueforge-org/devcontainer:4.1.1@sha256:3a5f6b641f3bc0d330cf32660f69a121e04ff23158e63d17b8d7975c33e41b68",
+  "image": "ghcr.io/trueforge-org/devcontainer:4.1.1@sha256:65e03b2ac4a3faad4f1434bbeec162272e4a5eba7340f0a40e2a06efc19bcb74",
   "postCreateCommand": {
     "setup": "bash ${containerWorkspaceFolder}/.devcontainer/postCreateCommand.sh"
   },
