@@ -67,3 +67,10 @@ spec:
         enabled: true
       dashboard:
         enabled: true
+    workload:
+      main:
+        podSpec:
+          containers:
+            main:
+              env:
+                AUTHORIZATION_ENABLED: 'false'
