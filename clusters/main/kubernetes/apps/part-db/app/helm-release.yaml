@@ -170,8 +170,7 @@ spec:
                 ATTACHMENT_DOWNLOAD_BY_DEFAULT: "1"
                 BANNER: 'Welcome to Part-DB.  <blockquote class=''pb-0''> <p style=''font-size: 12px''> And God said <br> $\\nabla \\cdot \\vec{D} = \\rho$, $\\nabla \\cdot \\vec{B} = 0$, $\\nabla \\times \\vec{E} = -\\frac{\\partial \\vec{B}}{\\partial t}$, $\\nabla \\times \\vec{H} = \\vec{j} + \\frac{\\partial \\vec{D}}{\\partial t}$,  <br> and then there was light. </p> </blockquote>'
                 BASE_CURRENCY: CAD
-                DATABASE_URL: postgresql://partdb:${PARTDB_DB_PASSWORD}@part-db-app-template-cnpg-main-rw.part-db.svc.cluster.local:5432/part-db?serverVersion=16.4&charset=utf8
-                TEST_VAR: "{{ .Values.cnpg.main.creds.std }}?serverVersion=16.4&charset=utf8"
+                DATABASE_URL: "{{ .Values.cnpg.main.creds.std }}?serverVersion=16.4&charset=utf8"
                 DB_AUTOMIGRATE: true
                 DEFAULT_LANG: en
                 DEFAULT_TIMEZONE: Etc/UTC
