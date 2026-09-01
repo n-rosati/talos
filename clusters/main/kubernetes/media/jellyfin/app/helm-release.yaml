@@ -117,7 +117,7 @@ spec:
       broadcastproxy:
         enabled: true
       jellyfin-up:
-        enabled: true
+        enabled: false
         type: Deployment
         strategy: RollingUpdate
         replicas: 1
@@ -132,7 +132,7 @@ spec:
                 JELLYFIN_URL: http://jellyfin.jellyfin.svc.cluster.local:8096
                 JELLYFIN_API_KEY: ${JELLYFIN_UPDATE_POSTER_API_KEY}
                 TMDB_API_KEY: ${TMDB_API_KEY}
-                INCLUDE_EPISODES: false
+                INCLUDE_EPISODES: true
                 ENABLE_WEBHOOK: true
                 # SCHEDULED_TIMES: 06:00,12:00,18:00 # Optional: Schedule poster updates at specific times (HH:MM)
                 args:
