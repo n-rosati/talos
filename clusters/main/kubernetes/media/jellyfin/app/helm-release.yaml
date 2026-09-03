@@ -126,7 +126,7 @@ spec:
           containers:
             jellyfin-up:
               primary: true
-              enabled: true
+              enabled: false
               imageSelector: jellyfinUpdatePosterImage
               env:
                 JELLYFIN_URL: http://jellyfin.jellyfin.svc.cluster.local:8096
