@@ -25,7 +25,7 @@ spec:
   values:
     j21graalvmImage:
       repository: ghcr.io/itzg/minecraft-server
-      tag: 2026.8.2-java21-graalvm@sha256:aaa4148b64faae6b7e4035bebb9b8161a95ad404949355f2758041dcb3aaf788
+      tag: 2026.9.0-java21-graalvm@sha256:e4cebe77e2a81fcdb2ba7cb4b50cc04acf3355d044898d97a47176262aceb06e
       pullPolicy: Always
     mcBackupImage:
       repository: docker.io/itzg/mc-backup
