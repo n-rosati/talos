@@ -40,7 +40,7 @@ spec:
         secretKey: ${S3_SECRET_KEY}
     service:
       jellyfin-up:
-        enabled: true
+        enabled: false
         targetSelector: jellyfin-up
         ports:
           jellyfin-up:
