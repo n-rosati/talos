@@ -25,7 +25,7 @@ spec:
   values:
     TZ: America/Toronto
     global:
-      stopAll: false
+      stopAll: true
     mcBackupImage:
       repository: docker.io/itzg/mc-backup
       tag: 2026.9.1@sha256:0b6a10703723e8b2c03cf19e237aaebef91deeeafceb376968a659b32c11b66f
