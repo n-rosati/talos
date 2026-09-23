@@ -114,6 +114,8 @@ spec:
               resources:
                 limits:
                   nvidia.com/gpu: 1
+                  cpu: 4000m
+                  memory: 8Gi
       broadcastproxy:
         enabled: true
       jellyfin-up:
