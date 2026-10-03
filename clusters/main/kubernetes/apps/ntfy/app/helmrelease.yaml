@@ -86,7 +86,7 @@ spec:
                 NTFY_LOG_LEVEL: debug
                 NTFY_AUTH_USERS: ${NTFY_USERS}
                 NTFY_PROXY_TRUSTED_HOSTS: ${PODNET}
-                NTFY_MESSAGE_DELAY_LIMIT: 7d
+                NTFY_MESSAGE_DELAY_LIMIT: 31d
     metrics:
       main:
         enabled: true
