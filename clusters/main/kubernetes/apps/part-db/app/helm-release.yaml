@@ -173,7 +173,7 @@ spec:
                 DATABASE_URL: "{{ .Values.cnpg.main.creds.std }}?serverVersion=16.4&charset=utf8"
                 DB_AUTOMIGRATE: true
                 DEFAULT_LANG: en
-                DEFAULT_TIMEZONE: Etc/UTC
+                DEFAULT_TIMEZONE: UTC
                 DEFAULT_URI: https://partdb.${DOMAIN_0}/
                 EMAIL_SENDER_EMAIL: ${SERVICE_EMAIL}
                 EMAIL_SENDER_NAME: PartDB Service
