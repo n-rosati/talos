@@ -162,4 +162,4 @@ spec:
           marketplace:
             # renovate: depName="SmartCTL"
             id: 23233
-            revision: 9
+            revision: 10
