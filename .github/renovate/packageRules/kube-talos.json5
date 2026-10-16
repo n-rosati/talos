@@ -13,7 +13,8 @@
             "dependencyDashboardApproval": false,
             "matchPackageNames": [
                 "ghcr.io/siderolabs/kubelet",
-                "ghcr.io/siderolabs/installer"
+                "ghcr.io/siderolabs/installer",
+                "ghcr.io/siderolabs/talos"
             ],
             "labels": [
                 "type/major",
