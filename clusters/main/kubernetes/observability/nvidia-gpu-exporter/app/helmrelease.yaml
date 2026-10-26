@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: nvidia-gpu-exporter
-      version: 7.0.3
+      version: 7.1.0
       sourceRef:
         kind: HelmRepository
         name: truecharts
