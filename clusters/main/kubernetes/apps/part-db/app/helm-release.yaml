@@ -163,6 +163,8 @@ spec:
                   type: http
                   path: /
               env:
+                AI_OLLAMA_ENDPOINT: "http://ollama-api.ollama.svc.cluster.local:11434"
+                AI_OLLAMA_API_KEY: ${PARTDB_OLLAMA_API_KEY}
                 ALLOW_ATTACHMENT_DOWNLOADS: "1"
                 ALLOW_EMAIL_PW_RESET: "true"
                 APP_ENV: docker
@@ -170,6 +172,7 @@ spec:
                 ATTACHMENT_DOWNLOAD_BY_DEFAULT: "1"
                 BANNER: 'Welcome to Part-DB.  <blockquote class=''pb-0''> <p style=''font-size: 12px''> And God said <br> $\\nabla \\cdot \\vec{D} = \\rho$, $\\nabla \\cdot \\vec{B} = 0$, $\\nabla \\times \\vec{E} = -\\frac{\\partial \\vec{B}}{\\partial t}$, $\\nabla \\times \\vec{H} = \\vec{j} + \\frac{\\partial \\vec{D}}{\\partial t}$,  <br> and then there was light. </p> </blockquote>'
                 BASE_CURRENCY: CAD
+                BROWSER_PLUGIN_ENABLED: "1"
                 DATABASE_URL: "{{ .Values.cnpg.main.creds.std }}?serverVersion=16.4&charset=utf8"
                 DB_AUTOMIGRATE: true
                 DEFAULT_LANG: en
@@ -184,6 +187,8 @@ spec:
                 HISTORY_SAVE_REMOVED_DATA: "true"
                 INSTANCE_NAME: Part-DB
                 MAILER_DSN: ${SMTP_MAILER_DSN}
+                MCP_ENABLED: "1"
+                MCP_EDITING_ENABLED: "1"
                 PROVIDER_DIGIKEY_CLIENT_ID: ${PARTDB_DIGIKEY_CLIENT_ID}
                 PROVIDER_DIGIKEY_COUNTRY: CA
                 PROVIDER_DIGIKEY_CURRENCY: CAD
@@ -194,10 +199,11 @@ spec:
                 PROVIDER_GENERIC_WEB_ENABLED: 1
                 PROVIDER_LCSC_CURRENCY: CAD
                 PROVIDER_LCSC_ENABLED: "1"
-                PROVIDER_OCOTPART_COUNTRY: CA
+                PROVIDER_OCOTPART_COUNTRY: "Canada"
                 PROVIDER_OCTOPART_CLIENT_ID: ${PARTDB_OCTOPART_CLIENT_ID}
                 PROVIDER_OCTOPART_CURRENCY: CAD
                 PROVIDER_OCTOPART_SECRET: ${PARTDB_OCTOPART_SECRET}
+                PROVIDER_OCOTPART_ONLY_AUTHORIZED_SELLERS: "1"
                 TRUSTED_PROXIES: 172.16.0.0/16,172.17.0.0/16
                 TRUSTED_HOSTS: partdb.${DOMAIN_0},part-db-app-template.part-db.svc.cluster.local
                 USE_GRAVATAR: "0"
