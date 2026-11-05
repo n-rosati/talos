@@ -26,7 +26,7 @@ spec:
       stopAll: false
     image:
       repository: ghcr.io/starosdev/scrutiny
-      tag: latest-omnibus@sha256:9fa46d69cd077e3c9f89587425c3f70f63b5b85170d47715c6a956ec094fcc16
+      tag: latest-omnibus@sha256:a8f87c091f083296ae12d33aa6a3d9e8d3439b9b8b7b0f00b8122cf07854c7c5
     service:
       main:
         type: LoadBalancer
