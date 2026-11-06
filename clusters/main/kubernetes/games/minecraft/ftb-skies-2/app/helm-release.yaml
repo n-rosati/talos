@@ -135,7 +135,6 @@ spec:
                 MOTD: FTB Skies 2!
                 PVP: true
                 MEMORY: "8G"
-                JVM_OPTS: -Xms8G -Xmx8G
                 MAX_TICK_TIME: 60000
                 RCON_PASSWORD: ${MC_RCON_PASSWORD}
                 USE_MODPACK_START_SCRIPT: true
@@ -184,5 +183,5 @@ spec:
         cpu: 100m
         memory: 8Gi
       limits:
-        cpu: null
+        cpu: 4000m
         memory: 10Gi
