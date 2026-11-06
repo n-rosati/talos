@@ -33,7 +33,6 @@ spec:
       tag: v2.20.4
     credentials:
       home-s3:
-        name: home-s3
         type: s3
         url: ${S3_URL}
         bucket: part-db

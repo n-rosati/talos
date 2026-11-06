@@ -32,7 +32,6 @@ spec:
       pullPolicy: Always
     credentials:
       home-s3:
-        name: home-s3
         type: s3
         url: ${S3_URL}
         bucket: mc-nomifactory

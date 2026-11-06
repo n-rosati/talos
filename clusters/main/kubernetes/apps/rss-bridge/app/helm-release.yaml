@@ -26,7 +26,6 @@ spec:
       tag: latest@sha256:ca00e6d11fe0dc3a466c741cc8906163a2461d7deb1ae46bc2fabbdcb21c1b7b
     credentials:
       home-s3:
-        name: home-s3
         type: s3
         url: ${S3_URL}
         bucket: rss-bridge
