@@ -90,7 +90,6 @@ spec:
     addons:
       codeserver:
         enabled: true
-        workingDir: "/config"
         service:
           type: LoadBalancer
         ingress:
@@ -103,11 +102,11 @@ spec:
                 pathType: Prefix
           integrations:
             certManager:
-            enabled: true
-            certificateIssuer: le-prod
-          nginx:
-            enabled: true
-            auth:
-              type: authelia
-              internalHost: ${AUTHELIA_INTERNAL_DNS}
-              externalHost: ${AUTHELIA_EXTERNAL_DNS}
+              enabled: true
+              certificateIssuer: le-prod
+            nginx:
+              enabled: true
+              auth:
+                type: authelia
+                internalHost: ${AUTHELIA_INTERNAL_DNS}
+                externalHost: ${AUTHELIA_EXTERNAL_DNS}
