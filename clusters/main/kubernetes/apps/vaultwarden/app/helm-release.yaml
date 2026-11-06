@@ -93,7 +93,6 @@ spec:
           revision: "5"
           credentials: home-s3
         recovery:
-          enabled: true
           credentials: home-s3
           revision: "4"
         cluster:

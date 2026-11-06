@@ -134,7 +134,6 @@ spec:
           credentials: home-s3
           revision: "5"
         recovery:
-          enabled: true
           revision: "4"
           credentials: home-s3
         monitoring:
