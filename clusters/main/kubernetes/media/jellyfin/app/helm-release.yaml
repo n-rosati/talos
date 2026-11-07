@@ -136,8 +136,8 @@ spec:
                 INCLUDE_EPISODES: true
                 ENABLE_WEBHOOK: true
                 # SCHEDULED_TIMES: 06:00,12:00,18:00 # Optional: Schedule poster updates at specific times (HH:MM)
-                args:
-                  - --force
+              args:
+                - --force
               probes:
                 readiness:
                   enabled: false
