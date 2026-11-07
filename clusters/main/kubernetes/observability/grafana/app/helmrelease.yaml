@@ -82,8 +82,7 @@ spec:
       main:
         cluster:
           singleNode: true
-          postgresql:
-            wal_keep_size: 5GB
+          instances: 1
     dashboards:
       grafana:
         cert-manager:

@@ -97,7 +97,6 @@ spec:
           revision: "4"
         cluster:
           singleNode: true
-          postgresql:
-            wal_keep_size: 5GB
+          instances: 1
         monitoring:
           enablePodMonitor: true

@@ -162,6 +162,7 @@ spec:
         mode: standalone # CHANGE TO RECOVERY ON RESTORE
         cluster:
           singleNode: true
+          instances: 1
         backups:
           enabled: true
           revision: "2"

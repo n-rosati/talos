@@ -127,8 +127,7 @@ spec:
         mode: recovery
         cluster:
           singleNode: true
-          postgresql:
-            wal_keep_size: 5GB
+          instances: 1
         backups:
           enabled: true
           credentials: home-s3
