@@ -48,13 +48,7 @@ spec:
                 name: "jitter",
                 image: "ghcr.io/home-operations/busybox:1.38.0@sha256:7e2c04dd50ede647bf4a7a4c8dbd629dd4971cd139b9b88fb22bfc3c7a6c13df",
                 imagePullPolicy: "IfNotPresent",
-                command:
-                  - sh
-                  - -c
-                  - |
-                    d=$(shuf -i 0-120 -n 1)
-                    echo "Sleeping for ${d} seconds before starting"
-                    sleep "${d}"
+                command: ["sh", "-c", "d=$$(shuf -i 0-120 -n 1); echo jitter: sleeping $${d}s; sleep $$d"]
               }
             }
           ]
