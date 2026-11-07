@@ -85,5 +85,5 @@ spec:
         cpu: 100m
         memory: 2Gi
       limits:
-        cpu: null
+        cpu: 6000m
         memory: 16Gi
