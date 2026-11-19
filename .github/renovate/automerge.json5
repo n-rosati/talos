@@ -1,0 +1,67 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "packageRules": [
+        {
+            "matchUpdateTypes": [
+                "major"
+            ],
+            "automerge": false
+        },
+        {
+            "matchUpdateTypes": [
+                "minor",
+                "patch",
+                "digest",
+                "pin",
+                "pinDigest"
+            ],
+            "automerge": true,
+            "addLabels": [
+                "automerge"
+            ]
+        },
+        {
+            "description": "Special schedule for game services",
+            "matchFileNames": [
+                "**/games/**"
+            ],
+            "automergeSchedule": [
+                "* 3-7 * * *"
+            ],
+            "automerge": true
+        },
+        {
+            "description": [
+                "Special schedule for apps where restarting would be disruptive"
+            ],
+            "matchPackageNames": [
+                "app-template",
+                "authelia",
+                "jellyfin",
+                "ollama",
+                "wg-easy"
+            ],
+            "automergeSchedule": [
+                "* 3-7 * * *"
+            ],
+            "automerge": true
+        },
+        {
+            "description": [
+                "Block automerge for Kubelet and Talos"
+            ],
+            "matchUpdateTypes": [
+                "major",
+                "minor",
+                "patch"
+            ],
+            "automerge": false,
+            "matchPackageNames": [
+                "/siderolabs/"
+            ],
+            "addLabels": [
+                "system-upgrade"
+            ]
+        }
+    ]
+}
