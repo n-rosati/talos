@@ -23,5 +23,5 @@ jobs:
           MERGE_RETRIES: 24
           MERGE_RETRY_SLEEP: 60000
           MERGE_METHOD: "rebase"
-          MERGE_LABELS: "automerge,!scheduled-merge"
+          MERGE_LABELS: "automerge,!scheduled-merge,!major"
           MERGE_DELETE_BRANCH: "true"
