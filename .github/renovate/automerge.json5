@@ -28,7 +28,11 @@
             "automergeSchedule": [
                 "* 3-7 * * *"
             ],
-            "automerge": true
+            "automerge": true,
+            "addLabels": [
+                "automerge",
+                "scheduled-merge"
+            ]
         },
         {
             "description": [
@@ -44,7 +48,11 @@
             "automergeSchedule": [
                 "* 3-7 * * *"
             ],
-            "automerge": true
+            "automerge": true,
+            "addLabels": [
+                "automerge",
+                "scheduled-merge"
+            ]
         },
         {
             "description": [
