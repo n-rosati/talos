@@ -8,8 +8,9 @@
         ":semanticCommits",
         ":configMigration",
         "helpers:pinGitHubActionDigests",
-        "github>n-rosati/talos//.github/renovate/automerge.json5",
-        "github>n-rosati/talos//.github/renovate/labels.json5"
+        "github>n-rosati/talos//.github/renovate/kinds.json5",
+        "github>n-rosati/talos//.github/renovate/labels.json5",
+        "github>n-rosati/talos//.github/renovate/automerge.json5"
         
         // "github>alfi0812/talos//.github/renovate/customManagers.json5",
         // "github>alfi0812/talos//.github/renovate/kinds.json5",

@@ -1,0 +1,63 @@
+{
+    "$schema": "https://docs.renovatebot.com/renovate-schema.json",
+    "flux": {
+        "managerFilePatterns": [
+            "/\\.yaml(?:\\.j2)?$/"
+        ],
+        "branchPrefix": "renovate/flux-",
+        // Resolve HelmRelease sourceRefs without the HelmRepository files in repositories/helm/.
+        // Without this, re-extracting a single helm-release.yaml on an existing branch yields a
+        // different deps list ("Rebasing branch after deps list has changed") and every flux PR
+        // is rebased after each merge to main. Keep in sync with repositories/helm/*.yaml.
+        "registryAliases": {
+            "bjw-s": "oci://ghcr.io/bjw-s-labs/helm",
+            "cilium": "oci://quay.io/cilium/charts",
+            "cloudnative-pg": "oci://ghcr.io/cloudnative-pg/charts",
+            "element-hq": "oci://ghcr.io/element-hq/ess-helm",
+            "home-ops-mirror": "oci://ghcr.io/home-operations/charts-mirror",
+            "ingress-nginx": "oci://registry.k8s.io/ingress-nginx/charts",
+            "jetstack": "oci://quay.io/jetstack/charts",
+            "metallb": "oci://quay.io/metallb/chart",
+            "mogenius": "oci://ghcr.io/mogenius/helm-charts",
+            "node-feature-discovery": "oci://registry.k8s.io/nfd/charts",
+            "nvidia": "https://helm.ngc.nvidia.com/nvidia",
+            "prometheus-community": "oci://ghcr.io/prometheus-community/charts",
+            "spegel": "oci://ghcr.io/spegel-org/helm-charts",
+            "stakater": "oci://ghcr.io/stakater/charts",
+            "topolvm": "https://topolvm.github.io/topolvm",
+            "truecharts": "oci://oci.trueforge.org/truecharts",
+            "weave-gitops": "oci://ghcr.io/weaveworks/charts",
+            "home-operations": "oci://ghcr.io/home-operations/charts",
+            "grafana": "oci://ghcr.io/grafana/helm-charts",
+            "grafana-community": "oci://ghcr.io/grafana-community/helm-charts",
+            "openebs": "oci://ghcr.io/openebs/charts"
+        }
+    },
+    "kubernetes": {
+        "managerFilePatterns": [
+            "/\\.yaml(?:\\.j2)?$/"
+        ],
+        "branchPrefix": "renovate/kubernetes-"
+    },
+    "github-actions": {
+        "branchPrefix": "renovate/githubactions-"
+    },
+    "devcontainer": {
+        "branchPrefix": "renovate/devcontainer-"
+    },
+    "packageRules": [
+        {
+            "description": "Disable docker datasource for Kubernetes manager on HelmRelease files",
+            "matchManagers": [
+                "kubernetes"
+            ],
+            "matchDatasources": [
+                "docker"
+            ],
+            "matchFileNames": [
+                "**/helm-release.yaml"
+            ],
+            "enabled": false
+        }
+    ]
+}
