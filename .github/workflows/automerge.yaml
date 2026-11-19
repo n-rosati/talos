@@ -1,8 +1,6 @@
 name: Automerge
 on:
   pull_request:
-    types:
-      - labeled
   # workflow_run:
   #   # If you want to filter based on a specific finisher workflow, add here
   #   workflows: ["Placeholder"] # Name of the main CI workflow
