@@ -58,9 +58,6 @@
             "automerge": false,
             "matchPackageNames": [
                 "/siderolabs/"
-            ],
-            "addLabels": [
-                "system-upgrade"
             ]
         }
     ]

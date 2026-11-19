@@ -4,9 +4,7 @@
   "image": "oci.trueforge.org/containerforge/devcontainer:4.1.1@sha256:6a3bfaaefc1fa31fce8fcd4dd860bfdafcf6b649c73abddb9d3f6d408ff1492c",
   "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
   "updateRemoteUserUID": false,
-  "runArgs": [
-    "--privileged"
-  ],
+  "runArgs": ["--privileged"],
   "containerEnv": {
     "TALOSCONFIG": "/workspaces/talos/clusters/main/talos/generated/talosconfig",
     "KUBECONFIG": "/workspaces/talos/clusters/main/talos/generated/kubeconfig"
@@ -24,7 +22,8 @@
         "VadzimNestsiarenka.helm-template-preview-and-more",
         "karyan40024.helmix",
         "albert.TabOut",
-        "weaveworks.vscode-gitops-tools"
+        "weaveworks.vscode-gitops-tools",
+        "blueglassblock.better-json5"
       ]
     }
   }
