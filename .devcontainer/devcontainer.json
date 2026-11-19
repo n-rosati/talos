@@ -1,7 +1,7 @@
 {
   "$schema": "https://raw.githubusercontent.com/devcontainers/spec/main/schemas/devContainer.schema.json",
   "name": "ClusterTool Cluster",
-  "image": "oci.trueforge.org/containerforge/devcontainer:4.1.1@sha256:2be86fdd9ba4736be6eb9b94125776c0077f2a4f706ab97468b2a11c9d8ac88a",
+  "image": "oci.trueforge.org/containerforge/devcontainer:4.1.1@sha256:7c905205f83086dac762506f5b51b1c97a9ebcb17671bc8da89977d57c9a9563",
   "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
   "updateRemoteUserUID": false,
   "runArgs": ["--privileged"],
