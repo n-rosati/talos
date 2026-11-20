@@ -5,20 +5,25 @@ metadata:
   namespace: flux-system
 resources:
   - bjw-s.yaml
+  - cilium.yaml
   - cloudnative-pg.yaml
+  - element-hq.yaml
+  - grafana-community.yaml
+  - grafana.yaml
+  - home-operations.yaml
   - home-ops-mirror.yaml
+  - ingress-nginx.yaml
   - jetstack.yaml
   - kustomization.yaml
   - metallb.yaml
-  - prometheus-community.yaml
-  - spegel.yaml
-  - truecharts.yaml
-  - topolvm.yaml
-  - ingress-nginx.yaml
-  - stakater.yaml
-  - cilium.yaml
-  - weave-gitops.yaml
+  - mogenius.yaml
   - node-feature-discovery.yaml
   - nvidia.yaml
-  - element-hq.yaml
-  - mogenius.yaml
+  - openebs.yaml
+  - prometheus-community.yaml
+  - spegel.yaml
+  - stakater.yaml
+  - topolvm.yaml
+  - truecharts.yaml
+  - weave-gitops.yaml
+  
