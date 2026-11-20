@@ -96,16 +96,16 @@ spec:
         user: ntfy
         password: ${NTFY_DB_PASSWORD}
         pgVersion: 16
-        mode: standalone # CHANGE TO RECOVERY ON RESTORE
+        mode: recovery
         cluster:
           singleNode: true
           instances: 1
         backups:
           enabled: true
-          revision: "2"
+          revision: "3"
           credentials: home-s3
         recovery:
-          revision: "1"
+          revision: "2"
           credentials: home-s3
         monitoring:
           enablePodMonitor: true
