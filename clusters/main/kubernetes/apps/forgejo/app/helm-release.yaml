@@ -69,9 +69,10 @@ spec:
           homepage:
             enabled: true
             name: Forgejo
-            description: Forgejo is a self-hosted lightweight software forge.
-            group: Apps
+            description: Code repository
             icon: https://codeberg.org/forgejo/forgejo/raw/branch/forgejo/public/assets/img/forgejo.svg
+            group: Apps
+            href: https://{{ ( index .Values.ingress.main.hosts 0 ).host }}
             widget:
               enabled: false
     persistence:

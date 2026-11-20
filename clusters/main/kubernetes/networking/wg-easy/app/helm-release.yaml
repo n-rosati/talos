@@ -64,6 +64,8 @@ spec:
           homepage:
             enabled: true
             name: Wireguard
+            description: Simple VPN with an admin interface
+            icon: wireguard
             group: Apps
             href: https://{{ ( index .Values.ingress.main.hosts 0 ).host }}
             widget:

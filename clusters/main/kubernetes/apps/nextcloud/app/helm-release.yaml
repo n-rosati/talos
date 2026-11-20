@@ -48,11 +48,19 @@ spec:
             enabled: true
           homepage:
             enabled: true
+            name: Nextcloud
+            description: Private cloud
+            icon: nextcloud
             group: Apps
+            href: https://{{ ( index .Values.ingress.main.hosts 0 ).host }}
             widget:
               enabled: true
               custom:
                 key: ${HOMEPAGE_NEXTCLOUD_KEY}
+                fields: 
+                  - freespace
+                  - numfiles
+                  - numshares
     persistence:
       html:
         volsync:

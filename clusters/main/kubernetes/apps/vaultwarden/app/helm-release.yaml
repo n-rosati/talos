@@ -52,6 +52,9 @@ spec:
             certificateIssuer: le-prod
           homepage:
             enabled: true
+            name: Vaultwarden
+            description: Bitwarden compatible server
+            icon: vaultwarden
             group: Apps
             href: https://{{ ( index .Values.ingress.main.hosts 0 ).host }}
             widget:

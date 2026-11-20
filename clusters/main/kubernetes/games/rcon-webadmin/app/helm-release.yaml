@@ -51,6 +51,9 @@ spec:
               externalHost: ${AUTHELIA_EXTERNAL_DNS}
           homepage:
             enabled: true
+            name: RCON Web Admin
+            description: Web console for RCON compatible games
+            icon: https://raw.githubusercontent.com/rcon-web-admin/rcon-web-admin/refs/heads/master/public/images/logo.png
             group: Apps
             href: https://{{ ( index .Values.ingress.main.hosts 0 ).host }}
             widget:

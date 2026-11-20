@@ -52,13 +52,19 @@ spec:
           homepage:
             enabled: true
             name: Tdarr
+            description: Media transcoding automation
+            icon: tdarr
             group: Media
-            icon: tdarr.png
             href: https://{{ ( index .Values.ingress.main.hosts 0 ).host }}
             widget:
               enabled: true
               type: tdarr
               url: http://tdarr.tdarr.svc.cluster.local:8265
+              custom:
+                fields:
+                  - queue
+                  - processed
+                  - errored
     persistence:
       configs:
         volsync:

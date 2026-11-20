@@ -44,6 +44,15 @@ spec:
           certManager:
             enabled: true
             certificateIssuer: le-prod
+          homepage:
+            enabled: true
+            name: FreshRSS
+            description: RSS feed aggregator
+            icon: freshrss
+            group: Apps
+            href: https://{{ ( index .Values.ingress.main.hosts 0 ).host }}
+            widget:
+              enabled: false
     persistence:
       config:
         volsync:

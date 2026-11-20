@@ -54,9 +54,13 @@ spec:
           homepage:
             enabled: true
             name: Home Assistant
+            description: Home automation
+            icon: home-assistant
             group: Infrastructure
+            href: https://{{ ( index .Values.ingress.main.hosts 0 ).host }}
             widget:
               enabled: true
+              type: homeassistant
               custom:
                 key: ${HOMEPAGE_HOMEASSISTANT_KEY}
     persistence:

@@ -60,6 +60,9 @@ spec:
             certificateIssuer: le-prod
           homepage:
             enabled: true
+            name: Jellyfin
+            description: Media organization and playback system
+            icon: jellyfin
             group: Media
             href: https://{{ ( index .Values.ingress.main.hosts 0 ).host }}
             widget:
@@ -68,6 +71,13 @@ spec:
               url: http://jellyfin.jellyfin.svc.cluster.local:8096
               custom:
                 key: ${HOMEPAGE_JELLYFIN_KEY}
+                version: "2"
+                enableBlocks: true
+                enableNowPlaying: true
+                fields:
+                  - movies
+                  - series
+                  - episodes
     persistence:
       config:
         volsync:

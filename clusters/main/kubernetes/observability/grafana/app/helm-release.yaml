@@ -71,13 +71,19 @@ spec:
               externalHost: ${AUTHELIA_EXTERNAL_DNS}
           homepage:
             enabled: true
-            group: "Observability"
-            weight: 1
+            name: Grafana
+            description: Metrics dashboard
+            icon: grafana
+            group: Observability
+            href: https://{{ ( index .Values.ingress.main.hosts 0 ).host }}
             widget:
               custom:
                 version: "2"
                 username: ${GRAFANA_USERNAME}
                 password: ${GRAFANA_PASSWORD}
+                fields:
+                  - dashboards
+                  - datasources
     cnpg:
       main:
         cluster:

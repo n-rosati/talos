@@ -50,6 +50,9 @@ spec:
               externalHost: ${AUTHELIA_EXTERNAL_DNS}
           homepage:
             enabled: true
+            name: JDownloader 2
+            description: Flexible download manager
+            icon: jdownloader2
             group: Apps
             href: https://{{ ( index .Values.ingress.main.hosts 0 ).host }}
             widget:

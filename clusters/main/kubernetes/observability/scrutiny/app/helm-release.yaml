@@ -44,6 +44,10 @@ spec:
             enabled: true
           homepage:
             enabled: true
-            group: Apps
+            name: Scrutiny
+            description: Disk SMART monitoring
+            icon: scrutiny
+            group: Observability
+            href: https://{{ ( index .Values.ingress.main.hosts 0 ).host }}
             widget:
-              enabled: false
+              enabled: true

@@ -59,6 +59,8 @@ spec:
           homepage:
             enabled: true
             name: LLDAP
+            description: Lightweight LDAP server
+            icon: lldap
             group: Infrastructure
             href: https://{{ ( index .Values.ingress.main.hosts 0 ).host }}
             widget:

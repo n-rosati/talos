@@ -48,14 +48,19 @@ spec:
           homepage:
             enabled: true
             name: Ntfy
-            description:
-              ntfy is a simple HTTP-based pub-sub notification service. It allows
-              you to send notifications to your phone or desktop via scripts
-              from any computer.
+            description: HTTP-based pub-sub notification service
+            icon: ntfy
             group: Apps
-            icon: https://github.com/binwiederhier/ntfy/blob/main/web/public/static/images/ntfy.png
+            href: https://{{ ( index .Values.ingress.main.hosts 0 ).host }}
             widget:
-              enabled: false
+              enabled: true
+              type: ntfy
+              custom:
+                key: ${NTFY_ACCESS_TOKEN}
+                url: https://{{ ( index .Values.ingress.main.hosts 0 ).host }}
+                topic: notes
+                fields:
+                  - lastReceived
     persistence:
       webpush:
         enabled: true

@@ -47,9 +47,10 @@ spec:
           homepage:
             enabled: true
             name: The Lounge
-            description: A self-hosted web IRC client.
+            description: Web IRC client
+            icon: thelounge
             group: Apps
-            icon: https://raw.githubusercontent.com/thelounge/thelounge.github.io/master/assets/logos/logo/TL_Grey%26Yellow_Vertical_logotype_Transparent_Bg/TL_Grey%26Yellow_Vertical_logotype_Transparent_Bg.png
+            href: https://{{ ( index .Values.ingress.main.hosts 0 ).host }}
             widget:
               enabled: false
     persistence:

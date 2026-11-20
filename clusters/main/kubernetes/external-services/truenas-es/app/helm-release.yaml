@@ -51,8 +51,9 @@ spec:
             enabled: true
             name: TrueNAS
             description: " "
+            icon: truenas
             group: Infrastructure
-            icon: truenas.png
+            href: https://{{ ( index .Values.ingress.main.hosts 0 ).host }}
             widget:
               enabled: true
               type: truenas

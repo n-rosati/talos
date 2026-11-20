@@ -53,6 +53,9 @@ spec:
               externalHost: ${AUTHELIA_EXTERNAL_DNS}
           homepage:
             enabled: true
+            name: Ollama
+            description: Local AI
+            icon: ollama
             group: Apps
             href: https://{{ ( index .Values.ingress.main.hosts 0 ).host }}
             widget:

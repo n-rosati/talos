@@ -45,9 +45,10 @@ spec:
           homepage:
             enabled: true
             name: Stirling PDF
-            description: "#1 Locally hosted web application that allows you to perform various operations on PDF files."
+            description: Web application to perform various operations on PDF files
+            icon: stirling-pdf
             group: Apps
-            icon: stirling-pdf.svg
+            href: https://{{ ( index .Values.ingress.main.hosts 0 ).host }}
             widget:
               enabled: false
     workload:

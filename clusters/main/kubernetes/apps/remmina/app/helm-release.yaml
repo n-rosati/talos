@@ -61,8 +61,9 @@ spec:
           homepage:
             enabled: true
             name: Remmina
-            description: The GTK Remmina Remote Desktop Client
+            description: Remote desktop client
+            icon: remmina
             group: Apps
-            icon: https://gitlab.com/uploads/-/system/project/avatar/7153509/org.remmina.Remmina.png?
+            href: https://{{ ( index .Values.ingress.main.hosts 0 ).host }}
             widget:
               enabled: false
