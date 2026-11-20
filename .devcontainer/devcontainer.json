@@ -23,7 +23,9 @@
         "karyan40024.helmix",
         "albert.TabOut",
         "weaveworks.vscode-gitops-tools",
-        "blueglassblock.better-json5"
+        "blueglassblock.better-json5",
+        "GitHub.vscode-github-actions",
+        "me-dutour-mathieu.vscode-github-actions"
       ]
     }
   }
