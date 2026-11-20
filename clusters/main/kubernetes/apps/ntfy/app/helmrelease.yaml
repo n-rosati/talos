@@ -95,7 +95,7 @@ spec:
         database: ntfy
         user: ntfy
         password: ${NTFY_DB_PASSWORD}
-        pgVersion: 16
+        pgVersion: 17
         mode: standalone # CHANGE TO RECOVERY ON RESTORE
         cluster:
           singleNode: true
