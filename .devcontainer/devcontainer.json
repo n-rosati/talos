@@ -3,8 +3,6 @@
   "name": "ClusterTool Cluster",
   "image": "oci.trueforge.org/containerforge/devcontainer:4.1.1@sha256:19a85732f9d5beab08bf79bd3dfa73e8c831ec725ab69a5355302a133aeccbd3",
   "postStartCommand": "git config --global --add safe.directory ${containerWorkspaceFolder}",
-  "updateRemoteUserUID": false,
-  "runArgs": ["--privileged"],
   "containerEnv": {
     "TALOSCONFIG": "/workspaces/talos/clusters/main/talos/generated/talosconfig",
     "KUBECONFIG": "/workspaces/talos/clusters/main/talos/generated/kubeconfig"
