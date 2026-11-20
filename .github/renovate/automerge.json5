@@ -35,9 +35,7 @@
             ]
         },
         {
-            "description": [
-                "Special schedule for apps where restarting would be disruptive"
-            ],
+            "description": "Special schedule for apps where restarting would be disruptive",
             "matchPackageNames": [
                 "app-template",
                 "authelia",
