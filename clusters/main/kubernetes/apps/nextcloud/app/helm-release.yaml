@@ -57,10 +57,7 @@ spec:
               enabled: true
               custom:
                 key: ${HOMEPAGE_NEXTCLOUD_KEY}
-                fields: 
-                  - freespace
-                  - numfiles
-                  - numshares
+                fields: '["freespace", "numfiles", "numshares"]'
     persistence:
       html:
         volsync:

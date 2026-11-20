@@ -81,9 +81,7 @@ spec:
                 version: "2"
                 username: ${GRAFANA_USERNAME}
                 password: ${GRAFANA_PASSWORD}
-                fields:
-                  - dashboards
-                  - datasources
+                fields: '["dashboards", "datasources"]'
     cnpg:
       main:
         cluster:

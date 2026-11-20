@@ -59,8 +59,7 @@ spec:
                 key: ${NTFY_ACCESS_TOKEN}
                 url: https://{{ ( index .Values.ingress.main.hosts 0 ).host }}
                 topic: notes
-                fields:
-                  - lastReceived
+                fields: '["lastReceived"]'
     persistence:
       webpush:
         enabled: true

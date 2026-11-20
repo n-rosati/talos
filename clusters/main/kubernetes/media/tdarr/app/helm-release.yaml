@@ -61,10 +61,7 @@ spec:
               type: tdarr
               url: http://tdarr.tdarr.svc.cluster.local:8265
               custom:
-                fields:
-                  - queue
-                  - processed
-                  - errored
+                fields: '[ "queue", "processed", "errored"]'
     persistence:
       configs:
         volsync:

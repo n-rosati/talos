@@ -77,9 +77,7 @@ spec:
               custom:
                 username: ${QBITTORRENT_USER}
                 password: ${QBITTORRENT_PASSWORD}
-                fields: 
-                  - upload
-                  - download
+                fields: '["upload", "download"]'
     persistence:
       config:
         volsync:

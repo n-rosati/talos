@@ -54,9 +54,5 @@ spec:
               custom:
                 key: ${HOMEPAGE_MOONRAKER_KEY}
                 url: http://${PRINTER_IP}:7125
-                fields: 
-                  - printer_state
-                  - print_status
-                  - print_progress
-                  - layers
+                fields: '["printer_state", "print_status", "print_progress", "layers"]'
 
