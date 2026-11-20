@@ -1,10 +1,8 @@
 name: Validate Renovate Flux registryAliases
 
 on:
-  # pull_request:
   push:
-    branches:
-      - main
+    paths: ["repositories/helm/kustomization.yaml", ".github/renovate/kinds.json5"]
   workflow_dispatch:
 
 jobs:
