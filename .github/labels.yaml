@@ -1,0 +1,17 @@
+---
+# Renovate
+- { name: "renovate/container",          color: "c5def5" }
+- { name: "renovate/github-action",      color: "c5def5" }
+- { name: "renovate/github-release",     color: "c5def5" }
+- { name: "renovate/grafana-dashboard",  color: "c5def5"}
+# Semantic Type
+- { name: "type/pin",                    color: "f9d0c4" }
+- { name: "type/digest",                 color: "f9d0c4" }
+- { name: "type/patch",                  color: "f9d0c4" }
+- { name: "type/minor",                  color: "f9d0c4" }
+- { name: "type/major",                  color: "d93f0b" }
+# Uncategorized
+- { name: "automerge",                   color: "0e8a16" }
+- { name: "scheduled-automerge",         color: "0e8a16" }
+- { name: "system-upgrade",              color: "b60205" }
+- { name: "fluxcd-update",               color: "c2e0c6" }
