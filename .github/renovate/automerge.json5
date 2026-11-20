@@ -2,12 +2,14 @@
     "$schema": "https://docs.renovatebot.com/renovate-schema.json",
     "packageRules": [
         {
+            "description": "Don't autmerge any major updates, likely breaking",
             "matchUpdateTypes": [
                 "major"
             ],
             "automerge": false
         },
         {
+            "description": "Automerge enable",
             "matchUpdateTypes": [
                 "minor",
                 "patch",
@@ -36,7 +38,7 @@
         },
         {
             "description": "Special schedule for apps where restarting would be disruptive",
-            "matchPackageNames": [
+            "matchDepNames": [
                 "app-template",
                 "authelia",
                 "jellyfin",
