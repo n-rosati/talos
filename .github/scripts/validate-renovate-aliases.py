@@ -4,7 +4,7 @@ import json5
 import yaml
 from pathlib import Path
 
-REPO_ROOT = Path(__file__).resolve().parent.parent
+REPO_ROOT = Path(__file__).resolve().parent.parent.parent
 HELM_REPOS_DIR = REPO_ROOT / "repositories/helm"
 RENOVATE_CONFIG = REPO_ROOT / ".github/renovate/kinds.json5"
 
