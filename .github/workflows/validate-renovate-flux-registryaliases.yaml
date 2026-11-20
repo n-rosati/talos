@@ -17,6 +17,14 @@ jobs:
         with:
           python-version: "3.x"
 
+      - name: Cache pip modules
+        id: cache-pip
+        uses: actions/cache@v4
+        env:
+          cache-name: cache-pip-modules
+        with:
+          path: ~/.cache/pip
+
       - name: Install dependencies
         run: pip install pyyaml json5
 
