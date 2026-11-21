@@ -9,6 +9,6 @@ spec:
   layerSelector:
     mediaType: application/vnd.cncf.helm.chart.content.v1.tar+gzip
     operation: copy
+  url: oci://git.erwanleboucher.dev/eleboucher/charts/forgejo-runner
   ref:
     tag: 13.2.2
-  url: oci://git.erwanleboucher.dev/eleboucher/charts/forgejo-runner
