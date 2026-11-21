@@ -31,7 +31,8 @@ spec:
       app.kubernetes.io/component: forgejo-runner
     runnerConfig: |
       cache:
-        enabled: true
+        # TODO: see https://git.erwanleboucher.dev/eleboucher/homelab/src/branch/main/kubernetes/apps/forgejo/forgejo-cache/app/externalsecret.yaml
+        enabled: false
         external_server: http://forgejo-cache.forgejo.svc.cluster.local:4000/
         secret_url: file:/etc/forgejo-runner-secret/cache-secret
         proxy_port: 8089
