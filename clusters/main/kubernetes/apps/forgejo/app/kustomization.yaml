@@ -4,3 +4,4 @@ resources:
   - namespace.yaml
   - helm-release.yaml
   - ssh.secret.yaml
+  - runner.secret.yaml
