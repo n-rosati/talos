@@ -183,6 +183,7 @@ spec:
   chartRef:
     kind: OCIRepository
     name: forgejo-runner
+    namespace: flux-system
   interval: 30m
   values:
     forgejo:
