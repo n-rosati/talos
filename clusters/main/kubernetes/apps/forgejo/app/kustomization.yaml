@@ -5,3 +5,4 @@ resources:
   - helm-release.yaml
   - ssh.secret.yaml
   - runner.secret.yaml
+  - runner.helm-release.yaml
