@@ -30,11 +30,7 @@
             "automergeSchedule": [
                 "* 3-7 * * *"
             ],
-            "automerge": true,
-            "addLabels": [
-                "automerge",
-                "scheduled-merge"
-            ]
+            "automerge": true
         },
         {
             "description": "Special schedule for apps where restarting would be disruptive",
@@ -48,11 +44,7 @@
             "automergeSchedule": [
                 "* 3-7 * * *"
             ],
-            "automerge": true,
-            "addLabels": [
-                "automerge",
-                "scheduled-merge"
-            ]
+            "automerge": true
         },
         {
             "description": [
