@@ -11,4 +11,4 @@ spec:
     operation: copy
   url: oci://git.erwanleboucher.dev/eleboucher/charts/forgejo-runner
   ref:
-    tag: 13.3.0
+    tag: 13.3.1
