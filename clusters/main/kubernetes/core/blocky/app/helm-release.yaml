@@ -94,10 +94,13 @@ spec:
             instances: 1
             singleNode: true
     queryLog:
-      logRetentionDays: 14
+      type: ""
     configmap:
       dashboard:
         enabled: false
     secret:
       datasource:
+        enabled: false
+    metrics:
+      main:
         enabled: false
