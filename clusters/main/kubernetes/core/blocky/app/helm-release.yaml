@@ -93,14 +93,3 @@ spec:
           cluster:
             instances: 1
             singleNode: true
-    queryLog:
-      type: ""
-    configmap:
-      dashboard:
-        enabled: false
-    secret:
-      datasource:
-        enabled: false
-    metrics:
-      main:
-        enabled: false
