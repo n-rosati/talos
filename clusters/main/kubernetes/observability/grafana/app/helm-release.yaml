@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: grafana
-      version: 24.2.5
+      version: 25.0.1
       sourceRef:
         kind: HelmRepository
         name: truecharts
@@ -84,87 +84,10 @@ spec:
                 username: ${GRAFANA_USERNAME}
                 password: ${GRAFANA_PASSWORD}
                 fields: '["dashboards", "datasources"]'
-    cnpg:
-      main:
-        cluster:
-          singleNode: true
-          instances: 1
-    dashboards:
-      grafana:
-        cert-manager:
-          enabled: true
-          datasource:
-            - name: "$${DS_PROMETHEUS}"
-              value: Prometheus
-          marketplace:
-            # renovate: depName="Cert-manager-Kubernetes"
-            id: 20842
-            revision: 3
-        cnpg:
-          enabled: true
-          datasource:
-            - name: "$${DS_PROMETHEUS}"
-              value: Prometheus
-          marketplace:
-            # renovate: depName="CloudNativePG"
-            id: 20417
-            revision: 4
-        flux-cluster:
-          enabled: true
-          datasource:
-            - name: "$${DS_PROMETHEUS}"
-              value: Prometheus
-          url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/refs/heads/main/monitoring/configs/dashboards/cluster.json
-        flux-control-plane:
-          enabled: true
-          datasource:
-            - name: "$${DS_PROMETHEUS}"
-              value: Prometheus
-          url: https://raw.githubusercontent.com/fluxcd/flux2-monitoring-example/refs/heads/main/monitoring/configs/dashboards/control-plane.json
-        metallb:
-          enabled: true
-          datasource:
-            - name: "$${DS_PROMETHEUS}"
-              value: Prometheus
-          marketplace:
-            # renovate: depName="Metallb"
-            id: 20162
-            revision: 6
-        nginx:
-          enabled: true
-          datasource:
-            - name: "$${DS_PROMETHEUS}"
-              value: Prometheus
-          url: https://github.com/kubernetes/ingress-nginx/raw/refs/tags/ingress-nginx-3.15.2/deploy/grafana/dashboards/nginx.json
-        blocky:
-          enabled: false
-          datasource:
-            - name: "$${DS_PROMETHEUS}"
-              value: Prometheus
-            - name: "$${VAR_BLOCKY_URL}"
-              value: "https://blocky.${DOMAIN_0}"
-          url: https://raw.githubusercontent.com/0xERR0R/blocky/refs/heads/main/docs/blocky-grafana.json
-        nvidia-gpu-exporter:
-          enabled: true
-          datasource:
-            - name: "$${DS_PROMETHEUS}"
-              value: Prometheus
-          url: https://raw.githubusercontent.com/utkuozdemir/nvidia_gpu_exporter/refs/heads/master/grafana/dashboard.json
-        smartctl-exporter:
-          enabled: true
-          datasource:
-            - name: "$${DS_PROMETHEUS}"
-              value: Prometheus
-          marketplace:
-            # renovate: depName="Kubernetes-PVC-Stats"
-            id: 22604
-            revision: 4
-        pvc-stats:
-          enabled: true
-          datasource:
-            - name: "$${DS_PROMETHEUS}"
-              value: Prometheus
-          marketplace:
-            # renovate: depName="SmartCTL"
-            id: 23233
-            revision: 10
+    dependencies:
+      postgresql:
+        operator:
+          cluster:
+            singleNode: true
+            instances: 1
+          pgVersion: 16
