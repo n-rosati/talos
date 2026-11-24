@@ -9,6 +9,20 @@
             "automerge": false
         },
         {
+            "description": [
+                "Block automerge for Kubelet and Talos"
+            ],
+            "matchUpdateTypes": [
+                "major",
+                "minor",
+                "patch"
+            ],
+            "automerge": false,
+            "matchPackageNames": [
+                "/siderolabs/"
+            ]
+        },
+        {
             "description": "Automerge enable",
             "matchUpdateTypes": [
                 "minor",
@@ -17,7 +31,6 @@
                 "pin",
                 "pinDigest"
             ],
-            "automerge": true,
             "addLabels": [
                 "automerge"
             ]
@@ -29,8 +42,7 @@
             ],
             "automergeSchedule": [
                 "* 3-7 * * *"
-            ],
-            "automerge": true
+            ]
         },
         {
             "description": "Special schedule for apps where restarting would be disruptive",
@@ -43,21 +55,6 @@
             ],
             "automergeSchedule": [
                 "* 3-7 * * *"
-            ],
-            "automerge": true
-        },
-        {
-            "description": [
-                "Block automerge for Kubelet and Talos"
-            ],
-            "matchUpdateTypes": [
-                "major",
-                "minor",
-                "patch"
-            ],
-            "automerge": false,
-            "matchPackageNames": [
-                "/siderolabs/"
             ]
         }
     ]
