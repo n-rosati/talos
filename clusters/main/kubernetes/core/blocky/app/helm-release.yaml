@@ -11,7 +11,7 @@ spec:
   chart:
     spec:
       chart: blocky
-      version: 24.5.1
+      version: 25.0.0
       sourceRef:
         kind: HelmRepository
         name: truecharts
@@ -111,9 +111,6 @@ spec:
         enabled: false
     dependencies:
       postgresql:
-        enabled: false
-    cnpg:
-      main:
         enabled: false
     # -- Set manual custom DNS resolution
     customDNS:
