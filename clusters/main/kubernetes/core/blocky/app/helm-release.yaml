@@ -11,7 +11,7 @@ spec:
   chart:
     spec:
       chart: blocky
-      version: 24.5.1
+      version: 25.0.0
       sourceRef:
         kind: HelmRepository
         name: truecharts
@@ -100,6 +100,14 @@ spec:
     bootstrapDns:
       ips: []
       upstream: "1.1.1.1"
+    dependencies:
+      postgresql:
+        operator:
+          cluster:
+            instances: 1
+            singleNode: true
+    queryLog:
+      logRetentionDays: 14
     customDNS:
       customTTL: 1h
       filterUnmappedTypes: true
