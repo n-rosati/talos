@@ -33,26 +33,26 @@ spec:
     global:
       stopAll: false
     # disable all persistence options as they don't work on talos.
-    # persistence:
-    #   nviaictl:
-    #     enabled: false
-    #   nvidia0:
-    #     enabled: false
-    #   nvidiasmi:
-    #     enabled: false
-    #   libnvidiamlso:
-    #     enabled: false
-    #   libnvidiamlso1:
-    #     enabled: false
-    # workload:
-    #   main:
-    #     podSpec:
-    #       runtimeClassName: "nvidia"
-    #       containers:
-    #         main:
-    #           resources:
-    #             limits:
-    #               nvidia.com/gpu: 1
+    persistence:
+      nviaictl:
+        enabled: false
+      nvidia0:
+        enabled: false
+      nvidiasmi:
+        enabled: false
+      libnvidiamlso:
+        enabled: false
+      libnvidiamlso1:
+        enabled: false
+    workload:
+      main:
+        podSpec:
+          runtimeClassName: "nvidia"
+          containers:
+            main:
+              resources:
+                limits:
+                  nvidia.com/gpu: 1
     # metrics:
     #   main:
     #     endpoints:
