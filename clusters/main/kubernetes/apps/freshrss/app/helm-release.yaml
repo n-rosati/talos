@@ -69,4 +69,4 @@ spec:
           containers:
             main:
               env:
-                INTERNAL_HOST_ALLOWLIST: "172.17.0.0/16 172.16.0.0/16"
+                INTERNAL_HOST_ALLOWLIST: "${PODNET} ${SVCNET}"
