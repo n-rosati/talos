@@ -1,7 +1,5 @@
-# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.json
 ---
-# yaml-language-server: $schema=https://raw.githubusercontent.com/trueforge-org/websites/refs/heads/main/truecharts/public/schemas/helm-release/32.9.0.schema.json
-apiVersion: helm.toolkit.fluxcd.io/v2
+# yaml-language-server: $schema=https://kubernetes-schemas.pages.dev/helm.toolkit.fluxcd.io/helmrelease_v2.jsonapiVersion: helm.toolkit.fluxcd.io/v2
 kind: HelmRelease
 metadata:
   name: blocky
@@ -88,17 +86,7 @@ spec:
           dnsChallenge:
             enabled: false
             domain: dns01.clouddns.com
-      forward:
-        enabled: false
-        primary: tls://1.1.1.1
-        secondary: tls://1.0.0.1
-        options:
-          - name: tls_servername
-            value: cloudflare-dns.com
-    defaultUpstreams:
-    - "https://1.1.1.1/dns-query"
     bootstrapDns:
-      ips: []
       upstream: "1.1.1.1"
     dependencies:
       postgresql:
@@ -108,12 +96,3 @@ spec:
             singleNode: true
     queryLog:
       logRetentionDays: 14
-    customDNS:
-      customTTL: 1h
-      filterUnmappedTypes: true
-      rewrite: []
-      # - in: something.com
-      #   out: somethingelse.com
-      mapping: []
-      # - domain: something.com
-      #   dnsserver: 192.168.178.1
