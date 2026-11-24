@@ -90,4 +90,3 @@ spec:
           cluster:
             singleNode: true
             instances: 1
-          pgVersion: 16
