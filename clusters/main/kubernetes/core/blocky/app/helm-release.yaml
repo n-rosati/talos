@@ -112,6 +112,9 @@ spec:
     dependencies:
       postgresql:
         enabled: false
+    cnpg:
+      main:
+        enabled: false
     # -- Set manual custom DNS resolution
     customDNS:
       customTTL: 1h
