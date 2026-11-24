@@ -1,7 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
-  - grafana/ks.yaml
+  # - grafana/ks.yaml
   - truenas-exporter/ks.yaml
   - nvidia-gpu-exporter/ks.yaml
   - smartctl-exporter/ks.yaml
