@@ -11,7 +11,7 @@ spec:
   extraEnv:
     - name: RENOVATE_GIT_IGNORED_AUTHORS
       value: "236480601+redecorate-bot[bot]@users.noreply.github.com"
-  image: renovate/renovate:44.261.1
+  image: renovate/renovate:44.261.2
   parallelism: 5
   resources:
     requests:
