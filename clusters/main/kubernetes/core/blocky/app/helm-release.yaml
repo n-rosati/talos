@@ -100,19 +100,12 @@ spec:
     bootstrapDns:
       ips: []
       upstream: "1.1.1.1"
-    # CANNOT be defined in above yaml section
-    queryLog:
-      # optional one of: mysql, postgresql, csv, csv-client. If empty, log to console only
-      type: ""
-    configmap:
-      dashboard:
-        enabled: false
-      datasource:
-        enabled: false
     dependencies:
       postgresql:
-        enabled: false
-    # -- Set manual custom DNS resolution
+        operator:
+          cluster:
+            instances: 1
+            singleNode: true
     customDNS:
       customTTL: 1h
       filterUnmappedTypes: true
