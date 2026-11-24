@@ -95,3 +95,6 @@ spec:
             singleNode: true
     queryLog:
       logRetentionDays: 14
+    configmap:
+      dashboard:
+        enabled: false
