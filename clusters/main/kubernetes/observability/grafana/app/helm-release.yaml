@@ -36,6 +36,8 @@ spec:
           containers:
             main:
               env:
+                GF_SECURITY_ADMIN_USER: ${GRAFANA_USERNAME}
+                GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD
                 GF_SERVER_ROOT_URL: https://grafana.${DOMAIN_0}
                 GF_PANELS_DISABLE_SANITIZE_HTML: "true"
     # OAuth stuff
