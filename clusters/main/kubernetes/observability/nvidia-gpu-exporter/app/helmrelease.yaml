@@ -8,7 +8,7 @@ spec:
   chart:
     spec:
       chart: nvidia-gpu-exporter
-      version: 7.5.0
+      version: 9.0.0
       sourceRef:
         kind: HelmRepository
         name: truecharts
@@ -33,30 +33,30 @@ spec:
     global:
       stopAll: false
     # disable all persistence options as they don't work on talos.
-    persistence:
-      nviaictl:
-        enabled: false
-      nvidia0:
-        enabled: false
-      nvidiasmi:
-        enabled: false
-      libnvidiamlso:
-        enabled: false
-      libnvidiamlso1:
-        enabled: false
-    workload:
-      main:
-        podSpec:
-          runtimeClassName: "nvidia"
-          containers:
-            main:
-              resources:
-                limits:
-                  nvidia.com/gpu: 1
-    metrics:
-      main:
-        endpoints:
-          - port: main
-            relabelings:
-              - sourceLabels: [ __meta_kubernetes_endpoint_node_name ]
-                targetLabel: instance
+    # persistence:
+    #   nviaictl:
+    #     enabled: false
+    #   nvidia0:
+    #     enabled: false
+    #   nvidiasmi:
+    #     enabled: false
+    #   libnvidiamlso:
+    #     enabled: false
+    #   libnvidiamlso1:
+    #     enabled: false
+    # workload:
+    #   main:
+    #     podSpec:
+    #       runtimeClassName: "nvidia"
+    #       containers:
+    #         main:
+    #           resources:
+    #             limits:
+    #               nvidia.com/gpu: 1
+    # metrics:
+    #   main:
+    #     endpoints:
+    #       - port: main
+    #         relabelings:
+    #           - sourceLabels: [ __meta_kubernetes_endpoint_node_name ]
+    #             targetLabel: instance
