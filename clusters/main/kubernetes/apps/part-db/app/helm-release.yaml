@@ -194,7 +194,7 @@ spec:
         enabled: true
         depconfig:
           postgresqlDatabase: part-db
-          postgresqlUsername: part-db
+          postgresqlUsername: partdb
           password: ${PARTDB_DB_PASSWORD}
         operator:
           mode: recovery
