@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: lldap
-      version: 10.1.4
+      version: 11.0.0
       sourceRef:
         kind: HelmRepository
         name: truecharts
@@ -52,10 +52,10 @@ spec:
             certificateIssuer: le-prod
           nginx:
             enabled: true
-            # auth:
-            #   type: authelia
-            #   internalHost: ${AUTHELIA_INTERNAL_DNS}
-            #   externalHost: ${AUTHELIA_EXTERNAL_DNS}
+            auth:
+              type: authelia
+              internalHost: ${AUTHELIA_INTERNAL_DNS}
+              externalHost: ${AUTHELIA_EXTERNAL_DNS}
           homepage:
             enabled: true
             name: LLDAP
@@ -75,24 +75,26 @@ spec:
               enabled: true
             src:
               enabled: true
-    cnpg:
-      main:
-        mode: recovery
-        pgVersion: 15
-        password: ${CNPG_PASSWORD}
-        backups:
-          enabled: true
-          credentials: home-s3
-          revision: "5"
-        recovery:
-          method: object_store
-          credentials: home-s3
-          revision: "4"
-        cluster:
-          singleNode: true
-          instances: 1
-        monitoring:
-          enablePodMonitor: true
+    dependencies:
+      postgresql:
+        enabled: true
+        depconfig:
+          password: ${CNPG_PASSWORD}
+        operator:
+          mode: recovery
+          pgVersion: 15
+          backups:
+            enabled: true
+            revision: "6"
+            credentials: home-s3
+          recovery:
+            revision: "5"
+            credentials: home-s3
+          monitoring:
+            enablePodMonitor: true
+          cluster:
+            instances: 1
+            singleNode: true
     workload:
       main:
         podSpec:
