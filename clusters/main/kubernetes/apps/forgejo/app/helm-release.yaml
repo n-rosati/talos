@@ -126,10 +126,18 @@ spec:
                   enabled: false
               env:
                 FORGEJO__database__DB_TYPE: postgres
-                FORGEJO__database__HOST: "{{ .Values.cnpg.main.creds.host }}"
-                FORGEJO__database__NAME: "{{ .Values.cnpg.main.database }}"
-                FORGEJO__database__USER: "{{ .Values.cnpg.main.user }}"
-                FORGEJO__database__PASSWD: "{{ .Values.cnpg.main.password }}"
+                FORGEJO__database__HOST: 
+                  secretKeyRef:
+                    expandObjectName: false
+                    name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                    key: plainhost
+                FORGEJO__database__NAME: "forgejo"
+                FORGEJO__database__USER: "forgejo"
+                FORGEJO__database__PASSWD: 
+                  secretKeyRef:
+                    expandObjectName: false
+                    name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                    key: postgresql-password
                 FORGEJO__mailer__ENABLED: "true"
                 FORGEJO__mailer__SMTP_ADDR: "${SMTP_SERVER}"
                 FORGEJO__mailer__SMTP_PORT: "${SMTP_PORT}"
@@ -153,26 +161,6 @@ spec:
                 FORGEJO__service__SHOW_REGISTRATION_BUTTON: "false"
                 FORGEJO__oauth2__USERNAME: userid
                 FORGEJO__oauth2__ENABLE_AUTO_REGISTRATION: true
-    # cnpg:
-    #   main:
-    #     enabled: true
-    #     database: forgejo
-    #     user: forgejo
-    #     password: ${FORGEJO_DB_PASSWORD}
-    #     pgVersion: 16
-    #     mode: standalone # CHANGE TO RECOVERY ON RESTORE
-    #     cluster:
-    #       singleNode: true
-    #       instances: 1
-    #     backups:
-    #       enabled: true
-    #       revision: "2"
-    #       credentials: home-s3
-    #     recovery:
-    #       revision: "1"
-    #       credentials: home-s3
-    #     monitoring:
-    #       enablePodMonitor: true
     dependencies:
       postgresql:
         enabled: true
