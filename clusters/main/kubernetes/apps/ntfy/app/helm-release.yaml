@@ -72,11 +72,7 @@ spec:
               env:
                 NTFY_BASE_URL: "https://{{ ( index .Values.ingress.main.hosts 0 ).host }}"
                 NTFY_BEHIND_PROXY: "true"
-                NTFY_DATABASE_URL: 
-                  valueFrom:
-                    secretKeyRef:
-                      name: ntfy-cnpg-main-urls
-                      key: std
+                NTFY_DATABASE_URL: '{{ .Values.dependencies.postgresql.depconfig.creds.urlnossl }}'
                 NTFY_AUTH_DEFAULT_ACCESS: "deny-all"
                 NTFY_ENABLE_LOGIN: "true"
                 NTFY_REQUIRE_LOGIN: "true"
