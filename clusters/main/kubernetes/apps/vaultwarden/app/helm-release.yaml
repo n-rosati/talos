@@ -93,6 +93,7 @@ spec:
         enabled: true
         depconfig:
           postgresqlUsername: app
+          postgresqlDatabase: vaultwarden
         operator:
           pgVersion: 16
           mode: recovery
