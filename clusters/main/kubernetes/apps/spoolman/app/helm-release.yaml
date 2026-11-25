@@ -84,22 +84,6 @@ spec:
               env:
                 SPOOLMAN_METRICS_ENABLED: "false"
                 SPOOLMAN_CORS_ORIGIN: spoolman.${DOMAIN_0}
-    # cnpg:
-    #   main:
-    #     password: ${CNPG_PASSWORD}
-    #     mode: recovery
-    #     cluster:
-    #       singleNode: true
-    #       instances: 1
-    #     backups:
-    #       enabled: true
-    #       credentials: home-s3
-    #       revision: "2"
-    #     recovery:
-    #       credentials: home-s3
-    #       revision: "1"
-    #     monitoring:
-    #       enablePodMonitor: true
     dependencies:
       postgresql:
         enabled: true
