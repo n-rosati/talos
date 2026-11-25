@@ -47,23 +47,26 @@ spec:
           certManager:
             enabled: true
             certificateIssuer: le-prod
-    cnpg:
-      main:
-        mode: recovery
-        password: ${CNPG_PASSWORD}
-        backups:
-          enabled: true
-          credentials: home-s3
-          revision: "3"
-        recovery:
-          method: object_store
-          credentials: home-s3
-          revision: "2"
-        cluster:
-          singleNode: true
-          instances: 1
-        monitoring:
-          enablePodMonitor: true
+    dependencies:
+      postgresql:
+        enabled: true
+        depconfig:
+          password: ${CNPG_PASSWORD}
+        operator:
+          mode: recovery
+          pgVersion: 16
+          backups:
+            enabled: true
+            revision: "3"
+            credentials: home-s3
+          recovery:
+            revision: "2"
+            credentials: home-s3
+          monitoring:
+            enablePodMonitor: true
+          cluster:
+            instances: 1
+            singleNode: true
     persistence:
       authelia-secrets:
         enabled: true
