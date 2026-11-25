@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: spoolman
-      version: 3.1.4
+      version: 4.0.0
       sourceRef:
         kind: HelmRepository
         name: truecharts
@@ -76,22 +76,6 @@ spec:
               enabled: true
             src:
               enabled: true
-    cnpg:
-      main:
-        password: ${CNPG_PASSWORD}
-        mode: recovery
-        cluster:
-          singleNode: true
-          instances: 1
-        backups:
-          enabled: true
-          credentials: home-s3
-          revision: "2"
-        recovery:
-          credentials: home-s3
-          revision: "1"
-        monitoring:
-          enablePodMonitor: true
     workload:
       main:
         podSpec:
@@ -100,3 +84,39 @@ spec:
               env:
                 SPOOLMAN_METRICS_ENABLED: "false"
                 SPOOLMAN_CORS_ORIGIN: spoolman.${DOMAIN_0}
+    # cnpg:
+    #   main:
+    #     password: ${CNPG_PASSWORD}
+    #     mode: recovery
+    #     cluster:
+    #       singleNode: true
+    #       instances: 1
+    #     backups:
+    #       enabled: true
+    #       credentials: home-s3
+    #       revision: "2"
+    #     recovery:
+    #       credentials: home-s3
+    #       revision: "1"
+    #     monitoring:
+    #       enablePodMonitor: true
+    dependencies:
+      postgresql:
+        enabled: true
+        depconfig:
+          password: ${CNPG_PASSWORD}
+        operator:
+          mode: recovery
+          pgVersion: 16
+          backups:
+            enabled: true
+            revision: "3"
+            credentials: home-s3
+          recovery:
+            revision: "2"
+            credentials: home-s3
+          monitoring:
+            enablePodMonitor: true
+          cluster:
+            instances: 1
+            singleNode: true
