@@ -93,23 +93,25 @@ spec:
     metrics:
       main:
         enabled: true
-    cnpg:
-      main:
+    dependencies:
+      postgresql:
         enabled: true
-        database: ntfy
-        user: ntfy
-        password: ${NTFY_DB_PASSWORD}
-        pgVersion: 16
-        mode: recovery
-        cluster:
-          singleNode: true
-          instances: 1
-        backups:
-          enabled: true
-          revision: "3"
-          credentials: home-s3
-        recovery:
-          revision: "2"
-          credentials: home-s3
-        monitoring:
-          enablePodMonitor: true
+        depconfig:
+          postgresqlDatabase: ntfy
+          postgresqlUsername: ntfy
+          password: ${NTFY_DB_PASSWORD}
+        operator:
+          mode: recovery
+          pgVersion: 16
+          backups:
+            enabled: true
+            revision: "4"
+            credentials: home-s3
+          recovery:
+            revision: "3"
+            credentials: home-s3
+          monitoring:
+            enablePodMonitor: true
+          cluster:
+            instances: 1
+            singleNode: true
