@@ -90,10 +90,10 @@ spec:
                 NTFY_WEB_PUSH_EMAIL_ADDRESS: "${PERSONAL_EMAIL}"
                 NTFY_UPSTREAM_BASE_URL: "https://ntfy.sh"
                 NTFY_AUTH_ACCESS: "*:up*:write-only"
-                NTFY_LOG_LEVEL: debug
+                NTFY_LOG_LEVEL: "debug"
                 NTFY_AUTH_USERS: ${NTFY_USERS}
                 NTFY_PROXY_TRUSTED_HOSTS: ${PODNET}
-                NTFY_MESSAGE_DELAY_LIMIT: 31d
+                NTFY_MESSAGE_DELAY_LIMIT: "31d"
     metrics:
       main:
         enabled: true
