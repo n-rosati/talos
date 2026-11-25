@@ -76,7 +76,7 @@ spec:
                   secretKeyRef:
                     expandObjectName: false
                     name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
-                    key: url
+                    key: urlnossl
                 NTFY_AUTH_DEFAULT_ACCESS: "deny-all"
                 NTFY_ENABLE_LOGIN: "true"
                 NTFY_REQUIRE_LOGIN: "true"
