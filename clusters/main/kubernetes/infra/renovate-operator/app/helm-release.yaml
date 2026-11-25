@@ -51,12 +51,6 @@ spec:
           - secretName: renovate-operator-webhook-tls-0
             hosts:
               - renovate-webhook.${DOMAIN_0}
-    valkey:
-      enabled: true
-      metrics:
-        enabled: true
-        serviceMonitor:
-          enabled: true
     metrics:
       enabled: true
       serviceMonitor:
