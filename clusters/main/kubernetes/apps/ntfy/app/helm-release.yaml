@@ -102,6 +102,7 @@ spec:
           password: ${NTFY_DB_PASSWORD}
         operator:
           mode: recovery
+          pgVersion: 16
           backups:
             enabled: true
             revision: "4"
