@@ -94,7 +94,6 @@ spec:
         depconfig:
         operator:
           mode: recovery
-          pgVersion: 16
           backups:
             enabled: true
             revision: "6"
