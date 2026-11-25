@@ -92,6 +92,7 @@ spec:
       postgresql:
         enabled: true
         depconfig:
+          postgresqlUsername: app
         operator:
           mode: recovery
           backups:
