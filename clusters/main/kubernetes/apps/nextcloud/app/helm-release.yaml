@@ -96,11 +96,11 @@ spec:
     dependencies:
       postgresql:
         enabled: true
-        pgVersion: 15
         depconfig:
           password: ${CNPG_PASSWORD}
         operator:
           mode: recovery
+          pgVersion: 15
           backups:
             enabled: true
             revision: "9"
