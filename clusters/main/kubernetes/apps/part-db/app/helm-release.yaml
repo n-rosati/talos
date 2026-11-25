@@ -198,7 +198,6 @@ spec:
           password: ${PARTDB_DB_PASSWORD}
         operator:
           mode: recovery
-          pgVersion: 16
           backups:
             enabled: true
             revision: "6"
