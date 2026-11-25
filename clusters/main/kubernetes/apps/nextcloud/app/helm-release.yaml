@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: nextcloud
-      version: 49.2.15
+      version: 50.0.0
       sourceRef:
         kind: HelmRepository
         name: truecharts
@@ -93,24 +93,26 @@ spec:
         server: ${TRUENAS_IP}
         path: ${NFS_APP_DATA}/OrcaSlicer
         mountPath: /mnt/OrcaSlicer
-    cnpg:
-      main:
+    dependencies:
+      postgresql:
+        enabled: true
         pgVersion: 15
-        password: ${CNPG_PASSWORD}
-        mode: recovery
-        backups:
-          enabled: true
-          credentials: home-s3
-          revision: "8"
-          retentionPolicy: "14d"
-        recovery:
-          credentials: home-s3
-          revision: "7"
-        cluster:
-          singleNode: true
-          instances: 1
-        monitoring:
-          enablePodMonitor: true
+        depconfig:
+          password: ${CNPG_PASSWORD}
+        operator:
+          mode: recovery
+          backups:
+            enabled: true
+            revision: "9"
+            credentials: home-s3
+          recovery:
+            revision: "8"
+            credentials: home-s3
+          monitoring:
+            enablePodMonitor: true
+          cluster:
+            instances: 1
+            singleNode: true
     nextcloud:
       collabora:
         enabled: true
