@@ -94,6 +94,7 @@ spec:
         depconfig:
           postgresqlUsername: app
         operator:
+          pgVersion: 16
           mode: recovery
           backups:
             enabled: true
