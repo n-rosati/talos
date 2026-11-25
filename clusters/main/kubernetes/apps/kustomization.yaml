@@ -18,4 +18,4 @@ resources:
   - spoolman/ks.yaml
   - stirling-pdf/ks.yaml
   - thelounge/ks.yaml
-  - vaultwarden/ks.yaml
+  # - vaultwarden/ks.yaml
