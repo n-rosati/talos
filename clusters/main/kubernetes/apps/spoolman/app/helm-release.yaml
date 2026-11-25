@@ -107,7 +107,6 @@ spec:
           password: ${CNPG_PASSWORD}
         operator:
           mode: recovery
-          pgVersion: 16
           backups:
             enabled: true
             revision: "3"
