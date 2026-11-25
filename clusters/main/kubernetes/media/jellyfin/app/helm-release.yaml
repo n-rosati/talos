@@ -39,7 +39,7 @@ spec:
         secretKey: ${S3_SECRET_KEY}
     service:
       jellyfin-up:
-        enabled: false
+        enabled: true
         targetSelector: jellyfin-up
         ports:
           jellyfin-up:
@@ -125,7 +125,7 @@ spec:
       broadcastproxy:
         enabled: true
       jellyfin-up:
-        enabled: false
+        enabled: true
         type: Deployment
         strategy: RollingUpdate
         replicas: 1
