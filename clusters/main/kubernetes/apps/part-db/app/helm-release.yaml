@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: app-template
-      version: 21.3.8
+      version: 22.0.0
       sourceRef:
         kind: HelmRepository
         name: truecharts
@@ -118,26 +118,6 @@ spec:
         mountPath: /run
         targetSelectAll: true
         size: 500Mi
-    cnpg:
-      main:
-        enabled: true
-        database: part-db
-        user: partdb
-        password: ${PARTDB_DB_PASSWORD}
-        pgVersion: 16
-        mode: recovery
-        cluster:
-          singleNode: true
-          instances: 1
-        backups:
-          enabled: true
-          credentials: home-s3
-          revision: "5"
-        recovery:
-          revision: "4"
-          credentials: home-s3
-        monitoring:
-          enablePodMonitor: true
     workload:
       main:
         podSpec:
@@ -171,7 +151,11 @@ spec:
                 BANNER: 'Welcome to Part-DB.  <blockquote class=''pb-0''> <p style=''font-size: 12px''> And God said <br> $\\nabla \\cdot \\vec{D} = \\rho$, $\\nabla \\cdot \\vec{B} = 0$, $\\nabla \\times \\vec{E} = -\\frac{\\partial \\vec{B}}{\\partial t}$, $\\nabla \\times \\vec{H} = \\vec{j} + \\frac{\\partial \\vec{D}}{\\partial t}$,  <br> and then there was light. </p> </blockquote>'
                 BASE_CURRENCY: CAD
                 BROWSER_PLUGIN_ENABLED: "1"
-                DATABASE_URL: "{{ .Values.cnpg.main.creds.std }}?serverVersion=16.4&charset=utf8"
+                DATABASE_URL:
+                  secretKeyRef:
+                    expandObjectName: false
+                    name: '{{ printf "%s-%s" .Release.Name "postgresqlcreds" }}'
+                    key: urlnossl
                 DB_AUTOMIGRATE: true
                 DEFAULT_LANG: en
                 DEFAULT_TIMEZONE: UTC
@@ -205,3 +189,25 @@ spec:
                 TRUSTED_PROXIES: 172.16.0.0/16,172.17.0.0/16
                 TRUSTED_HOSTS: partdb.${DOMAIN_0},part-db-app-template.part-db.svc.cluster.local
                 USE_GRAVATAR: "0"
+    dependencies:
+      postgresql:
+        enabled: true
+        depconfig:
+          postgresqlDatabase: part-db
+          postgresqlUsername: part-db
+          password: ${PARTDB_DB_PASSWORD}
+        operator:
+          mode: recovery
+          pgVersion: 16
+          backups:
+            enabled: true
+            revision: "6"
+            credentials: home-s3
+          recovery:
+            revision: "5"
+            credentials: home-s3
+          monitoring:
+            enablePodMonitor: true
+          cluster:
+            instances: 1
+            singleNode: true
