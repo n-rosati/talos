@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: vaultwarden
-      version: 31.1.4
+      version: 32.0.0
       sourceRef:
         kind: HelmRepository
         name: truecharts
@@ -88,18 +88,22 @@ spec:
               enabled: true
             src:
               enabled: true
-    cnpg:
-      main:
-        mode: recovery
-        backups:
-          enabled: true
-          revision: "5"
-          credentials: home-s3
-        recovery:
-          credentials: home-s3
-          revision: "4"
-        cluster:
-          singleNode: true
-          instances: 1
-        monitoring:
-          enablePodMonitor: true
+    dependencies:
+      postgresql:
+        enabled: true
+        depconfig:
+        operator:
+          mode: recovery
+          pgVersion: 16
+          backups:
+            enabled: true
+            revision: "6"
+            credentials: home-s3
+          recovery:
+            revision: "5"
+            credentials: home-s3
+          monitoring:
+            enablePodMonitor: true
+          cluster:
+            instances: 1
+            singleNode: true
