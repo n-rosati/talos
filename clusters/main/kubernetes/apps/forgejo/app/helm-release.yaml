@@ -170,7 +170,6 @@ spec:
           password: ${FORGEJO_DB_PASSWORD}
         operator:
           mode: recovery
-          pgVersion: 16
           backups:
             enabled: true
             revision: "3"
