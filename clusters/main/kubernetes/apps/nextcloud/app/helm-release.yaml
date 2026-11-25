@@ -109,7 +109,7 @@ spec:
             revision: "8"
             credentials: home-s3
           monitoring:
-            enablePodMonitor: true
+            enablePodMonitor: false
           cluster:
             instances: 1
             singleNode: true
