@@ -9,7 +9,7 @@ spec:
   chart:
     spec:
       chart: home-assistant
-      version: 32.2.8
+      version: 33.0.1
       sourceRef:
         kind: HelmRepository
         name: truecharts
@@ -73,23 +73,27 @@ spec:
               enabled: true
             src:
               enabled: true
-    cnpg:
-      main:
-        password: ${CNPG_PASSWORD}
-        mode: recovery
-        backups:
-          enabled: true
-          credentials: home-s3
-          revision: "3"
-          retentionPolicy: "14d"
-        recovery:
-          credentials: home-s3
-          revision: "2"
-        cluster:
-          singleNode: true
-          instances: 1
-        monitoring:
-          enablePodMonitor: true
+    dependencies:
+      postgresql:
+        enabled: true
+        depconfig:
+          password: ${CNPG_PASSWORD}
+        operator:
+          mode: recovery
+          pgVersion: 16
+          backups:
+            enabled: true
+            revision: "4"
+            credentials: home-s3
+            retentionPolicy: "14d"
+          recovery:
+            revision: "3"
+            credentials: home-s3
+          monitoring:
+            enablePodMonitor: true
+          cluster:
+            instances: 1
+            singleNode: true
     addons:
       codeserver:
         enabled: true
