@@ -30,7 +30,8 @@
             "home-operations": "oci://ghcr.io/home-operations/charts",
             "grafana": "oci://ghcr.io/grafana/helm-charts",
             "grafana-community": "oci://ghcr.io/grafana-community/helm-charts",
-            "openebs": "oci://ghcr.io/openebs/charts"
+            "openebs": "oci://ghcr.io/openebs/charts",
+            "csi-driver-nfs": "https://raw.githubusercontent.com/kubernetes-csi/csi-driver-nfs/master/charts"
         }
     },
     "kubernetes": {

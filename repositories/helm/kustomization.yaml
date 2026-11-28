@@ -26,4 +26,5 @@ resources:
   - topolvm.yaml
   - truecharts.yaml
   - weave-gitops.yaml
+  - csi-driver-nfs.yaml
   
