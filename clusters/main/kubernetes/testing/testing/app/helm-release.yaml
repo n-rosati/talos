@@ -25,7 +25,7 @@ spec:
   values:
     release_name: testing
     global:
-      stopAll: true
+      stopAll: false
     image:
       repository: busybox
       pullPolicy: IfNotPresent
