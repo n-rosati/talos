@@ -1,0 +1,36 @@
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: csi-driver-nfs
+  namespace: csi-driver-nfs
+spec:
+  interval: 2m
+  chart:
+    spec:
+      chart: csi-driver-nfs
+      version: 4.13.6
+      sourceRef:
+        kind: HelmRepository
+        name: csi-driver-nfs
+        namespace: flux-system
+  install:
+    createNamespace: true
+    remediation:
+      retries: 3
+  upgrade:
+    cleanupOnFail: true
+    remediation:
+      retries: 3
+  values:
+    storageClass:
+      create: false
+      name: nfs-csi
+      parameters:
+        server: ${TRUENAS_IP}
+        share: /mnt/Speed/AppData/testing
+        subDir:
+        mountPermissions: "0755"
+      reclaimPolicy: Delete
+      volumeBindingMode: Immediate
+      mountOptions:
+        - nfsvers=4.1
