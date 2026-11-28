@@ -23,7 +23,7 @@ spec:
       retries: 3
   values:
     storageClass:
-      create: false
+      create: true
       name: nfs-csi
       parameters:
         server: ${TRUENAS_IP}
