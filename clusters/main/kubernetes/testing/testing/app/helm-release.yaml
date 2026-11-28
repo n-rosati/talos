@@ -113,3 +113,17 @@ spec:
         enabled: true
         service:
           type: LoadBalancer
+    dependencies:
+      postgresql:
+        enabled: true
+        operator:
+          mode: standalone
+          cluster:
+            instances: 1
+            singleNode: true
+            storage:
+              size: 10Gi
+              storageClass: nfs-csi
+            walStorage:
+              size: 10Gi
+              storageClass: nfs-csi
