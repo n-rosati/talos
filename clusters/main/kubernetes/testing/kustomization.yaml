@@ -4,4 +4,4 @@ resources:
   - csi-driver-nfs/ks.yaml
   # - dbtest/ks.yaml
   # - mc-test/ks.yaml
-  - testing/ks.yaml
+  # - testing/ks.yaml
