@@ -115,7 +115,7 @@ spec:
           type: LoadBalancer
     dependencies:
       postgresql:
-        enabled: false
+        enabled: true
         operator:
           mode: standalone
           cluster:
