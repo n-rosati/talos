@@ -115,14 +115,12 @@ spec:
           type: LoadBalancer
     dependencies:
       postgresql:
-        enabled: true
+        enabled: false
         operator:
           mode: standalone
           cluster:
             instances: 1
             singleNode: true
-            postgresUID: 568
-            postgresGID: 568
             storage:
               size: 10Gi
               storageClass: nfs-csi
