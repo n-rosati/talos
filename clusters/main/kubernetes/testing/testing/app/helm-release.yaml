@@ -110,7 +110,7 @@ spec:
             }
     addons:
       codeserver:
-        enabled: true
+        enabled: false
         service:
           type: LoadBalancer
     dependencies:
